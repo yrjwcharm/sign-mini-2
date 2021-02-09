@@ -1,0 +1,75 @@
+.container{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
+}
+.address-info-wrap{
+  height:40PX;
+  margin-right: 20PX;
+  margin-left: 20PX;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dist-name-text {
+  font-size: 14PX;
+  font-family: PingFangSC-Regular;
+  color: #333;
+}
+.address-info-container{
+  background: #fff;
+}
+.address-info-view{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.location{
+  width: 11PX;
+  height:14PX
+}
+.code-view{
+  border: 1PX dashed #06B48D;
+  height: 32PX;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 92PX;
+}
+.img-code{
+  height: 30PX;
+  width: 90PX;
+}
+.btn-next-view{
+  margin-top: 30PX;
+  display: flex;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40PX;
+  background: #06B48D;
+  border-radius: 20PX;
+}
+.select-city-text{
+  font-size: 14PX;
+}
+.btn-next-text{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 14PX;
+  color: #FFFFFF;
+  letter-spacing: 0.18px;
+}
+.location{
+  width: 13PX;
+  height:16.5PX;
+}

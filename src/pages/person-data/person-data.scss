@@ -1,0 +1,32 @@
+@import "~taro-ui/dist/style/components/action-sheet.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+
+.personal-box{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  background: #F5F6F9;
+}
+
+.code-view{
+  border: 1PX dashed #3299FF;
+  height: 32PX;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 92PX;
+}
+.img-code{
+  height: 30PX;
+  width: 90PX;
+}
+
+
+::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+

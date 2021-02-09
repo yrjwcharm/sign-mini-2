@@ -1,0 +1,41 @@
+.sign-qrcode-box{
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.main{
+  padding-top: 48PX;
+  display: flex;
+  flex-direction: column;
+}
+.detail{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.status-img{
+  width: 88PX;
+  height: 88PX;
+}
+.dj-success{
+  font-family: PingFangSC-Medium;
+  font-size: 20PX;
+  color: #191F25;
+  margin-top: 24PX;
+  letter-spacing: 0.38PX;
+  text-align: center;
+  line-height: 24PX;
+}
+.dj-success-desc{
+  font-family: PingFangSC-Regular;
+  font-size: 14PX;
+  margin-top: 8PX;
+  color: rgba(25,31,37,0.56);
+  letter-spacing: -0.22PX;
+  text-align: center;
+  line-height: 19PX;
+}
+
+

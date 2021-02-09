@@ -1,0 +1,51 @@
+@import "~taro-ui/dist/style/components/list.scss";
+.already-sign-box{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  height: 100%;
+  background: #F5F6F9;
+}
+.sign-header{
+  height: 44PX;
+  background: #FFFFFF;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1PX solid #EEE;
+}
+.sign-date-view{
+  display: flex;
+  flex:1;
+  margin: auto;
+  height: 28PX;
+  box-sizing: border-box;
+  //background: red;
+
+}
+
+.sign-time-view{
+  display: flex;
+  flex:1;
+  height: 28PX;
+  margin: auto;
+  border-left: 1px solid #EEE;
+  box-sizing: border-box;
+  //background: rebeccapurple;
+
+}
+.list-row--layout{
+  display: flex;
+  height: 78PX;
+  background: #FFFFFF;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1PX solid #EEEEEE;
+}
+.list-row--view{
+  display: flex;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

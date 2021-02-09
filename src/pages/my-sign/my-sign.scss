@@ -1,0 +1,23 @@
+.my-sign-box{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  background: #F5F6F9;
+}
+.list-row--layout{
+  display: flex;
+  height: 68PX;
+  background: #FFFFFF;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1PX solid #EEEEEE;
+}
+.list-row--view {
+  display: flex;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

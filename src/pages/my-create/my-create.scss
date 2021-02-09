@@ -1,0 +1,28 @@
+@import "~taro-ui/dist/style/components/swipe-action.scss";
+.my-create-box{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+  background: #F5F6F9;
+}
+//.list-row---layout{
+//  display: flex;
+//  flex-direction: column;
+//}
+.list-row--layout{
+  display: flex;
+  height: 78PX;
+  background: #FFFFFF;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1PX solid #EEEEEE;
+}
+.list-row--view{
+  display: flex;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

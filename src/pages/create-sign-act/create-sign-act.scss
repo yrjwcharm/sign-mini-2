@@ -1,0 +1,55 @@
+@import "~taro-ui/dist/style/components/calendar.scss";
+
+.create-sign-act-box{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  background: #F5F6F9;
+}
+.layout{
+  display: flex;
+  height: 40PX;
+  background: #fff;
+  flex-direction: column;
+  justify-content: center;
+}
+.layout-fl{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  justify-content: space-between;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
+}
+.btn-next-view{
+  margin-top: 30PX;
+  display: flex;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40PX;
+  background: #06B48D;
+  border-radius: 20PX;
+}
+.btn-next-text{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 14PX;
+  color: #FFFFFF;
+  letter-spacing: 0.18px;
+}
+.switch{
+  width: 40PX;
+  height:22PX
+}
+.location{
+  width: 13PX;
+  height:16.5PX;
+}

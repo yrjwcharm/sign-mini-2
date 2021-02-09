@@ -1,0 +1,98 @@
+.home-box{
+  background: #f5f6f9;
+  height: 100%;
+}
+//.main{
+//  padding-top: 17PX;
+//}
+.banner{
+  width: 100%;
+  height: 146PX;
+  background-image: url("../../assets/bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-left: 20PX;
+  display: flex;
+  flex-direction: column;
+}
+.xyjsqd-text{
+  font-family: PingFangSC-Medium;
+  font-size: 21PX;
+  margin-top: 17PX;
+  color: #FFFFFF;
+  letter-spacing: 0.18PX;
+}
+.scan-qrcode-text{
+  font-family: PingFangSC-Regular;
+  font-size: 15PX;
+  margin-top: 2PX;
+  color: #FFFFFF;
+  letter-spacing: 0.18PX;
+}
+.personal{
+  margin-top: -60PX;
+  display: flex;
+  flex-direction: row;
+  height: 139PX;
+  justify-content: space-between;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  background: #FFFFFF;
+  box-shadow: 0 2PX 12PX 0 rgba(0,13,56,0.08);
+  border-radius: 5PX;
+}
+.basic-info-view{
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+
+}
+.avatar{
+  width: 50PX;
+  height:50PX;
+  border-radius: 25PX;
+}
+.btn-finish-view{
+  margin-top: 5PX;
+  border: 1PX solid #06B48D;
+  border-radius: 13.5PX;
+  width: 71PX;
+  height: 25PX;
+  display: flex;
+  &-text{
+    font-family: PingFangSC-Regular;
+    font-size: 13PX;
+    margin: auto;
+    color: #06B48D;
+    letter-spacing: 0.18PX;
+  }
+}
+.name{
+  text-align: center;
+  margin-top: 5PX;
+  font-family: PingFangSC-Regular;
+  font-size: 16PX;
+  color: #06B48D;
+}
+.scan-qrcode-view{
+  display: flex;
+  margin-top: 52PX;
+}
+
+.scan-qrcode{
+  width: 136PX;
+  height: 136PX;
+  display: flex;
+  border-radius: 68PX;
+  margin: auto;
+  background-image: linear-gradient(180deg, #4FDEBE 0%, #06B48D 49%, #4DD4B6 100%);
+  box-shadow: 0 0 75PX 11PX rgba(0,186,212,0.29);
+}
+.scan-dj{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 18PX;
+  color: #FFFFFF;
+  letter-spacing: 0.18PX;
+}
+

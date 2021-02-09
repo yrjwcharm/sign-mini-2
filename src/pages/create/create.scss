@@ -1,0 +1,36 @@
+.create-box{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  height: 100%;
+  background: #F5F6F9;
+}
+.header{
+  height: 40PX;
+  background: #FFFFFF;
+  display: flex;
+}
+.org-view{
+  display: flex;
+  flex:1;
+  height: 40PX;
+  box-sizing: border-box;
+  border-bottom: 2PX solid #06B48D;
+}
+.org-text{
+  font-family: PingFangSC-Regular;
+  font-size: 16PX;
+  color: #06B48D;
+  margin: auto;
+}
+.personal-act-view{
+  display: flex;
+  flex:1;
+  height: 40PX;
+}
+.personal-act-text{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 16PX;
+  color: #333333;
+}

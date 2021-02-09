@@ -1,0 +1,42 @@
+.orgInfo-box{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  background: #F5F6F9;
+}
+
+.org-detail{
+  height: 210PX;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  flex-direction: column;
+}
+.address-info-wrap{
+  height:40PX;
+  margin-right: 20PX;
+  margin-left: 20PX;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dist-name-text {
+  font-size: 14PX;
+  font-family: PingFangSC-Regular;
+  color: #333;
+}
+.address-info-container{
+  background: #fff;
+}
+.address-info-view{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.select-city-text{
+  font-size: 14PX;
+  flex:1;
+}

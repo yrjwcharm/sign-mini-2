@@ -1,0 +1,51 @@
+.list-row-container{
+  background: #fff;
+}
+
+.list-row-wrap{
+  height:40PX;
+  margin-left: 20PX;
+  margin-right: 20PX;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
+}
+.list-row-down{
+  width: 26px;
+  height: 14px;
+}
+
+.list-row-input-placeholder{
+  font-size: 14PX;
+  color: #999;
+}
+.list-row-arrow{
+  width: 7PX;
+  height:13PX ;
+}
+.list-row-input{
+  font-size: 14PX;
+  color: #666666;
+  text-align: left;
+  //padding-left: 142px;
+}
+.list-row-view{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.flex-between{
+  //flex:1;
+  justify-content: space-between;
+}
+.list-row-text{
+  font-size: 28px;
+  font-family: PingFangSC-Regular;
+
+  color: #333333;
+}

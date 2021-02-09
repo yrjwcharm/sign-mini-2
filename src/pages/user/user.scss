@@ -1,0 +1,55 @@
+.user-box {
+  display: flex;
+  height: 100%;
+  flex: 1;
+  flex-direction: column;
+  background-color: #f5f6f9;
+}
+.user-header{
+  height: 90PX;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  padding-left: 20PX;
+  &_wrap{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &_avatar{
+      width: 50PX;
+      height: 50PX;
+      border-radius: 50PX;
+    }
+    &_username{
+      font-size: 16PX;
+      font-family: PingFangSC-Regular;
+      color: #333;
+      margin-left: 14PX;
+    }
+  }
+}
+.list-row-layout{
+  display: flex;
+  flex-direction: column;
+}
+.list-item-view{
+  display: flex;
+  height: 50PX;
+  background: #FFFFFF;
+  flex-direction: column;
+  justify-content: center;
+}
+.list-flex{
+  margin-left: 20PX;
+  margin-right: 20PX;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
+}
