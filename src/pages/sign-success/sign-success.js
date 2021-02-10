@@ -10,7 +10,9 @@ const  SignSuccess =()=>{
     })
   },[])
   const back =()=>{
-
+      Taro.navigateBack({
+        delta:1
+      })
   }
   return(
     <View className='sign-success-box'>

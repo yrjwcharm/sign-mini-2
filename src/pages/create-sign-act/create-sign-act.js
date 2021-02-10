@@ -44,10 +44,10 @@ const CreateSignAct = () => {
     setEndDate(e.detail.value);
 
   }
-  const startTime = () => {
+  const showStartTimePicker = () => {
 
   }
-  const endTime = () => {
+  const showEndTimePicker = () => {
 
   }
   const generateSign = async () => {
@@ -211,21 +211,27 @@ const CreateSignAct = () => {
             style='margin-left:20PX;margin-right:20PX; display:flex;align-items:center;justify-content:space-between'>
             <View style='display:flex;flex-direction:row;flex:1 '>
               <View style='display:flex;flex-direction:column;flex:1'>
-                <View style='display:flex;align-items:center;flex:1'>
-                  <Text style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
-                    开始时间</Text>
-                  <Input disabled={true} style='flex:1;text-align:right;' type='text' placeholder={'请选择开始时间'}
-                         placeholderClass='list-row-input-placeholder'/>
+                <Picker mode='time' onChange={showStartTimePicker}>
+                  <View style='display:flex;align-items:center;flex:1'>
+                    <Text
+                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
+                      开始时间</Text>
+                    <Input disabled={true} style='flex:1;text-align:right;' type='text' placeholder={'请选择开始时间'}
+                           placeholderClass='list-row-input-placeholder'/>
 
-                </View>
-                <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
-                  <Text style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
-                    结束时间</Text>
-                  <Input disabled={true} style='flex:1;text-align:right;' type='text'
-                         placeholder={'请选择结束时间'}
-                         placeholderClass='list-row-input-placeholder'/>
+                  </View>
+                </Picker>
+                <Picker mode='time' onChange={showEndTimePicker}>
+                  <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
+                    <Text
+                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
+                      结束时间</Text>
+                    <Input disabled={true} style='flex:1;text-align:right;' type='text'
+                           placeholder={'请选择结束时间'}
+                           placeholderClass='list-row-input-placeholder'/>
 
-                </View>
+                  </View>
+                </Picker>
               </View>
             </View>
             <Image onClick={() => decreaseSign(index)} src={Decrease}

@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro';
 import {Text, View} from '@tarojs/components'
 import './home.scss'
 import {getUserInfoApi, sign} from "../../services/SyncRequest";
-
+let event = Taro.eventCenter;
 const Home = () => {
   const [userData,setUserData] =useState({});
   useLayoutEffect(() => {
@@ -13,11 +13,14 @@ const Home = () => {
   }, [])
   useEffect(()=>{
     getUserInfo();
-    Taro.eventCenter.on('update-userData',()=>{
-      getUserInfo();
-    })
+    try {
+      event.on('updateUserData',()=>{
+        getUserInfo();
+      })
+    }catch(e){
+    }
     return ()=>{
-      Taro.eventCenter.off();
+      event&&Taro.eventCenter.off();
     }
   },[])
   const getUserInfo= async ()=>{
@@ -46,6 +49,11 @@ const Home = () => {
              if(res.code==200){
                Taro.navigateTo({
                  url: '/pages/sign-success/sign-success'
+               })
+             }else{
+               Taro.showToast({
+                 title:res.msg,
+                 icon:'none'
                })
              }
            });
