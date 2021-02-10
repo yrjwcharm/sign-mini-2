@@ -6,7 +6,7 @@ import './my-create-config'
 import {AtSwipeAction} from "taro-ui";
 import Taro from '@tarojs/taro'
 import Qrcode from "@assets/qrcode.svg";
-import {getUserCreatedActApi} from "../../services/SyncRequest";
+import {deleteActApi, getUserCreatedActApi} from "../../services/SyncRequest";
 import EmptyData from '@assets/empty.png'
 const MyCreate = () => {
   const [createSignList,setCreateSignList] = useState([]);
@@ -46,6 +46,13 @@ const MyCreate = () => {
       url:'/pages/already-sign/already-sign'
     })
   }
+  const deleteAct =async (id)=>{
+    const res = await  deleteActApi(id);
+    console.log(333,res);
+    if(res.code==200){
+      getCreatedSignList();
+    }
+  }
   return (
     <View className='my-create-box'>
       <View className='my-create-main' style={isEmpty?'margin-top:0;flex:1;display:flex;flex-direction:column;':'margin-top:11PX;'}>
@@ -55,6 +62,7 @@ const MyCreate = () => {
                key={item.signActivityId+""}
               onOpened={handleSingle}
               isOpened={false}
+               onClick={()=>deleteAct(item.signActivityId)}
               options={[
                 {
                   text: '删除',

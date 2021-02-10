@@ -54,18 +54,21 @@ const CreateSignAct = () => {
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '签到主题不能为空',
+        icon:'none'
       })
       return;
     }
     if (isEmpty(startDate)) {
       Taro.showToast({
-        title: '开始日期不能为空'
+        title: '开始日期不能为空',
+        icon:'none'
       })
       return;
     }
     if (isEmpty(endDate)) {
       Taro.showToast({
-        title: '结束日期不能为空'
+        title: '结束日期不能为空',
+        icon:'none'
       })
       return;
     }
@@ -79,13 +82,6 @@ const CreateSignAct = () => {
     if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
         title: '请选择活动地点',
-        icon: 'none',
-      })
-      return;
-    }
-    if (isEmpty(streetdesc)) {
-      Taro.showToast({
-        title: '详细地址不能为空',
         icon: 'none',
       })
       return;
@@ -114,7 +110,7 @@ const CreateSignAct = () => {
     if (res.code == 200) {
 
       Taro.navigateTo({
-        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}`
+        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate}&endDate=${endDate}`
       })
     }
     Taro.hideLoading();
@@ -254,7 +250,6 @@ const CreateSignAct = () => {
       <View className='create-sign-act-main' style='margin-top:20PX'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
-
         }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
         <Picker mode='date' onChange={showStartDatePicker}>
           <View className='layout'>

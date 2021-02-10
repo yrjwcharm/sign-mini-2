@@ -39,5 +39,8 @@ request.post = (url, data) => {
 request.put = (url,data)=>{
   return request(url,data,'PUT');
 }
+request.delete=(url,data)=>{
+  return request(url,data,'DELETE');
+}
 
 export default request;

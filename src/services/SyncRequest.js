@@ -33,3 +33,12 @@ export async function sign(payload){
 export async function  getUserInfoApi(payload){
   return request.get(Api.getUserInfo+`?openId=${payload}`)
 }
+export async function  deleteActApi(payload){
+  return request.delete(Api.deleteAct+`?activityId=${payload}`)
+}
+export async function  getCompanyInfoApi(payload){
+  return request.get(Api.getCompany+`?userId=${payload}`)
+}
+export async  function updateCompanyInfoApi(payload){
+  return request.put(Api.updateCompany,payload)
+}

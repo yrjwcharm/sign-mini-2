@@ -72,10 +72,10 @@ const Home = () => {
         <View className='personal'>
           <View className='basic-info-view'>
             <View className='avatar' style='margin:auto;'>
-              <open-data type="userAvatarUrl"></open-data>
+              <open-data  type="userAvatarUrl"></open-data>
             </View>
             {/*<Image src={null} className='avatar'/>*/}
-            {userData.username&&<Text className='name'>{userData.username}</Text>}
+            {userData.username&&<Text className='name'>{userData.username&&userData.username}</Text>}
             {Object.keys(userData).length===0&& <View className='btn-finish-view' onClick={finishPersonalData}>
               <Text className='btn-finish-view-text'>去完善</Text>
             </View>}

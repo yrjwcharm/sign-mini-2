@@ -6,6 +6,9 @@ import {QRCode} from "taro-code";
 import {getCurrentInstance} from "@tarojs/runtime";
 
 const SignQrCode = () => {
+  const [activityName,setActivityName] = useState('');
+  const [startDate,setStartDate] = useState('');
+  const [endDate,setEndDate] = useState('');
   const [qrcode,setQrcode]=useState('');
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
@@ -13,8 +16,11 @@ const SignQrCode = () => {
     })
   }, [])
   useEffect(()=>{
-    const {url}= getCurrentInstance().router.params;
+    const {url,startDate,endDate}= getCurrentInstance().router.params;
     setQrcode(decodeURIComponent(url));
+    setStartDate(startDate);
+    setEndDate(endDate);
+
   },[])
   const back = () => {
     Taro.reLaunch({url:'/pages/index/index'})
@@ -24,7 +30,7 @@ const SignQrCode = () => {
       <View className='main'>
         <View className='detail'>
           <View style='margin-bottom:10PX'>
-            <Text style='font-family: PingFangSC-Medium;font-size: 18PX;color: #333333;'>签到主题名称</Text>
+            <Text style='font-family: PingFangSC-Medium;font-size: 18PX;color: #333333;'>{activityName}</Text>
           </View>
           <QRCode
             text={qrcode}
@@ -40,7 +46,7 @@ const SignQrCode = () => {
           </View>
           <View style='margin-top:29PX'>
             <Text
-              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #333333;letter-spacing: 0.18PX;'>有效期：2020-01-01至2020-01-01</Text>
+              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #333333;letter-spacing: 0.18PX;'>有效期：{startDate}至{endDate}</Text>
           </View>
         </View>
       </View>

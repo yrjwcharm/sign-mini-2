@@ -11,8 +11,10 @@ class App extends Component {
   }
   _login=async ()=>{
     const res = await login();
+    console.log(333,res.code);
     const _res = await wxLogin(res.code);
     if(_res.code==200){
+      console.log(333,_res.data);
       Taro.setStorageSync('userInfo',_res.data);
     }
   }
