@@ -16,3 +16,13 @@ export async  function  saveCompanyInfoApi(payload){
   return request.post(Api.saveCompanyInfo,payload)
 
 }
+export async  function  saveSignAct(payload){
+  return request.post(Api.saveSignAct,payload)
+}
+
+export async  function  signListApi(payload){
+  return request.get(Api.signList+`?userId=${payload}`)
+}
+export async  function  getUserCreatedActApi(payload){
+  return request.get(Api.createdAct+`?userId=${payload}`)
+}

@@ -5,5 +5,8 @@ export default {
     login:wxApi+`/user/${Constant.appid}/login`,
     getImgCode:wxApi+`/user/${Constant.appid}/getImgVerifyCode`,
     saveUserInfo:wxApi+`/user/${Constant.appid}/saveUserInfo`,
-    saveCompanyInfo:wxApi+`/company/saveCompanyInfo`
+    saveCompanyInfo:wxApi+`/company/saveCompanyInfo`,
+    saveSignAct:wxApi + `/activity/saveSignActivity`,
+    signList:wxApi + `/sign/getMySignList`,
+    createdAct:wxApi + `/activity/getMyCreate`
 }

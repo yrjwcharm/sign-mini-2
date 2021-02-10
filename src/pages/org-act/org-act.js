@@ -49,77 +49,85 @@ const OrgAct = () => {
     })
   }
   const nextStep = async () => {
-    if(isEmpty(orgName)){
-      Taro.showToast({
-        title: '机构名称不能为空',
-        icon: "none"
-      })
-      return;
-    }
-    if (isEmpty(name)) {
-      Taro.showToast({
-        title: '联系人不能为空',
-        icon: 'none'
-      })
-      return;
-    }
-    if (isEmpty(phone)) {
-      Taro.showToast({
-        title: '手机号不能为空',
-        icon: 'none',
-      })
-      return;
-    }
-    if (!isMobile(phone)) {
-      Taro.showToast({
-        title: '手机号码输入有误，请重新输入',
-        icon: 'none',
-      })
-      return;
-    }
-    if (isEmpty(verifyCode)) {
-      Taro.showToast({
-        title: '验证码不能为空',
-        icon: 'none',
-      })
-      return;
-    }
-    if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
-      Taro.showToast({
-        title: '请选择所属区域',
-        icon: 'none',
-      })
-      return;
-    }
-    if (isEmpty(streetdesc)) {
-      Taro.showToast({
-        title: '详细地址不能为空',
-        icon: 'none',
-      })
-      return;
-    }
-    Taro.showLoading({
-      title:'请稍等...'
+    Taro.navigateTo({
+      url:'/pages/create-sign-act/create-sign-act'
     })
-    const {openId,userId} = Taro.getStorageSync('userInfo');
-    const res = await  saveCompanyInfoApi({
-      openId,	// openid
-      verifyCode,					// 验证码
-      companyName:orgName,				// 企业名称
-      userId,			// 用户id  // 必传
-      contactUsername:name,
-      contactPhone:phone,       	// 联系人电话
-      provinceCode:provinceid,				// 省编码
-      cityCode:cityid,					// 市编码
-      areaCode:districtid,					// 区编码
-      detailedAddress:streetdesc  // 详细地址
-    })
-    Taro.hideLoading();
-    if(res.code==200) {
-      Taro.navigateTo({
-        url:'/pages/create-sign-act/create-sign-act'
-      })
-    }
+    // if(isEmpty(orgName)){
+    //   Taro.showToast({
+    //     title: '机构名称不能为空',
+    //     icon: "none"
+    //   })
+    //   return;
+    // }
+    // if (isEmpty(name)) {
+    //   Taro.showToast({
+    //     title: '联系人不能为空',
+    //     icon: 'none'
+    //   })
+    //   return;
+    // }
+    // if (isEmpty(phone)) {
+    //   Taro.showToast({
+    //     title: '手机号不能为空',
+    //     icon: 'none',
+    //   })
+    //   return;
+    // }
+    // if (!isMobile(phone)) {
+    //   Taro.showToast({
+    //     title: '手机号码输入有误，请重新输入',
+    //     icon: 'none',
+    //   })
+    //   return;
+    // }
+    // if (isEmpty(verifyCode)) {
+    //   Taro.showToast({
+    //     title: '验证码不能为空',
+    //     icon: 'none',
+    //   })
+    //   return;
+    // }
+    // if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
+    //   Taro.showToast({
+    //     title: '请选择所属区域',
+    //     icon: 'none',
+    //   })
+    //   return;
+    // }
+    // if (isEmpty(streetdesc)) {
+    //   Taro.showToast({
+    //     title: '详细地址不能为空',
+    //     icon: 'none',
+    //   })
+    //   return;
+    // }
+    // Taro.showLoading({
+    //   title:'请稍等...'
+    // })
+    // const {openId,userId} = Taro.getStorageSync('userInfo');
+    // const res = await  saveCompanyInfoApi({
+    //   openId,	// openid
+    //   verifyCode,					// 验证码
+    //   companyName:orgName,				// 企业名称
+    //   userId,			// 用户id  // 必传
+    //   contactUsername:name,
+    //   contactPhone:phone,       	// 联系人电话
+    //   provinceCode:provinceid,				// 省编码
+    //   cityCode:cityid,					// 市编码
+    //   areaCode:districtid,					// 区编码
+    //   detailedAddress:streetdesc  // 详细地址
+    // })
+    // Taro.hideLoading();
+    // if(res.code==200) {
+    //   Taro.navigateTo({
+    //     url:'/pages/create-sign-act/create-sign-act'
+    //   })
+    // }else{
+    //   Taro.showToast({
+    //     title:res.msg,
+    //     icon:'none'
+    //   })
+    // }
   }
   const getLocation = () => {
     Taro.getSetting({

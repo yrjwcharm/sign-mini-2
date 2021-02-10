@@ -29,3 +29,23 @@ page{
   height: 0;
   color: transparent;
 }
+.empty-view{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+}
+.empty-wrap{
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.empty-text{
+  color: #999;
+  margin:20PX auto;
+  font-size: 28px;
+}
+.empty-img{
+  width: 234px;
+  height: 188px;
+
+}
