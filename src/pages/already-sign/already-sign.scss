@@ -49,3 +49,26 @@
   align-items: center;
   justify-content: space-between;
 }
+.address-info-wrap{
+  height:40PX;
+  margin-right: 20PX;
+  margin-left: 20PX;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dist-name-text {
+  font-size: 14PX;
+  font-family: PingFangSC-Regular;
+  color: #333;
+}
+.address-info-container{
+  background: #fff;
+}
+.address-info-view{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}

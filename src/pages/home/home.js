@@ -1,21 +1,56 @@
-import React, {useLayoutEffect} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro';
 import {Text, View} from '@tarojs/components'
 import './home.scss'
+import {getUserInfoApi, sign} from "../../services/SyncRequest";
 
 const Home = () => {
+  const [userData,setUserData] =useState({});
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '小佑极速签到'
     })
   }, [])
+  useEffect(()=>{
+    getUserInfo();
+    Taro.eventCenter.on('update-userData',()=>{
+      getUserInfo();
+    })
+    return ()=>{
+      Taro.eventCenter.off();
+    }
+  },[])
+  const getUserInfo= async ()=>{
+    const {openId} = Taro.getStorageSync('userInfo');
+    const res = await getUserInfoApi(openId);
+    console.log(333,res);
+    if(res.code==200){
+      setUserData(res.data);
+    }
+  }
   const scanQrCode = () => {
+    if(Object.keys(userData).length===0){
+      Taro.showToast({
+        title:'请先完善用户信息',
+        icon:'none'
+      })
+      return;
+    }
     Taro.scanCode({
-      success: (res) => {
-        console.log(res)
-        Taro.navigateTo({
-          url: '/pages/sign-success/sign-success'
-        })
+      success:  (res) => {
+        const {userId} = Taro.getStorageSync('userInfo');
+        if(res.result){
+           let url = res.result + `&userId=${userId}`;
+           sign(url).then(res=>{
+             console.log(333,res);
+             if(res.code==200){
+               Taro.navigateTo({
+                 url: '/pages/sign-success/sign-success'
+               })
+             }
+           });
+        }
+
       },
       fail: (res => {
 
@@ -40,10 +75,10 @@ const Home = () => {
               <open-data type="userAvatarUrl"></open-data>
             </View>
             {/*<Image src={null} className='avatar'/>*/}
-            {/*<Text className='name'>陈晓晓</Text>*/}
-            <View className='btn-finish-view' onClick={finishPersonalData}>
+            {userData.username&&<Text className='name'>{userData.username}</Text>}
+            {Object.keys(userData).length===0&& <View className='btn-finish-view' onClick={finishPersonalData}>
               <Text className='btn-finish-view-text'>去完善</Text>
-            </View>
+            </View>}
           </View>
         </View>
         <View>

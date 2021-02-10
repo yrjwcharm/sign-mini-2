@@ -8,5 +8,7 @@ export default {
     saveCompanyInfo:wxApi+`/company/saveCompanyInfo`,
     saveSignAct:wxApi + `/activity/saveSignActivity`,
     signList:wxApi + `/sign/getMySignList`,
-    createdAct:wxApi + `/activity/getMyCreate`
+    createdAct:wxApi + `/activity/getMyCreate`,
+    getUserInfo:wxApi+`/user/${Constant.appid}/getUserInfo`
+
 }

@@ -26,3 +26,10 @@ export async  function  signListApi(payload){
 export async  function  getUserCreatedActApi(payload){
   return request.get(Api.createdAct+`?userId=${payload}`)
 }
+
+export async function sign(payload){
+  return request.get(payload)
+}
+export async function  getUserInfoApi(payload){
+  return request.get(Api.getUserInfo+`?openId=${payload}`)
+}

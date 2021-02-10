@@ -1,15 +1,21 @@
-import React, {useLayoutEffect} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro'
 import {Text, View} from "@tarojs/components";
 import './sign-qrcode.scss'
 import {QRCode} from "taro-code";
+import {getCurrentInstance} from "@tarojs/runtime";
 
 const SignQrCode = () => {
+  const [qrcode,setQrcode]=useState('');
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '二维码'
     })
   }, [])
+  useEffect(()=>{
+    const {url}= getCurrentInstance().router.params;
+    setQrcode(decodeURIComponent(url));
+  },[])
   const back = () => {
     Taro.reLaunch({url:'/pages/index/index'})
   }
@@ -21,7 +27,7 @@ const SignQrCode = () => {
             <Text style='font-family: PingFangSC-Medium;font-size: 18PX;color: #333333;'>签到主题名称</Text>
           </View>
           <QRCode
-            text={'helloword'}
+            text={qrcode}
             size={192}
             scale={4}
             style='margin-top:10PX'

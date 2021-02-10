@@ -94,7 +94,8 @@ const PersonData = () => {
     })
     Taro.hideLoading();
     if(res.code==200){
-       Taro.navigateBack({
+      Taro.eventCenter.trigger('update-userData',true);
+      Taro.navigateBack({
          delta:1
        })
     }else{
