@@ -54,21 +54,21 @@ const CreateSignAct = () => {
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '签到主题不能为空',
-        icon:'none'
+        icon: 'none'
       })
       return;
     }
     if (isEmpty(startDate)) {
       Taro.showToast({
         title: '开始日期不能为空',
-        icon:'none'
+        icon: 'none'
       })
       return;
     }
     if (isEmpty(endDate)) {
       Taro.showToast({
         title: '结束日期不能为空',
-        icon:'none'
+        icon: 'none'
       })
       return;
     }
@@ -209,22 +209,24 @@ const CreateSignAct = () => {
         <View style='display:flex;flex-direction:column; background:#fff;height:69.5PX;justify-content:center'>
           <View
             style='margin-left:20PX;margin-right:20PX; display:flex;align-items:center;justify-content:space-between'>
-            <View style='display:flex:flex-direction:column;'>
-              <View style='display:flex;flex-direction:row;align-items:center;flex:1'>
-                <Text style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
-                  开始时间</Text>
-                <Input disabled={true}  style='flex:1;text-align:right;' type='text' placeholder={'请选择开始时间'}
-                       placeholderClass='list-row-input-placeholder'/>
+            <View style='display:flex;flex-direction:row;flex:1 '>
+              <View style='display:flex;flex-direction:column;flex:1'>
+                <View style='display:flex;align-items:center;flex:1'>
+                  <Text style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
+                    开始时间</Text>
+                  <Input disabled={true} style='flex:1;text-align:right;' type='text' placeholder={'请选择开始时间'}
+                         placeholderClass='list-row-input-placeholder'/>
 
+                </View>
+                <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
+                  <Text style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
+                    结束时间</Text>
+                  <Input disabled={true} style='flex:1;text-align:right;' type='text'
+                         placeholder={'请选择结束时间'}
+                         placeholderClass='list-row-input-placeholder'/>
+
+                </View>
               </View>
-              {/*<View style='display:flex; margin-top:15PX;flex:1; flex-direction:row;align-items:center'>*/}
-              {/*  <Text*/}
-              {/*    style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到2*/}
-              {/*    结束时间</Text>*/}
-              {/*  <Input disabled={true} style='flex:1;text-align:right;' type='text'*/}
-              {/*         placeholder={'请选择结束时间'}*/}
-              {/*         placeholderClass='list-row-input-placeholder'/>*/}
-              {/*</View>*/}
             </View>
             <Image onClick={() => decreaseSign(index)} src={Decrease}
                    style='margin-left:7PX;width:20PX; height:20PX'/>

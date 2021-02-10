@@ -16,10 +16,11 @@ const SignQrCode = () => {
     })
   }, [])
   useEffect(()=>{
-    const {url,startDate,endDate}= getCurrentInstance().router.params;
+    const {url,startDate,endDate,activityName}= getCurrentInstance().router.params;
     setQrcode(decodeURIComponent(url));
     setStartDate(startDate);
     setEndDate(endDate);
+    setActivityName(activityName)
 
   },[])
   const back = () => {
