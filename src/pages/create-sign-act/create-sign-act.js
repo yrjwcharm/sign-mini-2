@@ -10,11 +10,11 @@ import Increase from '@assets/increase.png';
 import Close from '@assets/close.png'
 import Open from '@assets/open.png'
 import Calendar from '@assets/calendar.png'
-import {saveSignAct} from "../../services/SyncRequest";
+import {getCompanyInfoApi, getUserCreatedActApi, saveSignAct} from "../../services/SyncRequest";
 import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {compareDate} from "../../utils/Common";
-
+import moment from 'moment'
 const CreateSignAct = () => {
   const [actTopic, setActTopic] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -29,8 +29,8 @@ const CreateSignAct = () => {
   const [endTime2, setEndTime2] = useState('');
   const [endTime3, setEndTime3] = useState('');
   const [streetdesc, setStreetDesc] = useState('');
-  const [timeIntervalFlag, setTimeIntervalFlag] = useState("0");
-  const [callingFlag, setCallingFlag] = useState("0");
+  const [timeIntervalFlag, setTimeIntervalFlag] = useState("1");
+  const [callingFlag, setCallingFlag] = useState("1");
   const [provinceid, setProvinceId] = useState('');
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
@@ -44,13 +44,17 @@ const CreateSignAct = () => {
     setEndDate(e.detail.value);
 
   }
-  const showStartTimePicker = () => {
 
-  }
-  const showEndTimePicker = () => {
-
-  }
   const generateSign = async () => {
+    if(timeArr.length===1){
+      setStartTime2('');
+      setEndTime2('');
+      setStartTime3('')
+      setEndTime3('');
+    }else if(timeArr.length===2){
+      setStartTime3('')
+      setEndTime3('');
+    }
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '签到主题不能为空',
@@ -86,21 +90,25 @@ const CreateSignAct = () => {
       })
       return;
     }
-    Taro.showLoading({
-      title: '请稍等...'
-    })
+    // Taro.showLoading({
+    //   title: '请稍等...'
+    // })
+    console.log(333,startTime1,endTime1);
+    const {userId} = Taro.getStorageSync('userInfo');
+    const _res = await getCompanyInfoApi(userId);
+    const {companyId} =_res.code==200?_res.data:{};
     const res = await saveSignAct({
-      companyId: "279070190329790464",  // 企业id
+      companyId,  // 企业id
       activityName: actTopic,			// 活动名称
       startDate,			// 开始日期
       endDate,				// 结束日期
-      startTime1: "09:00:00",			// 开始时间1
-      endTime1: "09:05:00",				// 结束时间1
-      startTime2: "10:00:00",			// 开始时间2
-      endTime2: "10:10:00",				// 结束时间2
-      startTime3: "11:00:00",			// 开始时间3
-      endTime3: "11:10:00",				// 结束时间3
-      provinceCode: provinceid,			// 省
+      startTime1,			// 开始时间1
+      endTime1,				// 结束时间1
+      startTime2,			// 开始时间2
+      endTime2,				// 结束时间2
+      startTime3,			// 开始时间3
+      endTime3,				// 结束时间3
+      provinceCode:provinceid,			// 省
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
       detailedAddr: streetdesc,	// 详细地址
@@ -108,7 +116,6 @@ const CreateSignAct = () => {
       timeIntervalFlag				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
-
       Taro.navigateTo({
         url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate}&endDate=${endDate}`
       })
@@ -200,35 +207,52 @@ const CreateSignAct = () => {
       setCallingFlag(1);
     }
   }
-  const decreaseSign = (index) => {
-  }
   const TimeSign = (props) => {
     const {index} = props;
+    const [startTime,setStateTime]=useState('');
+    const [endTime,setEndTime] = useState('');
+    let time = moment().format('HH:mm');
+    const showStartTimePicker = (e) => {
+      setStateTime(e.detail.value);
+      index==0&&setStartTime1(e.detail.value+`:00`)
+      index==1&&setStartTime2(e.detail.value+`:00`)
+      index==2&&setStartTime3(e.detail.value+`:00`)
+    }
+    const showEndTimePicker = (e) => {
+      setEndTime(e.detail.value);
+      index==0&&setEndTime1(e.detail.value+`:00`)
+      index==1&&setEndTime2(e.detail.value+`:00`)
+      index==2&&setEndTime3(e.detail.value+`:00`)
+    }
+    const decreaseSign = (index) => {
+      // timeArr.splice(index,1);
+      // setTimeArr([...timeArr]);
+    }
     return (
       <View style='display:flex;flex-direction:column;'>
         <View style='display:flex;flex-direction:column; background:#fff;height:69.5PX;justify-content:center'>
           <View
             style='margin-left:20PX;margin-right:20PX; display:flex;align-items:center;justify-content:space-between'>
-            <View style='display:flex;flex-direction:row;flex:1 '>
+            <View style='display:flex;flex-direction:row;flex:1'>
               <View style='display:flex;flex-direction:column;flex:1'>
-                <Picker mode='time' onChange={showStartTimePicker}>
+                <Picker mode='time' value={time} onChange={showStartTimePicker}>
                   <View style='display:flex;align-items:center;flex:1'>
                     <Text
-                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
+                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
                       开始时间</Text>
-                    <Input disabled={true} style='flex:1;text-align:right;' type='text' placeholder={'请选择开始时间'}
-                           placeholderClass='list-row-input-placeholder'/>
+                    <Input disabled={true} value={startTime} style='flex:1;color:#666;font-size:12PX;text-align:right;' type='text' placeholder={'请选择开始时间'}
+                           placeholderClass='list-row-input-placeholder1'/>
 
                   </View>
                 </Picker>
-                <Picker mode='time' onChange={showEndTimePicker}>
+                <Picker mode='time' value={time}  onChange={showEndTimePicker}>
                   <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
                     <Text
-                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到1
+                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
                       结束时间</Text>
-                    <Input disabled={true} style='flex:1;text-align:right;' type='text'
+                    <Input disabled={true} value={endTime} style='color:#666;font-size:12PX;flex:1;text-align:right;' type='text'
                            placeholder={'请选择结束时间'}
-                           placeholderClass='list-row-input-placeholder'/>
+                           placeholderClass='list-row-input-placeholder1'/>
 
                   </View>
                 </Picker>
@@ -254,7 +278,7 @@ const CreateSignAct = () => {
     setTimeArr([...timeArr]);
   }
   return (
-    <ScrollView className='create-sign-act-box'>
+    <ScrollView scrollY={true} className='create-sign-act-box'>
       <View className='create-sign-act-main' style='margin-top:20PX'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
@@ -292,7 +316,7 @@ const CreateSignAct = () => {
           </View>
         </View>
         <View className='line' style='margin-left:20PX;margin-right:20PX'/>
-        {timeArr.length !== 0 && timeArr.map((item, index) => {
+        {timeIntervalFlag==0&&timeArr.length !== 0 && timeArr.map((item, index) => {
           console.log(333, item);
           return (
             item

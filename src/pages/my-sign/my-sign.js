@@ -22,6 +22,7 @@ const MySign =()=>{
     if(res.code==200){
         if(res.data.length>0){
           setIsEmpty(false);
+          setSignList(res.data);
 
         }else{
           setIsEmpty(true);
@@ -39,7 +40,7 @@ const MySign =()=>{
       <View className='my-sign-main' style={isEmpty?'margin-top:0':'margin-top:11PX'}>
         {!isEmpty?signList.map(item=>{
           return (
-            <View className='list-row--layout' key={index+""}>
+            <View className='list-row--layout' key={item.signActivityId+""}>
               <View className='list-row--view'>
                 <Text style='color:#333;font-size:16PX;'>{item.activityName}</Text>
                 <Text style='color:#999;font-size:14PX;'>{item.signDate}</Text>

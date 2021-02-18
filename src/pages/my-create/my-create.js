@@ -25,7 +25,7 @@ const MyCreate = () => {
     })
     const {userId} = Taro.getStorageSync('userInfo');
     const res = await getUserCreatedActApi(userId);
-    console.log(333,res.data);
+    console.log(888,res.data);
     if(res.code==200){
         if(res.data.length>0){
           setIsEmpty(false);
