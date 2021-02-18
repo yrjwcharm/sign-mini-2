@@ -13,7 +13,7 @@ const AlreadySign = () => {
   const [signDate, setSignDate] = useState('签到时间');
   const [signTime, setSignTime] = useState('签到时间段');
   const [startDate, setStartDate] = useState('');
-  const [range, setRange] = useState(['2010-08-22', '2012-09-21'])
+  const [range, setRange] = useState([])
   const [activityName, setActivityName] = useState('');
   const [endDate, setEndDate] = useState('');
   const [url, setUrl] = useState('');
@@ -36,15 +36,19 @@ const AlreadySign = () => {
     setIsIphoneX(isIphoneX);
     if (startTime1 && endTime1) {
       let time = `${startTime1}-${endTime1}`
-      range.push(time)
+      range.push(time);
+      setRange([...range])
+
     }
     if (startTime2 && endTime2) {
       let time = `${startTime2}-${endTime2}`
       range.push(time);
+      setRange([...range])
     }
     if (startTime3 && endTime3) {
       let time = `${startTime2}-${endTime2}`
       range.push(time);
+      setRange([...range])
     }
     _getSignList();
   }, [])
