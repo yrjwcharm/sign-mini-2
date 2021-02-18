@@ -187,7 +187,7 @@ const AlreadySign = () => {
         </View>
         <View className='sign-time-view'>
           <View style=' margin:auto; display:flex;align-items:center'>
-            <Picker mode='selector' range={range} onChange={onChangeTime}>
+            <Picker mode='selector' range={range} disabled={range.length==0?true:false} onChange={onChangeTime}>
               <Text className='sign-time'
                     style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>{signTime}</Text>
               <Image src={DropDown} style=' margin-left:7.3PX;  width:13.9PX;height:8.4PX'/>

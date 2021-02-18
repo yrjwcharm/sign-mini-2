@@ -15,6 +15,7 @@ import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {compareDate} from "../../utils/Common";
 import moment from 'moment'
+import {getCurrentInstance} from "@tarojs/runtime";
 const CreateSignAct = () => {
   const [actTopic, setActTopic] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -34,9 +35,12 @@ const CreateSignAct = () => {
   const [provinceid, setProvinceId] = useState('');
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
+  const [type,setType] = useState(0);
   useEffect(() => {
       const {isIphoneX} =Taro.getStorageSync('isIphoneX');
+      const {type}= getCurrentInstance().router.params;
       setIsIphoneX(isIphoneX);
+      setType(type);
   }, [])
   const showStartDatePicker = (e) => {
     setStartDate(e.detail.value);
@@ -97,24 +101,48 @@ const CreateSignAct = () => {
     const {userId} = Taro.getStorageSync('userInfo');
     const _res = await getCompanyInfoApi(userId);
     const {companyId} =_res.code==200?_res.data:{};
-    const res = await saveSignAct({
-      companyId,  // 企业id
-      activityName: actTopic,			// 活动名称
-      startDate,			// 开始日期
-      endDate,				// 结束日期
-      startTime1,			// 开始时间1
-      endTime1,				// 结束时间1
-      startTime2,			// 开始时间2
-      endTime2,				// 结束时间2
-      startTime3,			// 开始时间3
-      endTime3,				// 结束时间3
-      provinceCode:provinceid,			// 省
-      cityCode: cityid,					// 市
-      areaCode: districtid,				// 区
-      detailedAddr: streetdesc,	// 详细地址
-      callingFlag,				// 是否叫号  0是 1否
-      timeIntervalFlag				// 是否开启时间区间   0是 1否
-    })
+    let params ={};
+    if(type===1){
+     params= {
+        companyId,  // 企业id
+          activityName: actTopic,			// 活动名称
+        startDate,			// 开始日期
+        endDate,				// 结束日期
+        startTime1,			// 开始时间1
+        endTime1,				// 结束时间1
+        startTime2,			// 开始时间2
+        endTime2,				// 结束时间2
+        startTime3,			// 开始时间3
+        endTime3,				// 结束时间3
+        provinceCode:provinceid,			// 省
+        cityCode: cityid,					// 市
+        areaCode: districtid,				// 区
+        detailedAddr: streetdesc,	// 详细地址
+        callingFlag,				// 是否叫号  0是 1否
+        timeIntervalFlag				// 是否开启时间区间   0是 1否
+      }
+     }else{
+      params= {
+        userId,  // 企业id
+        activityName: actTopic,			// 活动名称
+        startDate,			// 开始日期
+        endDate,				// 结束日期
+        startTime1,			// 开始时间1
+        endTime1,				// 结束时间1
+        startTime2,			// 开始时间2
+        endTime2,				// 结束时间2
+        startTime3,			// 开始时间3
+        endTime3,				// 结束时间3
+        provinceCode:provinceid,			// 省
+        cityCode: cityid,					// 市
+        areaCode: districtid,				// 区
+        detailedAddr: streetdesc,	// 详细地址
+        callingFlag,				// 是否叫号  0是 1否
+        timeIntervalFlag				// 是否开启时间区间   0是 1否
+      }
+    }
+
+    const res = await saveSignAct(params)
     if (res.code == 200) {
       Taro.navigateTo({
         url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate}&endDate=${endDate}`

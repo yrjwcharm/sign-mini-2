@@ -3,6 +3,7 @@ import Taro from '@tarojs/taro';
 import {Text, View} from '@tarojs/components'
 import './create.scss'
 import OrgAct from "../org-act/org-act";
+import CreateSignAct from "../create-sign-act/create-sign-act";
 const Create =()=>{
   const [orgSelected,setOrgSelected] =useState(true);
   const [personalSelected,setPersonalSelected] =useState(false);
@@ -31,7 +32,7 @@ const Create =()=>{
           </View>
         </View>
         <View style='margin-top:20PX'>
-          <OrgAct/>
+          {orgSelected?<OrgAct/>:<CreateSignAct/>}
         </View>
       </View>
     );
