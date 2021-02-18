@@ -147,6 +147,17 @@ const OrgAct = () => {
         _chooseLocation();
       },
       fail: function (res) {
+        Taro.showModal({
+          title: '权限开启',
+          confirmColor:'#06B48D',
+          content: '是否允许开启位置权限?',
+          success: function (res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              _openSetting();
+            }
+          }
+        })
       }
     })
   }

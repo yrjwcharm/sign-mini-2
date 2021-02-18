@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import ListRow from "../../components/ListRow";
-import '../../components/ListRow.scss'
-import './create-sign-act.scss'
+import ListRow from "../components/ListRow";
+import '../components/ListRow.scss'
+import './personal-act.scss'
 import Location from '@assets/location.png'
 import Decrease from '@assets/decrease.png';
 import Increase from '@assets/increase.png';
 import Close from '@assets/close.png'
 import Open from '@assets/open.png'
 import Calendar from '@assets/calendar.png'
-import {getCompanyInfoApi, getUserCreatedActApi, saveSignAct} from "../../services/SyncRequest";
-import Api from "../../config/api";
-import {isEmpty} from "../../utils/EmptyUtil";
-import {compareDate} from "../../utils/Common";
+import {getCompanyInfoApi, getUserCreatedActApi, saveSignAct} from "../services/SyncRequest";
+import Api from "../config/api";
+import {isEmpty} from "../utils/EmptyUtil";
+import {compareDate} from "../utils/Common";
 import moment from 'moment'
-const CreateSignAct = () => {
+const PersonalAct = () => {
   const [actTopic, setActTopic] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [timeArr, setTimeArr] = useState([]);
@@ -98,7 +98,7 @@ const CreateSignAct = () => {
     const _res = await getCompanyInfoApi(userId);
     const {companyId} =_res.code==200?_res.data:{};
     const res = await saveSignAct({
-      companyId,  // 企业id
+      userId,  // 企业id
       activityName: actTopic,			// 活动名称
       startDate,			// 开始日期
       endDate,				// 结束日期
@@ -382,4 +382,4 @@ const CreateSignAct = () => {
   )
 
 }
-export default CreateSignAct;
+export default PersonalAct;
