@@ -143,7 +143,7 @@ const PersonData = () => {
       <View className='footer'>
         <View className='btn-submit-view' style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}
               onClick={nextStep}>
-          <Text className='btn-submit-text'>返回首页</Text>
+          <Text className='btn-submit-text'>保存</Text>
         </View>
       </View>
     </View>
