@@ -13,6 +13,7 @@ export default {
     deleteAct:wxApi + `/activity/deleteActivity`,
     getCompany:wxApi+`/company/getCompanyInfo`,
     updateCompany:wxApi + `/company/updateCompanyInfo`,
+    getActQrWeiMaInfo:wxApi + `/activity/getActivityQRCode`
 
 
 }

@@ -283,7 +283,7 @@ const CreateSignAct = () => {
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
         }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
-        <Picker mode='date' onChange={showStartDatePicker}>
+        <Picker mode='date' start={moment().format('YYYY-MM-DD')} onChange={showStartDatePicker}>
           <View className='layout'>
             <View className='layout-fl'>
               <View style='display:flex;flex:1;flex-direction:row;align-items:center'>
@@ -296,7 +296,7 @@ const CreateSignAct = () => {
           </View>
           <View className='line'/>
         </Picker>
-        <Picker mode={'date'} onChange={showEndDatePicker}>
+        <Picker mode={'date'}  start={moment().format('YYYY-MM-DD')} onChange={showEndDatePicker}>
           <View className='layout'>
             <View className='layout-fl'>
               <View style='display:flex;flex:1;flex-direction:row;align-items:center'>
