@@ -21,13 +21,6 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.getUserInfo();
-    try{
-      Taro.eventCenter.on('updateUserData', () => {
-        this.getUserInfo();
-      })
-    }catch (e){
-      this.getUserInfo();
-    }
   }
 
   getUserInfo = async () => {
@@ -39,12 +32,9 @@ export default class Home extends Component {
     }
   }
 
-  componentWillUnmount() {
-    Taro.eventCenter.off();
-  }
 
   scanQrCode = () => {
-    if (Object.keys(userData).length === 0) {
+    if (Object.keys(this.state.userData).length === 0) {
       Taro.navigateTo({
         url: '/pages/person-data/person-data'
       })
@@ -98,7 +88,7 @@ export default class Home extends Component {
               </View>
               {/*<Image src={null} className='avatar'/>*/}
               {userData.username && <Text className='name'>{userData.username && userData.username}</Text>}
-              {Object.keys(userData).length === 0 && <View className='btn-finish-view' onClick={this.finishPersonalData}>
+              {Object.keys(userData).length===0&&<View className='btn-finish-view' style='margin:auto;' onClick={this.finishPersonalData}>
                 <Text className='btn-finish-view-text'>去完善</Text>
               </View>}
             </View>

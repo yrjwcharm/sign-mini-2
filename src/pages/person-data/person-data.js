@@ -96,10 +96,12 @@ const PersonData = () => {
     })
     Taro.hideLoading();
     if(res.code==200){
-      Taro.eventCenter.trigger('updateUserData',true);
-      Taro.navigateBack({
-         delta:1
-       })
+     Taro.reLaunch({
+       url:'/pages/index/index'
+     })
+      // Taro.navigateBack({
+      //    delta:1
+      //  })
     }else{
       Taro.showToast({
         title:res.msg,
