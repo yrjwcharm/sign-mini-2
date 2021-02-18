@@ -41,9 +41,9 @@ const MyCreate = () => {
   const handleSingle = (index) => {
 
   }
-  const toAlreadySign=(signActivityId)=>{
+  const toAlreadySign=(item)=>{
     Taro.navigateTo({
-      url:`/pages/already-sign/already-sign?signActivityId=${signActivityId}`
+      url:`/pages/already-sign/already-sign?signActivityId=${item.signActivityId}&startTime1=${item.startTime1}&startTime2=${item.startTime2}&startTime3=${item.startTime3}&endTime1=${item.endTime1}&endTime2=${item.endTime2}&endTime3=${item.endTime3}`
     })
   }
   const deleteAct =async (id)=>{
@@ -73,7 +73,7 @@ const MyCreate = () => {
                 }
               ]}
             >
-              <View className='list-row--layout' onClick={()=>toAlreadySign(item.signActivityId)}>
+              <View className='list-row--layout' onClick={()=>toAlreadySign(item)}>
                 <View className='list-row--view'>
                   <View style='display:flex;flex-direction:column;'>
                     <Text style='color:#333;font-size:16PX;'>{item.activityName}</Text>

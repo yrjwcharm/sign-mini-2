@@ -10,7 +10,9 @@
   height: 146PX;
   background-image: url("../../assets/bg.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  border-bottom-left-radius: 5PX;
+  border-bottom-right-radius: 5PX;
+  //background-size: ;
   //padding-left: 20PX;
   display: flex;
   flex-direction: column;

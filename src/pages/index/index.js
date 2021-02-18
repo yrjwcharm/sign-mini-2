@@ -12,6 +12,7 @@ import Home from '@assets/tab-bar/home.png'
 import UserActive from '@assets/tab-bar/user-active.png'
 import User from '@assets/tab-bar/user.png'
 import './index.scss'
+import {getUserInfoApi} from "../../services/SyncRequest";
 export default class Index extends Component {
   constructor() {
     super();
@@ -19,6 +20,7 @@ export default class Index extends Component {
       current:0,
     }
   }
+
   handleClick= (value)=> {
     this.setState({
       current: value
@@ -28,7 +30,7 @@ export default class Index extends Component {
     const {current}=this.state;
     return (
       <View className={'index-box'}>
-        {current==0&&<HomePage/>}
+        {current==0&&<HomePage />}
         {current==1&&<CreatePage/>}
         {current==2&&<UserPage/>}
         <AtTabBar

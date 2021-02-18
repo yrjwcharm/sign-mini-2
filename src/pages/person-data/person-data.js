@@ -17,7 +17,7 @@ const PersonData = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [imgCode, setImgCode] = useState('');
   useEffect(()=>{
-    const {isIphoneX} = Taro.getStorageSync('isIphoneX');
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
     getImageCode();
   },[])

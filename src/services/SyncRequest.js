@@ -23,6 +23,9 @@ export async  function  saveSignAct(payload){
 export async  function  signListApi(payload){
   return request.get(Api.signList+`?userId=${payload}`)
 }
+export async  function  alreadySignListApi(payload){
+  return request.get(Api.alreadySignList+`?activityId=${payload}`)
+}
 export async  function  getUserCreatedActApi(payload){
   return request.get(Api.createdAct+`?userId=${payload}`)
 }
