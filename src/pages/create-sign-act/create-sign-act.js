@@ -35,7 +35,8 @@ const CreateSignAct = () => {
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
   useEffect(() => {
-
+      const {isIphoneX} =Taro.getStorageSync('isIphoneX');
+      setIsIphoneX(isIphoneX);
   }, [])
   const showStartDatePicker = (e) => {
     setStartDate(e.detail.value);
@@ -93,7 +94,6 @@ const CreateSignAct = () => {
     // Taro.showLoading({
     //   title: '请稍等...'
     // })
-    console.log(333,startTime1,endTime1);
     const {userId} = Taro.getStorageSync('userInfo');
     const _res = await getCompanyInfoApi(userId);
     const {companyId} =_res.code==200?_res.data:{};

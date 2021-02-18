@@ -74,8 +74,8 @@ const Home = () => {
     <View className='home-box'>
       <View className='main'>
         <View className='banner'>
-          <Text className='xyjsqd-text'>小佑极速签到</Text>
-          <Text className='scan-qrcode-text'>扫码签到、后台叫号管理</Text>
+          <Text className='xyjsqd-text' style='margin-left:20PX'>小佑极速签到</Text>
+          <Text className='scan-qrcode-text' style='margin-left:20PX'>扫码签到、后台叫号管理</Text>
         </View>
         <View className='personal'>
           <View className='basic-info-view'>

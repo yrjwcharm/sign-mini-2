@@ -6,6 +6,7 @@ import {QRCode} from "taro-code";
 import {getCurrentInstance} from "@tarojs/runtime";
 
 const SignQrCode = () => {
+  const [isIphoneX, setIsIphoneX] = useState(false);
   const [activityName,setActivityName] = useState('');
   const [startDate,setStartDate] = useState('');
   const [endDate,setEndDate] = useState('');
@@ -16,11 +17,13 @@ const SignQrCode = () => {
     })
   }, [])
   useEffect(()=>{
+    const {isIphoneX} = Taro.getStorageSync('isIphoneX');
     const {url,startDate,endDate,activityName}= getCurrentInstance().router.params;
     setQrcode(decodeURIComponent(url));
     setStartDate(startDate);
     setEndDate(endDate);
-    setActivityName(activityName)
+    setActivityName(activityName);
+    setIsIphoneX(isIphoneX);
 
   },[])
   const back = () => {
@@ -52,7 +55,7 @@ const SignQrCode = () => {
         </View>
       </View>
       <View className='footer'>
-        <View className='btn-submit-view' onClick={back}>
+        <View className='btn-submit-view' onClick={back}  style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}>
           <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>
