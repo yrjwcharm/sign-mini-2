@@ -14,9 +14,10 @@ const AlreadySign = () => {
   const [signDate, setSignDate] = useState('');
   const [signTime, setSignTime] = useState('');
   const [startDate, setStartDate] = useState('');
-  const [range, setRange] = useState([])
+  const [range, setRange] = useState([]);
   const [activityName, setActivityName] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [normalFlag,setNormalFlag] = useState(1);
   const [url, setUrl] = useState('');
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
@@ -44,6 +45,8 @@ const AlreadySign = () => {
     if (startTime3 && endTime3) {
       pushTime(startTime3,endTime3)
     }
+    range.push('非正常签到');
+    setRange([...range]);
     _getSignList();
   }, [])
   const pushTime =(start,end)=>{
@@ -62,8 +65,8 @@ const AlreadySign = () => {
     if (isEmpty(signTime)) {
       url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
     } else {
-      let startTime = signTime.split('-')[0];
-      let endTime = signTime.split('-')[1];
+      let startTime = signTime.split('-')[0]+':00';
+      let endTime = signTime.split('-')[1]+':00';
       url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&startTime=${startTime}&endTime=${endTime}`
     }
     Taro.request({
@@ -101,12 +104,20 @@ const AlreadySign = () => {
     } = getCurrentInstance().router.params;
     let url = '';
     if (range.length !== 0) {
-      let startTime = range[e.detail.value].split('-')[0];
-      let endTime = range[e.detail.value].split('-')[1];
-      if (isEmpty(signDate)) {
-        url = Api.alreadySignList + `?activityId=${signActivityId}&startTime=${startTime}&endTime=${endTime}`
-      } else {
-        url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${signDate}&startTime=${startTime}&endTime=${endTime}`
+      if(range[e.detail.value]==='非正常签到'){
+        if (isEmpty(signDate)) {
+          url = Api.alreadySignList + `?activityId=${signActivityId}&normalFlag=1`
+        } else {
+          url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${signDate}`
+        }
+      }else {
+        let startTime = range[e.detail.value].split('-')[0]+':00';
+        let endTime = range[e.detail.value].split('-')[1]+':00';
+        if (isEmpty(signDate)) {
+          url = Api.alreadySignList + `?activityId=${signActivityId}&startTime=${startTime}&endTime=${endTime}`
+        } else {
+          url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${signDate}&startTime=${startTime}&endTime=${endTime}`
+        }
       }
       Taro.request({
         url: url,
