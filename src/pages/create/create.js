@@ -35,9 +35,9 @@ const Create = () => {
           <Text className='personal-act-text' style={personalSelected ? 'color: #06B48D;' : 'color:#333'}>个人活动</Text>
         </View>
       </View>
-      {orgSelected ? <View style='margin-top:20PX'>
-        <OrgAct/>
-      </View> : <PersonalAct/>}
+      <View style='margin-top:20PX'>
+        {orgSelected?<OrgAct/>:<PersonalAct/>}
+      </View>
     </View>
   );
 }

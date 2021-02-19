@@ -3,13 +3,14 @@ import Taro from '@tarojs/taro';
 import {Text, View} from '@tarojs/components'
 import './home.scss'
 import {getUserInfoApi, sign} from "../../services/SyncRequest";
+import {isEmpty} from "../../utils/EmptyUtil";
 
 let event = Taro.eventCenter;
 export default class Home extends Component {
   constructor() {
     super();
     this.state = {
-      userData: {}
+      username:'',
     }
   }
 
@@ -28,13 +29,14 @@ export default class Home extends Component {
     const res = await getUserInfoApi(openId);
     console.log(333, res);
     if (res.code == 200) {
-      this.setState({userData: res.data});
+      const {username}=res.data;
+      this.setState({username});
     }
   }
 
 
   scanQrCode = () => {
-    if (Object.keys(this.state.userData).length === 0) {
+    if (isEmpty(this.state.username)) {
       Taro.navigateTo({
         url: '/pages/person-data/person-data'
       })
@@ -73,7 +75,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const {userData} = this.state;
+    const {username} = this.state;
     return (
       <View className='home-box'>
         <View className='main'>
@@ -87,8 +89,8 @@ export default class Home extends Component {
                 <open-data type="userAvatarUrl"></open-data>
               </View>
               {/*<Image src={null} className='avatar'/>*/}
-              {userData.username && <Text className='name'>{userData.username && userData.username}</Text>}
-              {Object.keys(userData).length===0&&<View className='btn-finish-view' style='margin:auto;' onClick={this.finishPersonalData}>
+               <Text className='name'>{username}</Text>
+              {isEmpty(username)&&<View className='btn-finish-view' style={isEmpty(username)?'margin:auto;margin-top:17PX':'margin:auto;'} onClick={this.finishPersonalData}>
                 <Text className='btn-finish-view-text'>去完善</Text>
               </View>}
             </View>

@@ -290,7 +290,7 @@ const PersonalAct = () => {
   }
   return (
     <ScrollView scrollY={true} className='create-sign-act-box'>
-      <View className='create-sign-act-main' style='margin-top:20PX'>
+      <View className='create-sign-act-main'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
         }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
