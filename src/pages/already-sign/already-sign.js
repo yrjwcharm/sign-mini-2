@@ -10,7 +10,7 @@ import Api from '../../config/api'
 const AlreadySign = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [signList, setSignList] = useState([]);
-  const [signDate, setSignDate] = useState('签到时间');
+  const [signDate, setSignDate] = useState('签到日期');
   const [signTime, setSignTime] = useState('签到时间段');
   const [startDate, setStartDate] = useState('');
   const [range, setRange] = useState([])
@@ -64,7 +64,7 @@ const AlreadySign = () => {
     } = getCurrentInstance().router.params;
     setSignDate(e.detail.value);
     let url = '';
-    if(signDate!=='签到时间') {
+    if(signDate!=='签到日期') {
       if (signTime === '签到时间段') {
         url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
       } else {
@@ -78,7 +78,7 @@ const AlreadySign = () => {
         method: 'GET',
         header: {
           'Content-Type': 'application/json',
-          // 'X-Litemall-Token': Taro.getStorageSync('token')
+          'userId': Taro.getStorageSync('userId')
         },
         success: function (res) {
           if (res.statusCode == 200) {
@@ -113,7 +113,7 @@ const AlreadySign = () => {
     if (range.length !== 0) {
       let startTime = signTime.split('-')[0];
       let endTime = signTime.split('-')[1];
-      if (signDate === '签到时间') {
+      if (signDate === '签到日期') {
           url = Api.alreadySignList + `?activityId=${signActivityId}&startTime=${startTime}&endTime=${endTime}`
       } else {
         url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&startTime=${startTime}&endTime=${endTime}`
@@ -124,6 +124,7 @@ const AlreadySign = () => {
         method: 'GET',
         header: {
           'Content-Type': 'application/json',
+          'userId':Taro.getStorageSync('userId')
           // 'X-Litemall-Token': Taro.getStorageSync('token')
         },
         success: function (res) {

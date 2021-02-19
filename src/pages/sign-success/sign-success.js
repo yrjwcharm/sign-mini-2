@@ -25,7 +25,7 @@ const  SignSuccess =()=>{
       <View className='main'>
         <View className='detail'>
           <Image src={Sign} className='status-img'/>
-          <Text className='dj-success'>登记成功</Text>
+          <Text className='dj-success'>签到成功</Text>
           <Text className='dj-success-desc'>请您前往报道</Text>
         </View>
       </View>

@@ -52,6 +52,7 @@ const CreateSignAct = () => {
       setEndTime2('');
       setStartTime3('')
       setEndTime3('');
+
     }else if(timeArr.length===2){
       setStartTime3('')
       setEndTime3('');

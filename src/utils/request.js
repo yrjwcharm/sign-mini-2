@@ -11,6 +11,7 @@ function request(url, data = {}, method = "GET") {
       method: method,
       header: {
         'Content-Type': 'application/json',
+        'userId':Taro.getStorageSync('userId')
           // 'X-Litemall-Token': Taro.getStorageSync('token')
       },
       success: function(res) {

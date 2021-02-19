@@ -1,9 +1,8 @@
 import React, {Component, useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro'
-import {Image, Text, View} from "@tarojs/components";
+import {Image, Input, Text, View} from "@tarojs/components";
 import './org-info.scss'
 import Location from '@assets/location.png'
-import ListRow from "../../components/ListRow";
 import Edit from '@assets/edit.svg'
 import {getCompanyInfoApi, updateCompanyInfoApi} from "../../services/SyncRequest";
 import {isEmpty} from "../../utils/EmptyUtil";
@@ -139,6 +138,21 @@ const OrgInfo =()=>{
         </View>
         </View>
       </View>
+    </View>
+  )
+}
+const ListRow = (props) => {
+  const {label, placeholder,disabled,noBorder,value, style, className, type, onInput} = props;
+  return (
+    <View className='list-row-container'>
+      <View className='list-row-wrap'>
+        <View className='list-row-view'>
+          <Text className='list-row-text' style={style}>{label}</Text>
+          <Input disabled={disabled} value={value} style='flex:1' type={type} className={className} onInput={onInput} placeholder={placeholder}
+                 placeholderClass='list-row-input-placeholder'/>
+        </View>
+      </View>
+      {!noBorder&&<View className='line'/>}
     </View>
   )
 }

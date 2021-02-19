@@ -98,7 +98,7 @@ export default class Home extends Component {
           <View>
             <View className='scan-qrcode-view'>
               <View className='scan-qrcode' onClick={this.scanQrCode}>
-                <Text className='scan-dj'>扫码登记</Text>
+                <Text className='scan-dj'>扫码签到</Text>
               </View>
             </View>
           </View>

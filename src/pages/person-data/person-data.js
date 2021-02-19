@@ -30,6 +30,7 @@ const PersonData = () => {
       method: "GET",
       header: {
         'Content-Type': 'application/json',
+        'userId':Taro.getStorageSync('userId')
         // 'X-Litemall-Token': Taro.getStorageSync('token')
       },
       responseType: 'arraybuffer',

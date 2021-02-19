@@ -15,7 +15,9 @@ class App extends Component {
     const _res = await wxLogin(res.code);
     if(_res.code==200){
       console.log(333,_res.data);
+      const {userId}=_res.data;
       Taro.setStorageSync('userInfo',_res.data);
+      Taro.setStorageSync('userId',userId);
     }
   }
 
