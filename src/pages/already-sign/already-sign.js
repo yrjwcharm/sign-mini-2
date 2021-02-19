@@ -33,35 +33,26 @@ const AlreadySign = () => {
       endTime2,
       endTime3
     } = getCurrentInstance().router.params;
-    console.log(999,startTime1,endTime1);
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
     if (startTime1 && endTime1) {
-      let startTime = startTime1.substring(startTime1.indexOf(' ')+1);
-      let endTime = endTime1.substring(endTime1.indexOf(' ')+1);
-      let time = `${startTime}-${endTime}`
-      range.push(time);
-      setRange([...range])
-
+      pushTime(startTime1,endTime1)
     }
     if (startTime2 && endTime2) {
-      let startTime = startTime2.substring(startTime2.indexOf(' ')+1);
-      let endTime = endTime2.substring(endTime2.indexOf(' ')+1);
-
-      let time = `${startTime}-${endTime}`
-      range.push(time);
-      setRange([...range])
+      pushTime(startTime2,endTime2)
     }
     if (startTime3 && endTime3) {
-      let startTime = startTime3.substring(startTime3.indexOf(' ')+1);
-      let endTime = endTime3.substring(endTime3.indexOf(' ')+1);
-
-      let time = `${startTime}-${endTime}`
-      range.push(time);
-      setRange([...range])
+      pushTime(startTime3,endTime3)
     }
     _getSignList();
   }, [])
+  const pushTime =(start,end)=>{
+    let startTime = start.substring(start.indexOf(' ')+1,start.lastIndexOf(':'));
+    let endTime = end.substring(end.indexOf(' ')+1,end.lastIndexOf(':'));
+    let time = `${startTime}-${endTime}`
+    range.push(time);
+    setRange([...range])
+  }
   const onChangeDate = async e => {
     setSignDate(e.detail.value);
     const {
