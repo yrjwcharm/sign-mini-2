@@ -74,7 +74,7 @@ const SignQrCode = () => {
           filePath: res.tempFilePath,//返回的临时文件路径，下载后的文件会存储到一个临时文件
           success: function (res) {
             Taro.showToast({
-              title: '保存成功',
+              title: '二维码已保存到相册',
               icon: 'none'
             })
           },
@@ -111,7 +111,7 @@ const SignQrCode = () => {
           </View>
           <View style='margin-top:29PX'>
             <Text
-              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #333333;letter-spacing: 0.18PX;'>有效期：{startDate}至{endDate}</Text>
+              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #999;letter-spacing: 0.18PX;'>有效期：{startDate}至{endDate}</Text>
           </View>
         </View>
       </View>
