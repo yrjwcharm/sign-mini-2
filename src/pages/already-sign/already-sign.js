@@ -6,12 +6,13 @@ import Taro from '@tarojs/taro'
 import {alreadySignListApi, getActQrcodeInfoApi} from "../../services/SyncRequest";
 import {getCurrentInstance} from "@tarojs/runtime";
 import Api from '../../config/api'
+import {isEmpty} from "../../utils/EmptyUtil";
 
 const AlreadySign = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [signList, setSignList] = useState([]);
-  const [signDate, setSignDate] = useState('签到日期');
-  const [signTime, setSignTime] = useState('签到时间段');
+  const [signDate, setSignDate] = useState('');
+  const [signTime, setSignTime] = useState('');
   const [startDate, setStartDate] = useState('');
   const [range, setRange] = useState([])
   const [activityName, setActivityName] = useState('');
@@ -32,45 +33,89 @@ const AlreadySign = () => {
       endTime2,
       endTime3
     } = getCurrentInstance().router.params;
+    console.log(999,startTime1,endTime1);
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
     if (startTime1 && endTime1) {
-      let time = `${startTime1}-${endTime1}`
+      let startTime = startTime1.substring(startTime1.indexOf(' ')+1);
+      let endTime = endTime1.substring(endTime1.indexOf(' ')+1);
+      let time = `${startTime}-${endTime}`
       range.push(time);
       setRange([...range])
 
     }
     if (startTime2 && endTime2) {
-      let time = `${startTime2}-${endTime2}`
+      let startTime = startTime2.substring(startTime2.indexOf(' ')+1);
+      let endTime = endTime2.substring(endTime2.indexOf(' ')+1);
+
+      let time = `${startTime}-${endTime}`
       range.push(time);
       setRange([...range])
     }
     if (startTime3 && endTime3) {
-      let time = `${startTime2}-${endTime2}`
+      let startTime = startTime3.substring(startTime3.indexOf(' ')+1);
+      let endTime = endTime3.substring(endTime3.indexOf(' ')+1);
+
+      let time = `${startTime}-${endTime}`
       range.push(time);
       setRange([...range])
     }
     _getSignList();
   }, [])
   const onChangeDate = async e => {
+    setSignDate(e.detail.value);
     const {
       signActivityId,
-      startTime1,
-      startTime2,
-      startTime3,
-      endTime1,
-      endTime2,
-      endTime3
     } = getCurrentInstance().router.params;
-    setSignDate(e.detail.value);
     let url = '';
-    if(signDate!=='签到日期') {
-      if (signTime === '签到时间段') {
-        url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
+    if (isEmpty(signTime)) {
+      url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
+    } else {
+      let startTime = signTime.split('-')[0];
+      let endTime = signTime.split('-')[1];
+      url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&startTime=${startTime}&endTime=${endTime}`
+    }
+    Taro.request({
+      url: url,
+      // data: data,
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json',
+        'userId': Taro.getStorageSync('userId')
+      },
+      success: function (res) {
+        console.log(333, res);
+        if (res.statusCode == 200) {
+          console.log(333, res);
+          if (res.data.code == 200) {
+            setSignList(res.data.data);
+          }
+
+          // setSignList(res.data)
+        } else {
+
+        }
+
+      },
+      fail: function (err) {
+        console.log(333, err);
+      }
+    })
+
+  }
+  const onChangeTime = e => {
+     setSignTime(range[e.detail.value]);
+    const {
+      signActivityId,
+    } = getCurrentInstance().router.params;
+    let url = '';
+    if (range.length !== 0) {
+      let startTime = range[e.detail.value].split('-')[0];
+      let endTime = range[e.detail.value].split('-')[1];
+      if (isEmpty(signDate)) {
+        url = Api.alreadySignList + `?activityId=${signActivityId}&startTime=${startTime}&endTime=${endTime}`
       } else {
-        let startTime = signTime.split('-')[0];
-        let endTime = signTime.split('-')[1];
-        url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&startTime=${startTime}&endTime=${endTime}`
+        url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${signDate}&startTime=${startTime}&endTime=${endTime}`
       }
       Taro.request({
         url: url,
@@ -79,52 +124,6 @@ const AlreadySign = () => {
         header: {
           'Content-Type': 'application/json',
           'userId': Taro.getStorageSync('userId')
-        },
-        success: function (res) {
-          if (res.statusCode == 200) {
-            console.log(333, res);
-            if (res.data.code == 200) {
-              setSignList(res.data.data);
-            }
-
-            // setSignList(res.data)
-          } else {
-
-          }
-
-        },
-        fail: function (err) {
-        }
-      })
-    }
-  }
-  const onChangeTime = e => {
-    setSignTime(e.detail.value);
-    const {
-      signActivityId,
-      startTime1,
-      startTime2,
-      startTime3,
-      endTime1,
-      endTime2,
-      endTime3
-    } = getCurrentInstance().router.params;
-    let url = '';
-    if (range.length !== 0) {
-      let startTime = signTime.split('-')[0];
-      let endTime = signTime.split('-')[1];
-      if (signDate === '签到日期') {
-          url = Api.alreadySignList + `?activityId=${signActivityId}&startTime=${startTime}&endTime=${endTime}`
-      } else {
-        url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&startTime=${startTime}&endTime=${endTime}`
-      }
-      Taro.request({
-        url: url,
-        // data: data,
-        method: 'GET',
-        header: {
-          'Content-Type': 'application/json',
-          'userId':Taro.getStorageSync('userId')
           // 'X-Litemall-Token': Taro.getStorageSync('token')
         },
         success: function (res) {
@@ -181,16 +180,16 @@ const AlreadySign = () => {
           <View style='margin:auto; display:flex;align-items:center'>
             <Picker mode='date' onChange={onChangeDate}>
               <Text className='sign-date'
-                    style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>{signDate}</Text>
+                    style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>{isEmpty(signDate) ? '签到日期' : signDate}</Text>
               <Image src={DropDown} style='margin-left:7.3PX;width:13.9PX;height:8.4PX'/>
             </Picker>
           </View>
         </View>
         <View className='sign-time-view'>
           <View style=' margin:auto; display:flex;align-items:center'>
-            <Picker mode='selector' range={range} disabled={range.length==0?true:false} onChange={onChangeTime}>
+            <Picker mode='selector' range={range} disabled={range.length == 0 ? true : false} onChange={onChangeTime}>
               <Text className='sign-time'
-                    style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>{signTime}</Text>
+                    style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>{isEmpty(signTime) ? '签到时间段' : signTime}</Text>
               <Image src={DropDown} style=' margin-left:7.3PX;  width:13.9PX;height:8.4PX'/>
             </Picker>
           </View>

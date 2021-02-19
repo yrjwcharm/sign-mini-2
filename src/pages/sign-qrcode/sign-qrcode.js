@@ -70,21 +70,22 @@ const SignQrCode = () => {
     Taro.downloadFile({
       url: file, success: function (res) {
         // 下载成功后再保存到本地
-        Taro.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,//返回的临时文件路径，下载后的文件会存储到一个临时文件
-          success: function (res) {
-            Taro.showToast({
-              title: '二维码已保存到相册',
-              icon: 'none'
-            })
-          },
-          fail:function (res){
-            Taro.showToast({
-              title: '保存失败',
-              icon: 'none'
-            })
-          }
-        })
+        console.log(333,res);
+      //   Taro.saveImageToPhotosAlbum({
+      //     filePath: res.tempFilePath,//返回的临时文件路径，下载后的文件会存储到一个临时文件
+      //     success: function (res) {
+      //       Taro.showToast({
+      //         title: '二维码已保存到相册',
+      //         icon: 'none'
+      //       })
+      //     },
+      //     fail:function (res){
+      //       Taro.showToast({
+      //         title: '保存失败',
+      //         icon: 'none'
+      //       })
+      //     }
+      //   })
       }
     });
   }
@@ -111,7 +112,7 @@ const SignQrCode = () => {
           </View>
           <View style='margin-top:29PX'>
             <Text
-              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #999;letter-spacing: 0.18PX;'>有效期：{startDate}至{endDate}</Text>
+              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #999;letter-spacing: 0.18PX;'>有效期：{startDate.substring(0,startDate.lastIndexOf(':'))}至{endDate.substring(0,endDate.lastIndexOf(':'))}</Text>
           </View>
         </View>
       </View>

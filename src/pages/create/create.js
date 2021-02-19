@@ -1,11 +1,14 @@
-import React, {useLayoutEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro';
 import {Text, View} from '@tarojs/components'
 import './create.scss'
 import OrgAct from "../org-act/org-act";
 import PersonalAct from "../../personal-act/personal-act";
-
+import {getCompanyInfoApi} from "../../services/SyncRequest";
+import {isEmpty} from "../../utils/EmptyUtil";
+import OrgSignAct from "../org-sign-act/org-sign-act";
 const Create = () => {
+  const [data,setData] = useState('');
   const [orgSelected, setOrgSelected] = useState(true);
   const [personalSelected, setPersonalSelected] = useState(false);
   useLayoutEffect(() => {
@@ -13,6 +16,9 @@ const Create = () => {
       title: '创建签到活动'
     })
   }, [])
+  useEffect(()=>{
+    _getCompanyInfo();
+  },[])
   const _orgSelected = () => {
     setPersonalSelected(false)
     setOrgSelected(true);
@@ -20,6 +26,15 @@ const Create = () => {
   const _personalSelected = () => {
     setPersonalSelected(true);
     setOrgSelected(false);
+
+  }
+  const _getCompanyInfo=async ()=>{
+    const {userId} = Taro.getStorageSync('userInfo');
+    console.log(333,userId);
+    const res = await  getCompanyInfoApi(userId);
+    if(res.code==200){
+      setData(res.data);
+    }
 
   }
   return (
@@ -36,7 +51,7 @@ const Create = () => {
         </View>
       </View>
       <View style='margin-top:20PX'>
-        {orgSelected?<OrgAct/>:<PersonalAct/>}
+        {orgSelected?isEmpty(data)?<OrgAct/>:<OrgSignAct/>:<PersonalAct/>}
       </View>
     </View>
   );

@@ -3,7 +3,7 @@ import {Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import ListRow from "../../components/ListRow";
 import '../../components/ListRow.scss'
-import './create-sign-act.scss'
+import './org-sign-act.scss'
 import Location from '@assets/location.png'
 import Decrease from '@assets/decrease.png';
 import Increase from '@assets/increase.png';
@@ -15,7 +15,7 @@ import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {compareDate} from "../../utils/Common";
 import moment from 'moment'
- const CreateSignAct = () => {
+ const OrgSignAct = () => {
   const [actTopic, setActTopic] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [timeArr, setTimeArr] = useState([]);
@@ -290,7 +290,7 @@ import moment from 'moment'
   }
   return (
     <ScrollView scrollY={true} className='create-sign-act-box'>
-      <View className='create-sign-act-main' style='margin-top:20PX'>
+      <View className='create-sign-act-main'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
         }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
@@ -382,4 +382,4 @@ import moment from 'moment'
   )
 
 }
-export default CreateSignAct;
+export default OrgSignAct;

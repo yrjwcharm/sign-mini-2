@@ -104,93 +104,91 @@ const OrgInfo =()=>{
     })
     console.log(333,res);
     if(res.code==200){
-      Taro.hideLoading();
-      setDisabled(true);
-      Taro.navigateBack({
-        delta:1
+      Taro.showToast({
+        title:'修改成功'
       })
     }
   }
-  // const getLocation = () => {
-  //   Taro.getSetting({
-  //     success: function (res) {
-  //       if (!res.authSetting['scope.userLocation']) {
-  //         authorize();
-  //       } else {
-  //         _chooseLocation();
-  //       }
-  //     },
-  //   })
-  //
-  // }
-  // const authorize = () => {
-  //   Taro.authorize({
-  //     scope: 'scope.userLocation',
-  //     success: function () {
-  //       // 用户已经同意小程序使用录音功能，后续调用 Taro.chooseLocation 接口不会弹窗询问
-  //       _chooseLocation();
-  //     },
-  //     fail: function (res) {
-  //       Taro.showModal({
-  //         title: '权限开启',
-  //         confirmColor:'#06B48D',
-  //         content: '是否允许开启位置权限?',
-  //         success: function (res) {
-  //           if (res.confirm) {
-  //             // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-  //             _openSetting();
-  //           }
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-  // const _openSetting = () => {
-  //   Taro.openSetting({
-  //     success: function (res) {
-  //       if (!res.authSetting['scope.userLocation']) {
-  //
-  //       }
-  //     }
-  //   })
-  // }
-  // const _chooseLocation = () => {
-  //   Taro.chooseLocation({
-  //     success: function (res) {
-  //       const {address, latitude, longitude} = res;
-  //       let url = `https://restapi.amap.com/v3/geocode/regeo?output=json&location=${longitude},${latitude}&key=${Api.key}&radius=1000&extensions=all&roadlevel=1`
-  //       Taro.request({
-  //         url,
-  //         data: {},
-  //         method: 'GET',
-  //         header: {
-  //           'content-type': 'application/json' // 默认值
-  //         },
-  //         success: function (res) {
-  //           const data = res.data;
-  //           if (data.infocode == 10000) {
-  //             const res = data.regeocode.addressComponent
-  //             let provinceId = res.adcode.substring(0, 2) + '0000';
-  //             let cityId = res.adcode.substring(0, 4) + '00';
-  //             let districtId = res.adcode;
-  //             setArea(address);
-  //             setProvinceId(provinceId);
-  //             setCityId(cityId);
-  //             setDistrictId(districtId);
-  //           }
-  //         }
-  //       })
-  //
-  //
-  //     },
-  //     complete: function (res) {
-  //       console.log(333, res);
-  //     },
-  //     fail: function (res) {
-  //       console.log(1111, res);
-  //     }
-  //   })
-  // }
+  const getLocation = () => {
+    Taro.getSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.userLocation']) {
+          authorize();
+        } else {
+          _chooseLocation();
+        }
+      },
+    })
+
+  }
+  const authorize = () => {
+    Taro.authorize({
+      scope: 'scope.userLocation',
+      success: function () {
+        // 用户已经同意小程序使用录音功能，后续调用 Taro.chooseLocation 接口不会弹窗询问
+        _chooseLocation();
+      },
+      fail: function (res) {
+        Taro.showModal({
+          title: '权限开启',
+          confirmColor:'#06B48D',
+          content: '是否允许开启位置权限?',
+          success: function (res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              _openSetting();
+            }
+          }
+        })
+      }
+    })
+  }
+  const _openSetting = () => {
+    Taro.openSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.userLocation']) {
+
+        }
+      }
+    })
+  }
+  const _chooseLocation = () => {
+    Taro.chooseLocation({
+      success: function (res) {
+        const {address, latitude, longitude} = res;
+        let url = `https://restapi.amap.com/v3/geocode/regeo?output=json&location=${longitude},${latitude}&key=${Api.key}&radius=1000&extensions=all&roadlevel=1`
+        Taro.request({
+          url,
+          data: {},
+          method: 'GET',
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function (res) {
+            const data = res.data;
+            if (data.infocode == 10000) {
+              const res = data.regeocode.addressComponent
+              let provinceId = res.adcode.substring(0, 2) + '0000';
+              let cityId = res.adcode.substring(0, 4) + '00';
+              let districtId = res.adcode;
+              setArea(address);
+              setProvinceId(provinceId);
+              setCityId(cityId);
+              setDistrictId(districtId);
+            }
+          }
+        })
+
+
+      },
+      complete: function (res) {
+        console.log(333, res);
+      },
+      fail: function (res) {
+        console.log(1111, res);
+      }
+    })
+  }
 
   return (
     <View className='orgInfo-box'>
@@ -207,7 +205,7 @@ const OrgInfo =()=>{
           <ListRow noBorder={disabled} disabled={disabled} className='list-row-input' type='number' onInput={(e) => {
             setPhone(e.detail.value);
           }}  label='联系电话' value={phone} style='margin-right:43PX' placeholder='请输入手机号码'/>
-          <View className='address-info-container' onClick={getLocation}>
+          <View className='address-info-container'>
             <View className='address-info-wrap'>
               <View className='address-info-view'>
                 <View style='display:flex;alignItems:center'>
@@ -215,7 +213,7 @@ const OrgInfo =()=>{
                   <Text className='select-city-text'
                         style={area === '' ? 'color:#999' : 'color:#666'}>{isEmpty(area)?'请选择所属区域':area}</Text>
                 </View>
-                {!disabled&&<Image src={Location} className='location'/>}
+                {/*{!disabled&&<Image src={Location} className='location'/>}*/}
               </View>
             </View>
             {!disabled&&<View className='line'/>}

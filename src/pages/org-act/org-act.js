@@ -119,7 +119,7 @@ const OrgAct = () => {
     console.log(333,res.data);
     if(res.code==200) {
       Taro.navigateTo({
-        url:'/pages/create-sign-act/create-sign-act?type=1'
+        url:'/pages/create-sign-act/create-sign-act'
       })
     }else{
       Taro.showToast({
