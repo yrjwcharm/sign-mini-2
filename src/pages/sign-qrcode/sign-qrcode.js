@@ -36,6 +36,19 @@ const SignQrCode = () => {
             scope: 'scope.writePhotosAlbum',
             success() {
               saveFile(url);
+            },
+            fail:function (){
+              Taro.showModal({
+                title: '权限开启',
+                confirmColor:'#06B48D',
+                content: '是否允许开启访问相册权限?',
+                success: function (res) {
+                  if (res.confirm) {
+                    // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                    _openSetting();
+                  }
+                }
+              })
             }
           });
         } else {
@@ -43,6 +56,15 @@ const SignQrCode = () => {
         }
       }
     });
+  }
+  const _openSetting = () => {
+    Taro.openSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+
+        }
+      }
+    })
   }
   const saveFile = (file) => {
     Taro.downloadFile({
@@ -73,7 +95,7 @@ const SignQrCode = () => {
           <View style='margin-bottom:10PX'>
             <Text style='font-family: PingFangSC-Medium;font-size: 18PX;color: #333333;'>{activityName}</Text>
           </View>
-          <View style='background:red' onLongPress={()=>authorize(qrcode)}>
+          <View onLongPress={()=>authorize(qrcode)}>
             <QRCode
               text={qrcode}
               size={192}
