@@ -219,7 +219,7 @@ const PersonalAct = () => {
     }
   }
   const TimeSign = (props) => {
-    const {index} = props;
+    const {index,decreaseSign} = props;
     const [startTime,setStateTime]=useState('');
     const [endTime,setEndTime] = useState('');
     let time = moment().format('HH:mm');
@@ -234,10 +234,6 @@ const PersonalAct = () => {
       index==0&&setEndTime1(e.detail.value+`:00`)
       index==1&&setEndTime2(e.detail.value+`:00`)
       index==2&&setEndTime3(e.detail.value+`:00`)
-    }
-    const decreaseSign = (index) => {
-      // timeArr.splice(index,1);
-      // setTimeArr([...timeArr]);
     }
     return (
       <View style='display:flex;flex-direction:column;'>
@@ -328,7 +324,7 @@ const PersonalAct = () => {
         </View>
         <View className='line' style='margin-left:20PX;margin-right:20PX'/>
         {timeIntervalFlag==0&&timeArr.length !== 0 && timeArr.map((item, index) => {
-          console.log(333, item);
+          console.log(333,item);
           return (
             item
           )
