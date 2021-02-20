@@ -1,6 +1,6 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro'
-import {Text, View} from "@tarojs/components";
+import {Image, Text, View} from "@tarojs/components";
 import './sign-qrcode.scss'
 import {QRCode} from "taro-code";
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -99,14 +99,7 @@ const SignQrCode = () => {
             <Text style='font-family: PingFangSC-Medium;font-size: 18PX;color: #333333;'>{activityName}</Text>
           </View>
           <View onLongPress={()=>authorize(qrcode)}>
-            <QRCode
-              text={qrcode}
-              size={192}
-              scale={4}
-              style='margin-top:10PX'
-              errorCorrectLevel='M'
-              typeNumber={2}
-            />
+            <Image src={qrcode} style='width:192PX;height:192PX'/>
           </View>
           <View style='margin-top:20PX'>
             <Text
