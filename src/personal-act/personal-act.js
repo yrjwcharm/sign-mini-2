@@ -3,7 +3,7 @@ import {Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import ListRow from "../components/ListRow";
 import '../components/ListRow.scss'
-import './org-sign-act.scss'
+import './personal-act.scss'
 import Location from '@assets/location.png'
 import Decrease from '@assets/decrease.png';
 import Increase from '@assets/increase.png';
@@ -13,9 +13,8 @@ import Calendar from '@assets/calendar.png'
 import {getCompanyInfoApi, saveSignAct} from "../services/SyncRequest";
 import Api from "../config/api";
 import {isEmpty} from "../utils/EmptyUtil";
-import {compareDate} from "../utils/Common";
+import {compareDate,compareTime} from "../utils/Common";
 import moment from 'moment'
-import {compareTime} from "@tarojs/components/dist/types/components/picker/utils";
 
 const PersonalAct = () => {
   const [actTopic, setActTopic] = useState('');
@@ -81,7 +80,7 @@ const PersonalAct = () => {
       return;
     }
     if(!isEmpty(startTime1)&&!isEmpty(endTime1)){
-      if(compareTime(startTime1,endTime1)){
+      if(!compareTime(startTime1,endTime1)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -90,7 +89,7 @@ const PersonalAct = () => {
       }
     }
     if(!isEmpty(startTime2)&&!isEmpty(endTime2)){
-      if(compareTime(startTime2,endTime2)){
+      if(!compareTime(startTime2,endTime2)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -99,7 +98,7 @@ const PersonalAct = () => {
       }
     }
     if(!isEmpty(startTime3)&&!isEmpty(endTime3)){
-      if(compareTime(startTime2,endTime2)){
+      if(!compareTime(startTime2,endTime2)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',

@@ -19,6 +19,7 @@ const SignQrCode = () => {
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     const {url, startDate, endDate, activityName} = getCurrentInstance().router.params;
     setQrcode(decodeURIComponent(url));
+    console.log(333,decodeURIComponent(url));
     setStartDate(startDate);
     setEndDate(endDate);
     setActivityName(activityName);

@@ -13,9 +13,8 @@ import Calendar from '@assets/calendar.png'
 import {getCompanyInfoApi, saveSignAct} from "../../services/SyncRequest";
 import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
-import {compareDate} from "../../utils/Common";
+import {compareDate,compareTime} from "../../utils/Common";
 import moment from 'moment'
-import {compareTime} from "@tarojs/components/dist/types/components/picker/utils";
 
 const CreateSignAct = () => {
   const [actTopic, setActTopic] = useState('');
@@ -81,7 +80,7 @@ const CreateSignAct = () => {
       return;
     }
     if(!isEmpty(startTime1)&&!isEmpty(endTime1)){
-      if(compareTime(startTime1,endTime1)){
+      if(!compareTime(startTime1,endTime1)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -90,7 +89,7 @@ const CreateSignAct = () => {
       }
     }
     if(!isEmpty(startTime2)&&!isEmpty(endTime2)){
-      if(compareTime(startTime2,endTime2)){
+      if(!compareTime(startTime2,endTime2)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -99,7 +98,7 @@ const CreateSignAct = () => {
       }
     }
     if(!isEmpty(startTime3)&&!isEmpty(endTime3)){
-      if(compareTime(startTime2,endTime2)){
+      if(!compareTime(startTime2,endTime2)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
