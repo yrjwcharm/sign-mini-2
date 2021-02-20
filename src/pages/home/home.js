@@ -33,6 +33,7 @@ export default class Home extends Component {
       if (res.code == 200) {
         const {username}=res.data;
         this.setState({username});
+
       }
     }
 
@@ -79,7 +80,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const {username} = this.state;
+    const {username,flag} = this.state;
     return (
       <View className='home-box'>
         <View className='main'>

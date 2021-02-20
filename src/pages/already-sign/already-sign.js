@@ -7,7 +7,7 @@ import {alreadySignListApi, getActQrcodeInfoApi} from "../../services/SyncReques
 import {getCurrentInstance} from "@tarojs/runtime";
 import Api from '../../config/api'
 import {isEmpty} from "../../utils/EmptyUtil";
-
+import EmptyData from '@assets/empty.png'
 const AlreadySign = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [signList, setSignList] = useState([]);
@@ -65,7 +65,7 @@ const AlreadySign = () => {
     if (isEmpty(signTime)) {
       url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
     } else {
-      if (range[e.detail.value] === '非正常签到') {
+      if (signTime==='非正常签到') {
         url = Api.alreadySignList + `?activityId=${signActivityId}&normalFlag=1`
       } else {
         let startTime = range[e.detail.value].split('-')[0] + ':00';
@@ -225,6 +225,16 @@ const AlreadySign = () => {
               style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}>
           <Text className='btn-submit-text'>查看签到码</Text>
         </View>
+      </View>
+    </View>
+  )
+}
+const Empty = () => {
+  return (
+    <View className='empty-view'>
+      <View className='empty-wrap'>
+        <Image src={EmptyData} className='empty-img'/>
+        <Text className='empty-text'>暂无数据哦~</Text>
       </View>
     </View>
   )

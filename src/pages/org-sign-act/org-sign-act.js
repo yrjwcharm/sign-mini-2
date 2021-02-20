@@ -231,6 +231,12 @@ const OrgSignAct = () => {
       setTimeIntervalFlag(0);
     } else {
       setTimeIntervalFlag(1);
+      setStartTime1('');
+      setStartTime2('');
+      setStartTime3('');
+      setEndTime1('');
+      setEndTime2('');
+      setEndTime3('')
     }
 
   }
