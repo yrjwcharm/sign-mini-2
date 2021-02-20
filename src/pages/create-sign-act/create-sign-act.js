@@ -10,12 +10,14 @@ import Increase from '@assets/increase.png';
 import Close from '@assets/close.png'
 import Open from '@assets/open.png'
 import Calendar from '@assets/calendar.png'
-import {getCompanyInfoApi, getUserCreatedActApi, saveSignAct} from "../../services/SyncRequest";
+import {getCompanyInfoApi, saveSignAct} from "../../services/SyncRequest";
 import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {compareDate} from "../../utils/Common";
 import moment from 'moment'
- const CreateSignAct = () => {
+import {compareTime} from "@tarojs/components/dist/types/components/picker/utils";
+
+const CreateSignAct = () => {
   const [actTopic, setActTopic] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [timeArr, setTimeArr] = useState([]);
@@ -34,9 +36,12 @@ import moment from 'moment'
   const [provinceid, setProvinceId] = useState('');
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
+  const [index, setIndex] = useState(0);
+  const [startTime, setStateTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   useEffect(() => {
-      const {isIphoneX} =Taro.getStorageSync('isIphoneX');
-      setIsIphoneX(isIphoneX);
+    const {isIphoneX} = Taro.getStorageSync('isIphoneX');
+    setIsIphoneX(isIphoneX);
   }, [])
   const showStartDatePicker = (e) => {
     setStartDate(e.detail.value);
@@ -45,17 +50,8 @@ import moment from 'moment'
     setEndDate(e.detail.value);
 
   }
-
   const generateSign = async () => {
-    if(timeArr.length===1){
-      setStartTime2('');
-      setEndTime2('');
-      setStartTime3('')
-      setEndTime3('');
-    }else if(timeArr.length===2){
-      setStartTime3('')
-      setEndTime3('');
-    }
+    console.log(333,startTime1,endTime1);
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '签到主题不能为空',
@@ -84,6 +80,34 @@ import moment from 'moment'
       })
       return;
     }
+    if(!isEmpty(startTime1)&&!isEmpty(endTime1)){
+      if(compareTime(startTime1,endTime1)){
+        Taro.showToast({
+          title: '开始时间不能晚于结束时间',
+          icon: 'none',
+        })
+        return;
+      }
+    }
+    if(!isEmpty(startTime2)&&!isEmpty(endTime2)){
+      if(compareTime(startTime2,endTime2)){
+        Taro.showToast({
+          title: '开始时间不能晚于结束时间',
+          icon: 'none',
+        })
+        return;
+      }
+    }
+    if(!isEmpty(startTime3)&&!isEmpty(endTime3)){
+      if(compareTime(startTime2,endTime2)){
+        Taro.showToast({
+          title: '开始时间不能晚于结束时间',
+          icon: 'none',
+        })
+        return;
+      }
+    }
+
     if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
         title: '请选择活动地点',
@@ -96,7 +120,7 @@ import moment from 'moment'
     // })
     const {userId} = Taro.getStorageSync('userInfo');
     const _res = await getCompanyInfoApi(userId);
-    const {companyId} =_res.code==200?_res.data:{};
+    const {companyId} = _res.code == 200 ? _res.data : {};
     const res = await saveSignAct({
       companyId,  // 企业id
       activityName: actTopic,			// 活动名称
@@ -108,7 +132,7 @@ import moment from 'moment'
       endTime2,				// 结束时间2
       startTime3,			// 开始时间3
       endTime3,				// 结束时间3
-      provinceCode:provinceid,			// 省
+      provinceCode: provinceid,			// 省
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
       detailedAddr: streetdesc,	// 详细地址
@@ -145,7 +169,7 @@ import moment from 'moment'
       fail: function (res) {
         Taro.showModal({
           title: '权限开启',
-          confirmColor:'#06B48D',
+          confirmColor: '#06B48D',
           content: '是否允许开启位置权限?',
           success: function (res) {
             if (res.confirm) {
@@ -218,64 +242,21 @@ import moment from 'moment'
       setCallingFlag(1);
     }
   }
-  const TimeSign = (props) => {
-    const {index} = props;
-    const [startTime,setStateTime]=useState('');
-    const [endTime,setEndTime] = useState('');
-    let time = moment().format('HH:mm');
-    const showStartTimePicker = (e) => {
-      setStateTime(e.detail.value);
-      index==0&&setStartTime1(e.detail.value+`:00`)
-      index==1&&setStartTime2(e.detail.value+`:00`)
-      index==2&&setStartTime3(e.detail.value+`:00`)
+  const decreaseSign = (index) => {
+    if(index===0){
+      setStartTime1('');
+      setEndTime1('');
+    }else if(index===1){
+      setStartTime2('');
+      setEndTime2('');
+    }else{
+      setStartTime3('');
+      setEndTime3('')
     }
-    const showEndTimePicker = (e) => {
-      setEndTime(e.detail.value);
-      index==0&&setEndTime1(e.detail.value+`:00`)
-      index==1&&setEndTime2(e.detail.value+`:00`)
-      index==2&&setEndTime3(e.detail.value+`:00`)
-    }
-    const decreaseSign = (index) => {
-      // timeArr.splice(index,1);
-      // setTimeArr([...timeArr]);
-    }
-    return (
-      <View style='display:flex;flex-direction:column;'>
-        <View style='display:flex;flex-direction:column; background:#fff;height:69.5PX;justify-content:center'>
-          <View
-            style='margin-left:20PX;margin-right:20PX; display:flex;align-items:center;justify-content:space-between'>
-            <View style='display:flex;flex-direction:row;flex:1'>
-              <View style='display:flex;flex-direction:column;flex:1'>
-                <Picker mode='time' value={time} onChange={showStartTimePicker}>
-                  <View style='display:flex;align-items:center;flex:1'>
-                    <Text
-                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
-                      开始时间</Text>
-                    <Input disabled={true} value={startTime} style='flex:1;color:#666;font-size:12PX;text-align:right;' type='text' placeholder={'请选择开始时间'}
-                           placeholderClass='list-row-input-placeholder1'/>
 
-                  </View>
-                </Picker>
-                <Picker mode='time' value={time}  onChange={showEndTimePicker}>
-                  <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
-                    <Text
-                      style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
-                      结束时间</Text>
-                    <Input disabled={true} value={endTime} style='color:#666;font-size:12PX;flex:1;text-align:right;' type='text'
-                           placeholder={'请选择结束时间'}
-                           placeholderClass='list-row-input-placeholder1'/>
-
-                  </View>
-                </Picker>
-              </View>
-            </View>
-            <Image onClick={() => decreaseSign(index)} src={Decrease}
-                   style='margin-left:7PX;width:20PX; height:20PX'/>
-          </View>
-        </View>
-        <View className='line' style='margin-left:20PX;margin-right:20PX'/>
-      </View>
-    )
+    timeArr.splice(index, 1);
+    setTimeArr([...timeArr]);
+    setIndex(index - 1);
   }
   const addSignTime = () => {
     if (timeArr.length > 2) {
@@ -285,12 +266,33 @@ import moment from 'moment'
       })
       return;
     }
-    timeArr.push(<TimeSign index={timeArr.length}/>)
+
+    timeArr.push(<View/>)
     setTimeArr([...timeArr]);
+
+  }
+
+  const showStartTimePicker = (e) => {
+    setStartTime1(e.detail.value+`:00`);
+  }
+  const showStartTimePicker1 = (e) => {
+    setStartTime2(e.detail.value+`:00`);
+  }
+  const showStartTimePicker2 = (e) => {
+    setStartTime3(e.detail.value+`:00`);
+  }
+  const showEndTimePicker = (e) => {
+    setEndTime1(e.detail.value+`:00`);
+  }
+  const showEndTimePicker1 = (e) => {
+    setEndTime2(e.detail.value+`:00`);
+  }
+  const showEndTimePicker2 = (e) => {
+    setEndTime3(e.detail.value+`:00`);
   }
   return (
     <ScrollView scrollY={true} className='create-sign-act-box'>
-      <View className='create-sign-act-main' style='margin-top:20PX'>
+      <View className='create-sign-act-main'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
         }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
@@ -327,10 +329,51 @@ import moment from 'moment'
           </View>
         </View>
         <View className='line' style='margin-left:20PX;margin-right:20PX'/>
-        {timeIntervalFlag==0&&timeArr.length !== 0 && timeArr.map((item, index) => {
-          console.log(333, item);
+        {timeIntervalFlag == 0 && timeArr.length !== 0 && timeArr.map((item, index) => {
+          let time = moment().format('hh:mm');
           return (
-            item
+            <View style='display:flex;flex-direction:column;'>
+              <View style='display:flex;flex-direction:column; background:#fff;height:69.5PX;justify-content:center'>
+                <View
+                  style='margin-left:20PX;margin-right:20PX; display:flex;align-items:center;justify-content:space-between'>
+                  <View style='display:flex;flex-direction:row;flex:1'>
+                    <View style='display:flex;flex-direction:column;flex:1'>
+                      <Picker mode='time'
+                              value={time} onChange={index === 0 ? showStartTimePicker : index === 1 ? showStartTimePicker1 : showStartTimePicker2}>
+                        <View style='display:flex;align-items:center;flex:1'>
+                          <Text
+                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
+                            开始时间</Text>
+                          <Input disabled={true} value={index===0?startTime1:index===1?startTime2:startTime3}
+                                 style='flex:1;color:#666;font-size:12PX;text-align:right;' type='text'
+                                 placeholder={'请选择开始时间'}
+                                 placeholderClass='list-row-input-placeholder1'/>
+
+                        </View>
+                      </Picker>
+                      <Picker mode='time'
+                              value={time}
+                              onChange={index === 0 ? showEndTimePicker : index === 1 ? showEndTimePicker1 : showEndTimePicker2}>
+                        <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
+                          <Text
+                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
+                            结束时间</Text>
+                          <Input disabled={true} value={index===0?endTime1:index===1?endTime2:endTime3}
+                                 style='color:#666;font-size:12PX;flex:1;text-align:right;' type='text'
+                                 placeholder={'请选择结束时间'}
+                                 placeholderClass='list-row-input-placeholder1'/>
+
+                        </View>
+                      </Picker>
+                    </View>
+                  </View>
+                  <Image onClick={() => decreaseSign(index)} src={Decrease}
+                         style='margin-left:7PX;width:20PX; height:20PX'/>
+                </View>
+              </View>
+              <View className='line' style='margin-left:20PX;margin-right:20PX'/>
+            </View>
+
           )
         })}
         {timeIntervalFlag == 0 && <View style='display:flex;height:40PX;background:#fff;' onClick={addSignTime}>
