@@ -42,7 +42,10 @@ export default class Home extends Component {
       }else{
         this.setState({FLAG:true})
       }
+    }else{
+      this.setState({FLAG:true})
     }
+
 
   }
 

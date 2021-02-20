@@ -229,7 +229,7 @@ const AlreadySign = () => {
 }
 const Empty = () => {
   return (
-    <View className='empty-view'>
+    <View className='empty-view' style='margin-top:50%'>
       <View className='empty-wrap'>
         <Image src={EmptyData} className='empty-img'/>
         <Text className='empty-text'>暂无数据哦~</Text>
