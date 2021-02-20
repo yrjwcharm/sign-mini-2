@@ -19,7 +19,7 @@ const AlreadySign = () => {
   const [endDate, setEndDate] = useState('');
   const [normalFlag, setNormalFlag] = useState(1);
   const [url, setUrl] = useState('');
-  const [isEmpty,setIsEmpty] = useState(false);
+  const [FLAG,setFLAG] = useState(false);
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '已签约'
@@ -88,10 +88,10 @@ const AlreadySign = () => {
           if (res.data.code == 200) {
             if (res.data.data.length === 0) {
               setSignList(res.data.data);
-              setIsEmpty(true);
+              setFLAG(true);
             } else {
               setSignList(res.data.data);
-              setIsEmpty(false);
+              setFLAG(false);
             }
           }
         }
@@ -137,10 +137,10 @@ const AlreadySign = () => {
             if (res.data.code == 200) {
               if (res.data.data.length === 0) {
                 setSignList(res.data.data);
-                setIsEmpty(true);
+                setFLAG(true);
               } else {
                 setSignList(res.data.data);
-                setIsEmpty(false);
+                setFLAG(false);
               }
             }
           }
@@ -200,7 +200,7 @@ const AlreadySign = () => {
         </View>
       </View>
       <View className='already-sign-main' style='margin-top:11PX'>
-        {!isEmpty?signList.map((item, index) => {
+        {!FLAG?signList.map((item, index) => {
           return (
             <View className='list-row--layout'>
               <View className='list-row--view'>
