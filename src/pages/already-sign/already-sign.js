@@ -19,6 +19,7 @@ const AlreadySign = () => {
   const [endDate, setEndDate] = useState('');
   const [normalFlag, setNormalFlag] = useState(1);
   const [url, setUrl] = useState('');
+  const [isEmpty,setIsEmpty] = useState(false);
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '已签约'
@@ -84,20 +85,18 @@ const AlreadySign = () => {
       success: function (res) {
         console.log(333, res);
         if (res.statusCode == 200) {
-          console.log(333, res);
           if (res.data.code == 200) {
-            setSignList(res.data.data);
+            if (res.data.data.length === 0) {
+              setSignList(res.data.data);
+              setIsEmpty(true);
+            } else {
+              setSignList(res.data.data);
+              setIsEmpty(false);
+            }
           }
-
-          // setSignList(res.data)
-        } else {
-
         }
-
       },
-      fail: function (err) {
-        console.log(333, err);
-      }
+
     })
 
   }
@@ -136,17 +135,16 @@ const AlreadySign = () => {
           if (res.statusCode == 200) {
             console.log(333, res);
             if (res.data.code == 200) {
-              setSignList(res.data.data);
+              if (res.data.data.length === 0) {
+                setSignList(res.data.data);
+                setIsEmpty(true);
+              } else {
+                setSignList(res.data.data);
+                setIsEmpty(false);
+              }
             }
-
-            // setSignList(res.data)
-          } else {
-
           }
-
         },
-        fail: function (err) {
-        }
       })
 
     }
@@ -202,7 +200,7 @@ const AlreadySign = () => {
         </View>
       </View>
       <View className='already-sign-main' style='margin-top:11PX'>
-        {signList.map((item, index) => {
+        {!isEmpty?signList.map((item, index) => {
           return (
             <View className='list-row--layout'>
               <View className='list-row--view'>
@@ -218,7 +216,7 @@ const AlreadySign = () => {
               </View>
             </View>
           )
-        })}
+        }):<Empty/>}
       </View>
       <View className='footer'>
         <View className='btn-submit-view' onClick={searchQrcode}
