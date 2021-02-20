@@ -24,8 +24,8 @@ const MyCreate = () => {
       title:'请稍等...'
     })
     const {userId} = Taro.getStorageSync('userInfo');
+    console.log(888,userId);
     const res = await getUserCreatedActApi(userId);
-    console.log(888,res.data);
     if(res.code==200){
         if(res.data.length>0){
           setIsEmpty(false);

@@ -66,7 +66,7 @@ const AlreadySign = () => {
       url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
     } else {
       if (signTime==='非正常签到') {
-        url = Api.alreadySignList + `?activityId=${signActivityId}&normalFlag=1`
+        url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&normalFlag=1`
       } else {
         let startTime = range[e.detail.value].split('-')[0] + ':00';
         let endTime = range[e.detail.value].split('-')[1] + ':00';
