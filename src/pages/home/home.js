@@ -4,8 +4,8 @@ import {Text, View} from '@tarojs/components'
 import './home.scss'
 import {getUserInfoApi, sign} from "../../services/SyncRequest";
 import {isEmpty} from "../../utils/EmptyUtil";
+import {login, wxLogin} from "../../services/user";
 
-let event = Taro.eventCenter;
 export default class Home extends Component {
   constructor() {
     super();
@@ -25,13 +25,17 @@ export default class Home extends Component {
   }
 
   getUserInfo = async () => {
-    const {openId} = Taro.getStorageSync('userInfo');
-    const res = await getUserInfoApi(openId);
-    console.log(333, res);
-    if (res.code == 200) {
-      const {username}=res.data;
-      this.setState({username});
+    const res = await login();
+    const _res = await wxLogin(res.code);
+    if(_res.code==200){
+      const {openId}=_res.data;
+      const res = await getUserInfoApi(openId);
+      if (res.code == 200) {
+        const {username}=res.data;
+        this.setState({username});
+      }
     }
+
   }
 
 

@@ -13,12 +13,40 @@ import UserActive from '@assets/tab-bar/user-active.png'
 import User from '@assets/tab-bar/user.png'
 import './index.scss'
 import {getUserInfoApi} from "../../services/SyncRequest";
+import {login} from "../../services/user";
+import Api from "../../config/api";
 export default class Index extends Component {
   constructor() {
     super();
     this.state={
       current:0,
     }
+  }
+  componentWillMount() {
+    this._login();
+  }
+  _login=async ()=>{
+    const res = await login();
+    Taro.request({
+      url: Api.login+`?code=${res.code}`,
+      // data: data,
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json',
+      },
+      success: function(res) {
+        if (res.statusCode == 200) {
+          if(res.data.code==200){
+            const {userId}=res.data.data;
+            Taro.setStorageSync('userInfo',res.data.data);
+            console.log(111,res.data.data);
+            Taro.setStorageSync('userId',userId);
+          }
+
+        }
+
+      }
+    })
   }
 
   handleClick= (value)=> {
