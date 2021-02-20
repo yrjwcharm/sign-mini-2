@@ -28,22 +28,18 @@ export default class Home extends Component {
   getUserInfo = async () => {
     const res = await login();
     const _res = await wxLogin(res.code);
-    if(_res.code==200){
-      const {openId}=_res.data;
+    if(_res.code==200) {
+      const {openId} = _res.data;
       const res = await getUserInfoApi(openId);
       if (res.code == 200) {
-        const {username}=res.data;
-        if(isEmpty(username)){
-          this.setState({username,FLAG:true});
-        }else{
-          this.setState({username,FLAG:false});
+        const {username} = res.data;
+        if (isEmpty(username)) {
+          this.setState({username, FLAG: true});
+        } else {
+          this.setState({username, FLAG: false});
         }
 
-      }else{
-        this.setState({FLAG:true})
       }
-    }else{
-      this.setState({FLAG:true})
     }
 
 
