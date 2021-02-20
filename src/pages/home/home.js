@@ -10,7 +10,8 @@ export default class Home extends Component {
   constructor() {
     super();
     this.state = {
-      username:'',
+       username:'',
+       FLAG:false,
     }
   }
 
@@ -32,7 +33,11 @@ export default class Home extends Component {
       const res = await getUserInfoApi(openId);
       if (res.code == 200) {
         const {username}=res.data;
-        this.setState({username});
+        if(isEmpty(username)){
+          this.setState({username,FLAG:true});
+        }else{
+          this.setState({username,FLAG:false});
+        }
 
       }
     }
@@ -80,7 +85,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const {username,flag} = this.state;
+    const {FLAG,username} = this.state;
     return (
       <View className='home-box'>
         <View className='main'>
@@ -95,7 +100,7 @@ export default class Home extends Component {
               </View>
               {/*<Image src={null} className='avatar'/>*/}
                <Text className='name'>{username}</Text>
-              {isEmpty(username)&&<View className='btn-finish-view' style={isEmpty(username)?'margin:auto;margin-top:17PX':'margin:auto;'} onClick={this.finishPersonalData}>
+              {FLAG&&<View className='btn-finish-view' style={FLAG?'margin:auto;margin-top:17PX':'margin:auto;'} onClick={this.finishPersonalData}>
                 <Text className='btn-finish-view-text'>去完善</Text>
               </View>}
             </View>
