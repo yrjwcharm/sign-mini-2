@@ -205,8 +205,8 @@ const AlreadySign = () => {
             <View className='list-row--layout'>
               <View className='list-row--view'>
                 <View style='display:flex;align-items:center'>
-                  <Image src={null} style='width:50PX;height:50PX'/>
-                  <View style='margin-left:7PX; display:flex;flex-direction:column;'>
+                  {/*<Image src={null} style='width:50PX;height:50PX'/>*/}
+                  <View style='display:flex;flex-direction:column;'>
                     <Text style='color:#333;font-size:16PX;'>{item.username}</Text>
                     <Text style='color:#999;font-size:14PX;margin-top:3PX'>{item.signDate}</Text>
                   </View>
