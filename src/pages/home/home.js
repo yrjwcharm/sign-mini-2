@@ -39,6 +39,8 @@ export default class Home extends Component {
           this.setState({username,FLAG:false});
         }
 
+      }else{
+        this.setState({FLAG:true})
       }
     }
 
