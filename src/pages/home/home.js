@@ -110,11 +110,11 @@ export default class Home extends Component {
               </View>}
             </View>
           </View>
-          <View>
-            <View className='scan-qrcode-view'>
-              <View className='scan-qrcode' onClick={this.scanQrCode}>
-                <Text className='scan-dj'>扫码签到</Text>
-              </View>
+        </View>
+        <View style='display:flex;flex:1;flex-direction:column;'>
+          <View className='scan-qrcode-view' style='margin:auto'>
+            <View className='scan-qrcode' onClick={this.scanQrCode}>
+              <Text className='scan-dj'>扫码签到</Text>
             </View>
           </View>
         </View>

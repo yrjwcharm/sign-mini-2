@@ -50,7 +50,7 @@ const OrgSignAct = () => {
 
   }
   const generateSign = async () => {
-    console.log(333,startTime1,endTime1);
+    console.log(333,timeIntervalFlag);
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '活动名称不能为空',
@@ -142,8 +142,8 @@ const OrgSignAct = () => {
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
       detailedAddr:area,	// 详细地址
-      callingFlag:callingFlag==0?1:0,				// 是否叫号  0是 1否
-      timeIntervalFlag:timeIntervalFlag==0?1:0				// 是否开启时间区间   0是 1否
+      callingFlag,				// 是否叫号  0是 1否
+      timeIntervalFlag				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
       Taro.navigateTo({

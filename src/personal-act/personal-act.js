@@ -141,7 +141,7 @@ const PersonalAct = () => {
       areaCode: districtid,				// 区
       detailedAddr:area,	// 详细地址
       // callingFlag,				// 是否叫号  0是 1否
-      timeIntervalFlag:timeIntervalFlag==0?1:0				// 是否开启时间区间   0是 1否
+      timeIntervalFlag				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
       Taro.navigateTo({
