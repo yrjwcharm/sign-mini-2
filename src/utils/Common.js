@@ -26,3 +26,11 @@ function time_to_sec(time) {
     return s;
   }
 }
+export function desensitizationMobile(str){
+  if(null != str && str != undefined){
+    var pat=/(\d{3})\d*(\d{4})/;
+    return str.replace(pat,'$1****$2');
+  } else {
+    return "";
+  }
+}

@@ -5,6 +5,7 @@ import './home.scss'
 import {getUserInfoApi, sign} from "../../services/SyncRequest";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {login, wxLogin} from "../../services/user";
+import {desensitizationMobile} from "../../utils/Common";
 
 export default class Home extends Component {
   constructor() {
@@ -12,6 +13,7 @@ export default class Home extends Component {
     this.state = {
        username:'',
        FLAG:false,
+      mobile:'',
     }
   }
 
@@ -31,12 +33,13 @@ export default class Home extends Component {
     if(_res.code==200) {
       const {openId} = _res.data;
       const res = await getUserInfoApi(openId);
+      console.log(333,res);
       if (res.code == 200) {
-        const {username} = res.data;
+        const {username,mobile} = res.data;
         if (isEmpty(username)) {
-          this.setState({username, FLAG: true});
+          this.setState({username,mobile, FLAG: true});
         } else {
-          this.setState({username, FLAG: false});
+          this.setState({username,mobile, FLAG: false});
         }
 
       }
@@ -86,7 +89,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const {FLAG,username} = this.state;
+    const {FLAG,username,mobile} = this.state;
     return (
       <View className='home-box'>
         <View className='main'>
@@ -101,6 +104,7 @@ export default class Home extends Component {
               </View>
               {/*<Image src={null} className='avatar'/>*/}
                <Text className='name'>{username}</Text>
+               <Text className='name'>{desensitizationMobile(mobile)}</Text>
               {FLAG&&<View className='btn-finish-view' style={FLAG?'margin:auto;margin-top:17PX':'margin:auto;'} onClick={this.finishPersonalData}>
                 <Text className='btn-finish-view-text'>去完善</Text>
               </View>}
