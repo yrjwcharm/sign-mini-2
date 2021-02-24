@@ -53,7 +53,14 @@ const PersonalAct = () => {
     console.log(333,startTime1,endTime1);
     if (isEmpty(actTopic)) {
       Taro.showToast({
-        title: '签到主题不能为空',
+        title: '活动名称不能为空',
+        icon: 'none'
+      })
+      return;
+    }
+    if(actTopic.length>10){
+      Taro.showToast({
+        title: '活动名称不能超过10个字符',
         icon: 'none'
       })
       return;
@@ -132,9 +139,9 @@ const PersonalAct = () => {
       provinceCode: provinceid,			// 省
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
-      detailedAddr: streetdesc,	// 详细地址
-      callingFlag,				// 是否叫号  0是 1否
-      timeIntervalFlag				// 是否开启时间区间   0是 1否
+      detailedAddr:area,	// 详细地址
+      // callingFlag,				// 是否叫号  0是 1否
+      timeIntervalFlag:timeIntervalFlag==0?1:0				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
       Taro.navigateTo({
@@ -298,7 +305,7 @@ const PersonalAct = () => {
       <View className='create-sign-act-main'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
-        }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
+        }} label='活动名称' placeholder='请输入活动名称(10个字以内)'/>
         <Picker mode='date' start={moment().format('YYYY-MM-DD')} onChange={showStartDatePicker}>
           <View className='layout'>
             <View className='layout-fl'>
@@ -398,16 +405,16 @@ const PersonalAct = () => {
           </View>
         </View>
         <View className='line'/>
-        <View className='layout' onClick={switchCall}>
-          <View className='layout-fl'>
-            <View style='display:flex;flex:1;flex-direction:row;align-items:center'>
-              <Text style='color:#333;font-size:14PX;margin-right:43PX'>叫号系统</Text>
-              <Input disabled={true} type='text' style='flex:1' className='list-row-input' placeholder='签到成功后电脑端叫号'/>
-            </View>
-            <Image src={callingFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>
-          </View>
-        </View>
-        <View className='line'/>
+        {/*<View className='layout' onClick={switchCall}>*/}
+        {/*  <View className='layout-fl'>*/}
+        {/*    <View style='display:flex;flex:1;flex-direction:row;align-items:center'>*/}
+        {/*      <Text style='color:#333;font-size:14PX;margin-right:43PX'>叫号系统</Text>*/}
+        {/*      <Input disabled={true} type='text' style='flex:1' className='list-row-input' placeholder='签到成功后电脑端叫号'/>*/}
+        {/*    </View>*/}
+        {/*    <Image src={callingFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>*/}
+        {/*  </View>*/}
+        {/*</View>*/}
+        {/*<View className='line'/>*/}
         <View style='margin-top:10PX;padding-left:20PX'>
           <Text
             style='font-family: PingFangSC-Regular;font-size: 14PX;color: #999999;letter-spacing: 0.18px;'>叫号系统需要外接设备，才能呼叫号源</Text>

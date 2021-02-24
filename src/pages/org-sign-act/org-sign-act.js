@@ -53,7 +53,14 @@ const OrgSignAct = () => {
     console.log(333,startTime1,endTime1);
     if (isEmpty(actTopic)) {
       Taro.showToast({
-        title: '签到主题不能为空',
+        title: '活动名称不能为空',
+        icon: 'none'
+      })
+      return;
+    }
+    if(actTopic.length>10){
+      Taro.showToast({
+        title: '活动名称不能超过10个字符',
         icon: 'none'
       })
       return;
@@ -134,9 +141,9 @@ const OrgSignAct = () => {
       provinceCode: provinceid,			// 省
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
-      detailedAddr: streetdesc,	// 详细地址
-      callingFlag,				// 是否叫号  0是 1否
-      timeIntervalFlag				// 是否开启时间区间   0是 1否
+      detailedAddr:area,	// 详细地址
+      callingFlag:callingFlag==0?1:0,				// 是否叫号  0是 1否
+      timeIntervalFlag:timeIntervalFlag==0?1:0				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
       Taro.navigateTo({
@@ -300,7 +307,7 @@ const OrgSignAct = () => {
       <View className='create-sign-act-main'>
         <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setActTopic(e.detail.value);
-        }} label='签到主题' placeholder='请输入主题名称(10个字以内)'/>
+        }} label='活动名称' placeholder='请输入活动名称(10个字以内)'/>
         <Picker mode='date' start={moment().format('YYYY-MM-DD')} onChange={showStartDatePicker}>
           <View className='layout'>
             <View className='layout-fl'>
