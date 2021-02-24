@@ -107,7 +107,7 @@ const SignQrCode = () => {
           </View>
           <View style='margin-top:29PX'>
             <Text
-              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #999;letter-spacing: 0.18PX;'>有效期：{startDate}至{endDate}</Text>
+              style='font-family: PingFangSC-Regular;font-size: 13PX;color: #999;letter-spacing: 0.18PX;'>有效期：{startDate.substring(0,startDate.indexOf(' '))}至{endDate.substring(0,endDate.indexOf(' '))}</Text>
           </View>
         </View>
       </View>

@@ -148,7 +148,7 @@ const CreateSignAct = () => {
     })
     if (res.code == 200) {
       Taro.navigateTo({
-        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate}&endDate=${endDate}`
+        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate+` 00:00:00`}&endDate=${endDate+` 00:00:00`}`
       })
     }
     Taro.hideLoading();
@@ -235,7 +235,7 @@ const CreateSignAct = () => {
     })
   }
   const switchSign = () => {
-    if (timeIntervalFlag === 1) {
+    if (timeIntervalFlag == 1) {
       setTimeIntervalFlag(0);
     } else {
       setTimeIntervalFlag(1);
@@ -249,7 +249,7 @@ const CreateSignAct = () => {
 
   }
   const switchCall = () => {
-    if (callingFlag === 1) {
+    if (callingFlag == 1) {
       setCallingFlag(0);
     } else {
       setCallingFlag(1);
@@ -428,7 +428,7 @@ const CreateSignAct = () => {
         <View style='display:flex;margin-top:15PX'>
           <View style=' margin:auto; display:flex;align-items:center'>
             <Text
-              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户同时最多可以创建3个服务码，</Text>
+              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户同时最多可以创建3个活动，</Text>
             <Text
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>
           </View>
