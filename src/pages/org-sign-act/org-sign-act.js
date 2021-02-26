@@ -447,7 +447,7 @@ const OrgSignAct = () => {
             <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
           </View>
           <View className='line'/>
-          <View style='padding-left:20PX;'>
+          <View style='padding:20PX;'>
             <View style='display:flex;flex-direction:row;align-items:center'>
               <Image src={Phone} style='width:17PX;height:13PX'/>
               <Text style='color:#333;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>

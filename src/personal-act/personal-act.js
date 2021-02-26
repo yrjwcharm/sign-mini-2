@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
+import {Button, Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import ListRow from "../components/ListRow";
 import '../components/ListRow.scss'
@@ -15,7 +15,9 @@ import Api from "../config/api";
 import {isEmpty} from "../utils/EmptyUtil";
 import {compareDate,compareTime} from "../utils/Common";
 import moment from 'moment'
-
+import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
+import Email from '@assets/email.png';
+import Phone from '@assets/phone.png';
 const PersonalAct = () => {
   const [actTopic, setActTopic] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -38,6 +40,7 @@ const PersonalAct = () => {
   const [index, setIndex] = useState(0);
   const [startTime, setStateTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [visible,setVisible] = useState(false);
   useEffect(() => {
     const {isIphoneX} = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
@@ -423,10 +426,30 @@ const PersonalAct = () => {
             <Text
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户同时最多可以创建3个活动，</Text>
             <Text
+              onClick={()=>setVisible(true)}
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>
           </View>
         </View>
       </View>
+      <AtModal isOpened={visible} customStyle='border-radius:5PX'>
+        <AtModalContent>
+          <View style='display:flex;height:45PX;'>
+            <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
+          </View>
+          <View className='line'/>
+          <View style='padding:20PX;'>
+            <View style='display:flex;flex-direction:row;align-items:center'>
+              <Image src={Phone} style='width:17PX;height:13PX'/>
+              <Text style='color:#333;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
+            </View>
+            <View>
+              <Image src={Email} style='width:17PX;height:13PX'/>
+              <Text style='color:#333;font-size:14PX;margin-left:10PX'>wangyanlong@sinosoft.com.cn</Text>
+            </View>
+          </View>
+        </AtModalContent>
+        <AtModalAction> <Button style='color:#06B48D' onClick={() => setVisible(false)}>知道了</Button> </AtModalAction>
+      </AtModal>
     </ScrollView>
   )
 

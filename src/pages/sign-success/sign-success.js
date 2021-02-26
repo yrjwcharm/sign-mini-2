@@ -16,9 +16,9 @@ const  SignSuccess =()=>{
 
   },[])
   const back =()=>{
-      Taro.navigateBack({
-        delta:1
-      })
+    Taro.reLaunch({
+      url:'/pages/index/index'
+    })
   }
   return(
     <View className='sign-success-box'>

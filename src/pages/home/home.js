@@ -98,7 +98,6 @@ export default class Home extends Component {
 
   render() {
     const {FLAG, username, mobile,signTimes,latestSignTime} = this.state;
-    let time = latestSignTime&&moment(latestSignTime).format('hh:mm');
     return (
       <View className='home-box'>
         <View className='home-main'>
@@ -128,11 +127,11 @@ export default class Home extends Component {
             </View>
           </View>
           <View style='display:flex;flex-direction:column;margin-top:60PX;'>
-            <Text style='color:#999;font-size:14PX;text-align:center;' onClick={()=>Taro.navigateTo({url:'/pages/my-sign/my-sign'})}>今日已签到0次</Text>
+            <Text style='color:#999;font-size:14PX;text-align:center;' onClick={()=>Taro.navigateTo({url:'/pages/my-sign/my-sign'})}>今日已签到{signTimes}次</Text>
             {signTimes!=0&& <View style='display:flex;flex-direction:column;align-items:center;' onClick={()=>Taro.navigateTo({url:'/pages/my-sign/my-sign'})}>
               <View style='margin:5PX 0;display:flex;flex-direction:row;align-items:center'>
                 <Image src={Sign} style='width:16PX;height:16PX'/>
-                <Text style='margin-left:5PX;margin-right:5PX;  color:#999;font-size:14PX;'>最近一次{time}</Text>
+                <Text style='margin-left:5PX;margin-right:5PX;  color:#999;font-size:14PX;'>最近一次{latestSignTime}</Text>
                 <Image src={Forward} style='width:7PX;height:14PX'/>
               </View>
             </View>}
