@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
+import {Button, Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import ListRow from "../../components/ListRow";
 import '../../components/ListRow.scss'
 import './create-sign-act.scss'
+import Email from '@assets/email.png';
+import Phone from '@assets/phone.png';
 import Location from '@assets/location.png'
 import Decrease from '@assets/decrease.png';
 import Increase from '@assets/increase.png';
@@ -15,6 +17,7 @@ import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {compareDate,compareTime} from "../../utils/Common";
 import moment from 'moment'
+import {AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
 
 const CreateSignAct = () => {
   const [actTopic, setActTopic] = useState('');
@@ -30,14 +33,15 @@ const CreateSignAct = () => {
   const [endTime2, setEndTime2] = useState('');
   const [endTime3, setEndTime3] = useState('');
   const [streetdesc, setStreetDesc] = useState('');
-  const [timeIntervalFlag, setTimeIntervalFlag] = useState("1");
-  const [callingFlag, setCallingFlag] = useState("1");
+  const [timeIntervalFlag, setTimeIntervalFlag] = useState("0");
+  const [callingFlag, setCallingFlag] = useState("0");
   const [provinceid, setProvinceId] = useState('');
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
   const [index, setIndex] = useState(0);
   const [startTime, setStateTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [visible,setVisible]= useState(false);
   useEffect(() => {
     const {isIphoneX} = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
@@ -338,11 +342,11 @@ const CreateSignAct = () => {
         <View className='layout' onClick={switchSign}>
           <View className='layout-fl'>
             <Text style='color:#333;font-size:14PX;margin-right:43PX'>签到时间区间</Text>
-            <Image src={timeIntervalFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>
+            <Image src={timeIntervalFlag == 1 ? Open : Close} style='width:45PX;height:22PX'/>
           </View>
         </View>
         <View className='line' style='margin-left:20PX;margin-right:20PX'/>
-        {timeIntervalFlag == 0 && timeArr.length !== 0 && timeArr.map((item, index) => {
+        {timeIntervalFlag == 1 && timeArr.length !== 0 && timeArr.map((item, index) => {
           let time = moment().format('hh:mm');
           return (
             <View style='display:flex;flex-direction:column;'>
@@ -389,7 +393,7 @@ const CreateSignAct = () => {
 
           )
         })}
-        {timeIntervalFlag == 0 && <View style='display:flex;height:40PX;background:#fff;' onClick={addSignTime}>
+        {timeIntervalFlag == 1 && <View style='display:flex;height:45PX;background:#fff;' onClick={addSignTime}>
           <View style='display:flex;align-items:center;margin:auto;'>
             <Image src={Increase} style='width:20PX;height:20PX'/>
             <Text
@@ -414,7 +418,7 @@ const CreateSignAct = () => {
               <Text style='color:#333;font-size:14PX;margin-right:43PX'>叫号系统</Text>
               <Input disabled={true} type='text' style='flex:1' className='list-row-input' placeholder='签到成功后电脑端叫号'/>
             </View>
-            <Image src={callingFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>
+            <Image src={callingFlag == 1 ? Open : Close} style='width:45PX;height:22PX'/>
           </View>
         </View>
         <View className='line'/>
@@ -430,10 +434,29 @@ const CreateSignAct = () => {
             <Text
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户同时最多可以创建3个活动，</Text>
             <Text
+              onClick={()=>setVisible(true)}
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>
           </View>
         </View>
       </View>
+      <AtModal isOpened={visible} customStyle='border-radius:5PX'>
+        <AtModalContent>
+          <View style='display:flex;height:45PX;'>
+            <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
+          </View>
+          <View style='padding-left:20PX;'>
+            <View style='display:flex;flex-direction:row;align-items:center'>
+              <Image src={Phone} style='width:17PX;height:13PX'/>
+              <Text style='color:#333;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
+            </View>
+            <View>
+              <Image src={Email} style='width:17PX;height:13PX'/>
+              <Text style='color:#333;font-size:14PX;margin-left:10PX'>wangyanlong@sinosoft.com.cn</Text>
+            </View>
+          </View>
+        </AtModalContent>
+        <AtModalAction> <Button style='color:#06B48D' onClick={() => setVisible(false)}>知道了</Button> </AtModalAction>
+      </AtModal>
     </ScrollView>
   )
 

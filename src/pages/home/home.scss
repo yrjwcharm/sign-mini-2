@@ -5,9 +5,11 @@
   background: #f5f6f9;
   height: 100%;
 }
-//.main{
-//  padding-top: 17PX;
-//}
+.home-main{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .banner{
   width: 100%;
   height: 146PX;
@@ -56,6 +58,7 @@
   width: 50PX;
   height:50PX;
   border-radius: 25PX;
+  overflow: hidden;
 }
 .btn-finish-view{
   margin-top: 6PX;
@@ -81,7 +84,6 @@
 }
 .scan-qrcode-view{
   display: flex;
-  margin-top: 52PX;
 }
 
 .scan-qrcode{

@@ -49,3 +49,7 @@ export async  function updateCompanyInfoApi(payload){
 export async  function  getActQrcodeInfoApi(payload){
   return request.get(Api.getActQrWeiMaInfo+`?activityId=${payload}`)
 }
+
+export async  function  getSignTimesApi(payload){
+  return request.get(Api.getSignTimes+`?userId=${payload}`)
+}

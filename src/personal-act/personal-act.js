@@ -30,8 +30,8 @@ const PersonalAct = () => {
   const [endTime2, setEndTime2] = useState('');
   const [endTime3, setEndTime3] = useState('');
   const [streetdesc, setStreetDesc] = useState('');
-  const [timeIntervalFlag, setTimeIntervalFlag] = useState("1");
-  const [callingFlag, setCallingFlag] = useState("1");
+  const [timeIntervalFlag, setTimeIntervalFlag] = useState("0");
+  const [callingFlag, setCallingFlag] = useState("0");
   const [provinceid, setProvinceId] = useState('');
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
@@ -335,11 +335,11 @@ const PersonalAct = () => {
         <View className='layout' onClick={switchSign}>
           <View className='layout-fl'>
             <Text style='color:#333;font-size:14PX;margin-right:43PX'>签到时间区间</Text>
-            <Image src={timeIntervalFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>
+            <Image src={timeIntervalFlag == 1 ? Open :Close } style='width:45PX;height:22PX'/>
           </View>
         </View>
         <View className='line' style='margin-left:20PX;margin-right:20PX'/>
-        {timeIntervalFlag == 0 && timeArr.length !== 0 && timeArr.map((item, index) => {
+        {timeIntervalFlag == 1 && timeArr.length !== 0 && timeArr.map((item, index) => {
           let time = moment().format('hh:mm');
           return (
             <View style='display:flex;flex-direction:column;'>
@@ -386,7 +386,7 @@ const PersonalAct = () => {
 
           )
         })}
-        {timeIntervalFlag == 0 && <View style='display:flex;height:40PX;background:#fff;' onClick={addSignTime}>
+        {timeIntervalFlag == 1 && <View style='display:flex;height:45PX;background:#fff;' onClick={addSignTime}>
           <View style='display:flex;align-items:center;margin:auto;'>
             <Image src={Increase} style='width:20PX;height:20PX'/>
             <Text
@@ -411,14 +411,10 @@ const PersonalAct = () => {
         {/*      <Text style='color:#333;font-size:14PX;margin-right:43PX'>叫号系统</Text>*/}
         {/*      <Input disabled={true} type='text' style='flex:1' className='list-row-input' placeholder='签到成功后电脑端叫号'/>*/}
         {/*    </View>*/}
-        {/*    <Image src={callingFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>*/}
+        {/*    <Image src={callingFlag == 0 ? Open : Close} style='width:45PX;height:22PX'/>*/}
         {/*  </View>*/}
         {/*</View>*/}
         {/*<View className='line'/>*/}
-        <View style='margin-top:10PX;padding-left:20PX'>
-          <Text
-            style='font-family: PingFangSC-Regular;font-size: 14PX;color: #999999;letter-spacing: 0.18px;'>叫号系统需要外接设备，才能呼叫号源</Text>
-        </View>
         <View className='btn-next-view' onClick={generateSign}>
           <Text className='btn-next-text'>生成签到码</Text>
         </View>

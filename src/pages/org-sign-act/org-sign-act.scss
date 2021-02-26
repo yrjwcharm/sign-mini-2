@@ -1,5 +1,6 @@
 @import "~taro-ui/dist/style/components/calendar.scss";
 @import "~taro-ui/dist/style/components/list.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
 
 .create-sign-act-box{
   display: flex;
@@ -10,7 +11,7 @@
 }
 .layout{
   display: flex;
-  height: 40PX;
+  height: 45PX;
   background: #fff;
   flex-direction: column;
   justify-content: center;
@@ -35,7 +36,7 @@
   margin-right: 20PX;
   flex-direction: row;
   justify-content: space-between;
-  height: 40PX;
+  height: 45PX;
   background: #06B48D;
   border-radius: 20PX;
 }
@@ -47,7 +48,7 @@
   letter-spacing: 0.18px;
 }
 .switch{
-  width: 40PX;
+  width: 45PX;
   height:22PX
 }
 .location{

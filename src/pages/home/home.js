@@ -1,19 +1,23 @@
 import React, {Component} from "react";
 import Taro from '@tarojs/taro';
-import {Text, View} from '@tarojs/components'
+import {Image, Text, View} from '@tarojs/components'
 import './home.scss'
-import {getUserInfoApi, sign} from "../../services/SyncRequest";
+import {getSignTimesApi, getUserInfoApi, sign} from "../../services/SyncRequest";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {login, wxLogin} from "../../services/user";
 import {desensitizationMobile} from "../../utils/Common";
-
+import Sign from '@assets/sign.svg'
+import Forward from '@assets/forward.png'
+import moment  from "moment";
 export default class Home extends Component {
   constructor() {
     super();
     this.state = {
-       username:'',
-       FLAG:false,
-      mobile:'',
+      username: '',
+      FLAG: false,
+      mobile: '',
+      signTimes:0,
+      latestSignTime:'',
     }
   }
 
@@ -24,28 +28,32 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    this.getUserInfo();
+    this._initData();
   }
 
-  getUserInfo = async () => {
+  _initData = async () => {
     const res = await login();
     const _res = await wxLogin(res.code);
-    if(_res.code==200) {
-      const {openId} = _res.data;
-      const res = await getUserInfoApi(openId);
-      console.log(333,res);
-      if (res.code == 200) {
-        const {username,mobile} = res.data;
+    const {openId,userId} = _res.data;
+    const result = await getUserInfoApi(openId);
+    const _result= await getSignTimesApi(userId);
+
+    if (_res.code == 200) {
+      if (result.code == 200) {
+        const {username, mobile} = result.data;
         if (isEmpty(username)) {
-          this.setState({username,mobile, FLAG: true});
+          this.setState({username, mobile, FLAG: true});
         } else {
-          this.setState({username,mobile, FLAG: false});
+          this.setState({username, mobile, FLAG: false});
         }
 
       }
+      if(_result.code==200){
+        const {todaySignCount,recentSignDate} = _result.data;
+        this.setState({latestSignTime:recentSignDate,signTimes:todaySignCount})
+      }
+
     }
-
-
   }
 
 
@@ -89,10 +97,11 @@ export default class Home extends Component {
   }
 
   render() {
-    const {FLAG,username,mobile} = this.state;
+    const {FLAG, username, mobile,signTimes,latestSignTime} = this.state;
+    let time = latestSignTime&&moment(latestSignTime).format('hh:mm');
     return (
       <View className='home-box'>
-        <View className='main'>
+        <View className='home-main'>
           <View className='banner'>
             <Text className='xyjsqd-text' style='margin-left:20PX'>小佑极速签到</Text>
             <Text className='scan-qrcode-text' style='margin-left:20PX'>扫码签到、后台叫号管理</Text>
@@ -103,19 +112,30 @@ export default class Home extends Component {
                 <open-data type="userAvatarUrl"></open-data>
               </View>
               {/*<Image src={null} className='avatar'/>*/}
-               <Text className='name'>{username}</Text>
-               <Text className='name'>{desensitizationMobile(mobile)}</Text>
-              {FLAG&&<View className='btn-finish-view' style={FLAG?'margin:auto;margin-top:17PX':'margin:auto;'} onClick={this.finishPersonalData}>
+              <Text className='name'>{username}</Text>
+              <Text className='name'>{desensitizationMobile(mobile)}</Text>
+              {FLAG && <View className='btn-finish-view' style={FLAG ? 'margin:auto;margin-top:17PX' : 'margin:auto;'}
+                             onClick={this.finishPersonalData}>
                 <Text className='btn-finish-view-text'>去完善</Text>
               </View>}
             </View>
           </View>
         </View>
-        <View style='display:flex;flex:1;flex-direction:column;'>
-          <View className='scan-qrcode-view' style='margin:auto'>
+        <View style='display:flex;flex:1;flex-direction:column;margin-bottom:50PX'>
+          <View className='scan-qrcode-view'>
             <View className='scan-qrcode' onClick={this.scanQrCode}>
               <Text className='scan-dj'>扫码签到</Text>
             </View>
+          </View>
+          <View style='display:flex;flex-direction:column;margin-top:60PX;'>
+            <Text style='color:#999;font-size:14PX;text-align:center;' onClick={()=>Taro.navigateTo({url:'/pages/my-sign/my-sign'})}>今日已签到0次</Text>
+            {signTimes!=0&& <View style='display:flex;flex-direction:column;align-items:center;' onClick={()=>Taro.navigateTo({url:'/pages/my-sign/my-sign'})}>
+              <View style='margin:5PX 0;display:flex;flex-direction:row;align-items:center'>
+                <Image src={Sign} style='width:16PX;height:16PX'/>
+                <Text style='margin-left:5PX;margin-right:5PX;  color:#999;font-size:14PX;'>最近一次{time}</Text>
+                <Image src={Forward} style='width:7PX;height:14PX'/>
+              </View>
+            </View>}
           </View>
         </View>
       </View>

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
+import {Button, Image, Input, Picker, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import ListRow from "../../components/ListRow";
 import '../../components/ListRow.scss'
 import './org-sign-act.scss'
+import Email from '@assets/email.png';
+import Phone from '@assets/phone.png';
 import Location from '@assets/location.png'
 import Decrease from '@assets/decrease.png';
 import Increase from '@assets/increase.png';
@@ -13,8 +15,9 @@ import Calendar from '@assets/calendar.png'
 import {getCompanyInfoApi, saveSignAct} from "../../services/SyncRequest";
 import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
-import {compareDate,compareTime} from "../../utils/Common";
+import {compareDate, compareTime} from "../../utils/Common";
 import moment from 'moment'
+import {AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
 
 const OrgSignAct = () => {
   const [actTopic, setActTopic] = useState('');
@@ -30,14 +33,15 @@ const OrgSignAct = () => {
   const [endTime2, setEndTime2] = useState('');
   const [endTime3, setEndTime3] = useState('');
   const [streetdesc, setStreetDesc] = useState('');
-  const [timeIntervalFlag, setTimeIntervalFlag] = useState("1");
-  const [callingFlag, setCallingFlag] = useState("1");
+  const [timeIntervalFlag, setTimeIntervalFlag] = useState("0");
+  const [callingFlag, setCallingFlag] = useState("0");
   const [provinceid, setProvinceId] = useState('');
   const [cityid, setCityId] = useState('');
   const [districtid, setDistrictId] = useState('');
   const [index, setIndex] = useState(0);
   const [startTime, setStateTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     const {isIphoneX} = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
@@ -50,7 +54,7 @@ const OrgSignAct = () => {
 
   }
   const generateSign = async () => {
-    console.log(333,timeIntervalFlag);
+    console.log(333, timeIntervalFlag);
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '活动名称不能为空',
@@ -58,7 +62,7 @@ const OrgSignAct = () => {
       })
       return;
     }
-    if(actTopic.length>10){
+    if (actTopic.length > 10) {
       Taro.showToast({
         title: '活动名称不能超过10个字符',
         icon: 'none'
@@ -86,17 +90,8 @@ const OrgSignAct = () => {
       })
       return;
     }
-    if(!isEmpty(startTime1)&&!isEmpty(endTime1)){
-        if(!compareTime(startTime1,endTime1)){
-          Taro.showToast({
-            title: '开始时间不能晚于结束时间',
-            icon: 'none',
-          })
-          return;
-        }
-    }
-    if(!isEmpty(startTime2)&&!isEmpty(endTime2)){
-      if(!compareTime(startTime2,endTime2)){
+    if (!isEmpty(startTime1) && !isEmpty(endTime1)) {
+      if (!compareTime(startTime1, endTime1)) {
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -104,8 +99,17 @@ const OrgSignAct = () => {
         return;
       }
     }
-    if(!isEmpty(startTime3)&&!isEmpty(endTime3)){
-      if(!compareTime(startTime2,endTime2)){
+    if (!isEmpty(startTime2) && !isEmpty(endTime2)) {
+      if (!compareTime(startTime2, endTime2)) {
+        Taro.showToast({
+          title: '开始时间不能晚于结束时间',
+          icon: 'none',
+        })
+        return;
+      }
+    }
+    if (!isEmpty(startTime3) && !isEmpty(endTime3)) {
+      if (!compareTime(startTime2, endTime2)) {
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -141,13 +145,13 @@ const OrgSignAct = () => {
       provinceCode: provinceid,			// 省
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
-      detailedAddr:area,	// 详细地址
+      detailedAddr: area,	// 详细地址
       callingFlag,				// 是否叫号  0是 1否
       timeIntervalFlag				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
       Taro.navigateTo({
-        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate+` 00:00:00`}&endDate=${endDate+` 00:00:00`}`
+        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate + ` 00:00:00`}&endDate=${endDate + ` 00:00:00`}`
       })
     }
     Taro.hideLoading();
@@ -255,13 +259,13 @@ const OrgSignAct = () => {
     }
   }
   const decreaseSign = (index) => {
-    if(index===0){
+    if (index === 0) {
       setStartTime1('');
       setEndTime1('');
-    }else if(index===1){
+    } else if (index === 1) {
       setStartTime2('');
       setEndTime2('');
-    }else{
+    } else {
       setStartTime3('');
       setEndTime3('')
     }
@@ -285,23 +289,24 @@ const OrgSignAct = () => {
   }
 
   const showStartTimePicker = (e) => {
-    setStartTime1(e.detail.value+`:00`);
+    setStartTime1(e.detail.value + `:00`);
   }
   const showStartTimePicker1 = (e) => {
-    setStartTime2(e.detail.value+`:00`);
+    setStartTime2(e.detail.value + `:00`);
   }
   const showStartTimePicker2 = (e) => {
-    setStartTime3(e.detail.value+`:00`);
+    setStartTime3(e.detail.value + `:00`);
   }
   const showEndTimePicker = (e) => {
-    setEndTime1(e.detail.value+`:00`);
+    setEndTime1(e.detail.value + `:00`);
   }
   const showEndTimePicker1 = (e) => {
-    setEndTime2(e.detail.value+`:00`);
+    setEndTime2(e.detail.value + `:00`);
   }
   const showEndTimePicker2 = (e) => {
-    setEndTime3(e.detail.value+`:00`);
+    setEndTime3(e.detail.value + `:00`);
   }
+
   return (
     <ScrollView scrollY={true} className='create-sign-act-box'>
       <View className='create-sign-act-main'>
@@ -337,11 +342,11 @@ const OrgSignAct = () => {
         <View className='layout' onClick={switchSign}>
           <View className='layout-fl'>
             <Text style='color:#333;font-size:14PX;margin-right:43PX'>签到时间区间</Text>
-            <Image src={timeIntervalFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>
+            <Image src={timeIntervalFlag == 1 ? Open : Close} style='width:45PX;height:22PX'/>
           </View>
         </View>
         <View className='line' style='margin-left:20PX;margin-right:20PX'/>
-        {timeIntervalFlag == 0 && timeArr.length !== 0 && timeArr.map((item, index) => {
+        {timeIntervalFlag == 1 && timeArr.length !== 0 && timeArr.map((item, index) => {
           let time = moment().format('hh:mm');
           return (
             <View style='display:flex;flex-direction:column;'>
@@ -351,12 +356,14 @@ const OrgSignAct = () => {
                   <View style='display:flex;flex-direction:row;flex:1'>
                     <View style='display:flex;flex-direction:column;flex:1'>
                       <Picker mode='time'
-                              value={time} onChange={index === 0 ? showStartTimePicker : index === 1 ? showStartTimePicker1 : showStartTimePicker2}>
+                              value={time}
+                              onChange={index === 0 ? showStartTimePicker : index === 1 ? showStartTimePicker1 : showStartTimePicker2}>
                         <View style='display:flex;align-items:center;flex:1'>
                           <Text
-                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
+                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index + 1}
                             开始时间</Text>
-                          <Input disabled={true} value={index===0?startTime1:index===1?startTime2:startTime3}
+                          <Input disabled={true}
+                                 value={index === 0 ? startTime1 : index === 1 ? startTime2 : startTime3}
                                  style='flex:1;color:#666;font-size:12PX;text-align:right;' type='text'
                                  placeholder={'请选择开始时间'}
                                  placeholderClass='list-row-input-placeholder1'/>
@@ -368,9 +375,9 @@ const OrgSignAct = () => {
                               onChange={index === 0 ? showEndTimePicker : index === 1 ? showEndTimePicker1 : showEndTimePicker2}>
                         <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
                           <Text
-                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
+                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index + 1}
                             结束时间</Text>
-                          <Input disabled={true} value={index===0?endTime1:index===1?endTime2:endTime3}
+                          <Input disabled={true} value={index === 0 ? endTime1 : index === 1 ? endTime2 : endTime3}
                                  style='color:#666;font-size:12PX;flex:1;text-align:right;' type='text'
                                  placeholder={'请选择结束时间'}
                                  placeholderClass='list-row-input-placeholder1'/>
@@ -388,7 +395,7 @@ const OrgSignAct = () => {
 
           )
         })}
-        {timeIntervalFlag == 0 && <View style='display:flex;height:40PX;background:#fff;' onClick={addSignTime}>
+        {timeIntervalFlag == 1 && <View style='display:flex;height:45PX;background:#fff;' onClick={addSignTime}>
           <View style='display:flex;align-items:center;margin:auto;'>
             <Image src={Increase} style='width:20PX;height:20PX'/>
             <Text
@@ -413,7 +420,7 @@ const OrgSignAct = () => {
               <Text style='color:#333;font-size:14PX;margin-right:43PX'>叫号系统</Text>
               <Input disabled={true} type='text' style='flex:1' className='list-row-input' placeholder='签到成功后电脑端叫号'/>
             </View>
-            <Image src={callingFlag == 0 ? Open : Close} style='width:40PX;height:22PX'/>
+            <Image src={callingFlag == 1 ? Open : Close} style='width:45PX;height:22PX'/>
           </View>
         </View>
         <View className='line'/>
@@ -429,10 +436,30 @@ const OrgSignAct = () => {
             <Text
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户同时最多可以创建3个活动，</Text>
             <Text
+              onClick={() => setVisible(true)}
               style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>
           </View>
         </View>
       </View>
+      <AtModal isOpened={visible} customStyle='border-radius:5PX'>
+        <AtModalContent>
+          <View style='display:flex;height:45PX;'>
+            <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
+          </View>
+          <View className='line'/>
+          <View style='padding-left:20PX;'>
+            <View style='display:flex;flex-direction:row;align-items:center'>
+              <Image src={Phone} style='width:17PX;height:13PX'/>
+              <Text style='color:#333;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
+            </View>
+            <View>
+              <Image src={Email} style='width:17PX;height:13PX'/>
+              <Text style='color:#333;font-size:14PX;margin-left:10PX'>wangyanlong@sinosoft.com.cn</Text>
+            </View>
+          </View>
+        </AtModalContent>
+        <AtModalAction> <Button style='color:#06B48D' onClick={() => setVisible(false)}>知道了</Button> </AtModalAction>
+      </AtModal>
     </ScrollView>
   )
 

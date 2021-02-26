@@ -14,7 +14,7 @@ export default {
     getCompany:wxApi+`/company/getCompanyInfo`,
     updateCompany:wxApi + `/company/updateCompanyInfo`,
     getActQrWeiMaInfo:wxApi + `/activity/getActivityQRCode`,
-    alreadySignList:wxApi + `/activity/getActivitySignList`
-
+    alreadySignList:wxApi + `/activity/getActivitySignList`,
+    getSignTimes:wxApi + `/sign/getTodaySignInfo`
 
 }
