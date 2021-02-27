@@ -8,6 +8,7 @@ import {isEmpty} from "../../utils/EmptyUtil";
 import {isMobile} from "../../utils/RegUtil";
 import Api from "../../config/api";
 import Copy from '@assets/copy.svg'
+import Location from '@assets/location.png'
 
 const OrgInfo = () => {
   const [companyId, setCompanyId] = useState('');
@@ -24,6 +25,7 @@ const OrgInfo = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [contactPhone,setContactPhone]= useState('');
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '机构信息维护'
@@ -54,6 +56,7 @@ const OrgInfo = () => {
       } = res.data || {};
       companyName && setOrgName(companyName);
       contactPhone && setPhone(contactPhone);
+      contactPhone&&setContactPhone(contactPhone),
       contactUsername && setName(contactUsername);
       companyId && setCompanyId(companyId);
       detailedAddress && setArea(detailedAddress);
@@ -66,55 +69,62 @@ const OrgInfo = () => {
     }
   }
   const edit = async () => {
-    setDisabled(false);
-    if (isEmpty(companyId)) {
-      return;
-    }
-    if (isEmpty(orgName)) {
-      Taro.showToast({
-        title: '机构名称不能为空',
-        icon: "none"
+    if (!disabled) {
+      if (isEmpty(companyId)) {
+        return;
+      }
+      if (isEmpty(orgName)) {
+        Taro.showToast({
+          title: '机构名称不能为空',
+          icon: "none"
+        })
+        return;
+      }
+      if (isEmpty(name)) {
+        Taro.showToast({
+          title: '联系人不能为空',
+          icon: 'none'
+        })
+        return;
+      }
+      if (isEmpty(phone)) {
+        Taro.showToast({
+          title: '手机号不能为空',
+          icon: 'none',
+        })
+        return;
+      }
+      if (!isMobile(phone)) {
+        Taro.showToast({
+          title: '手机号码输入有误，请重新输入',
+          icon: 'none',
+        })
+        return;
+      }
+      Taro.showLoading({
+        title: '请稍等...'
       })
-      return;
-    }
-    if (isEmpty(name)) {
-      Taro.showToast({
-        title: '联系人不能为空',
-        icon: 'none'
+      console.log(333, area, provinceid, cityid);
+      const res = await updateCompanyInfoApi({
+        companyId,
+        companyName: orgName,
+        contactUsername: name,
+        contactPhone: phone,
+        provinceCode: provinceid,
+        cityCode: cityid,					// 市编码
+        areaCode: districtid,					// 区编码
+        detailedAddress: area  // 详细地址
       })
-      return;
-    }
-    if (isEmpty(phone)) {
-      Taro.showToast({
-        title: '手机号不能为空',
-        icon: 'none',
-      })
-      return;
-    }
-    if (!isMobile(phone)) {
-      Taro.showToast({
-        title: '手机号码输入有误，请重新输入',
-        icon: 'none',
-      })
-      return;
-    }
-    Taro.showLoading({
-      title: '请稍等...'
-    })
-    const res = await updateCompanyInfoApi({
-      companyId,
-      companyName: orgName,
-      contactUsername: name,
-      contactPhone: phone,
-      provinceCode:provinceid,
-      cityCode:cityid,
-      areaCode:districtid
-    })
-    console.log(333, res);
-    if (res.code == 200) {
-      Taro.showToast({
-        title: '修改成功'
-      })
+      console.log(333, res);
+      if (res.code == 200) {
+        setDisabled(true)
+        getCompanyInfo();
+        Taro.showToast({
+          title: '修改成功'
+        })
+      }
+    }else {
+      setDisabled(false);
     }
   }
   const getLocation = () => {
@@ -225,7 +235,7 @@ const OrgInfo = () => {
           <ListRow noBorder={disabled} disabled={disabled} className='list-row-input' type='number' onInput={(e) => {
             setPhone(e.detail.value);
           }} label='联系电话' value={phone} style='margin-right:43PX' placeholder='请输入手机号码'/>
-          <View className='address-info-container'>
+          <View className='address-info-container' onClick={disabled ? null : getLocation}>
             <View className='address-info-wrap'>
               <View className='address-info-view'>
                 <View style='display:flex;alignItems:center'>
@@ -233,7 +243,7 @@ const OrgInfo = () => {
                   <Text className='select-city-text'
                         style={area === '' ? 'color:#999' : 'color:#666'}>{isEmpty(area) ? '请选择所属区域' : area}</Text>
                 </View>
-                {!disabled&&<Image src={Location} className='location'/>}
+                {!disabled && <Image src={Location} className='location'/>}
               </View>
             </View>
             {!disabled && <View className='line'/>}
@@ -241,7 +251,7 @@ const OrgInfo = () => {
           <View style='display:flex;justify-content:flex-end;margin-top:10PX; margin-right:20PX' onClick={edit}>
             <View style='display:flex;align-items:center;'>
               <Image src={Edit} style='width:12PX;height:12PX'/>
-              <Text style='color:#06B48D;font-size:14PX;margin-left:7PX'>编辑</Text>
+              <Text style='color:#06B48D;font-size:14PX;margin-left:7PX'>{disabled?'编辑':'保存'}</Text>
             </View>
           </View>
         </View>
@@ -260,14 +270,14 @@ const OrgInfo = () => {
 
             <View style='display:flex;flex-direction:row;align-items:center'>
               <Text style='color:#333;font-size:14PX;'>用户名</Text>
-              <Text style='margin-left:40PX; color:#666;font-size:14PX'>{orgName}/{phone}</Text>
+              <Text style='margin-left:50PX; color:#666;font-size:14PX'>{contactPhone}</Text>
             </View>
           </View>
           <View style='display:flex; height:45PX;flex-direction:column;justify-content:center;'>
 
             <View style='display:flex;flex-direction:row;align-items:center'>
               <Text style='color:#333;font-size:14PX;'>密码</Text>
-              <Text style='margin-left:45PX; color:#666;font-size:14PX'>{password}</Text>
+              <Text style='margin-left:60PX; color:#666;font-size:14PX'>{password}</Text>
             </View>
           </View>
         </View>

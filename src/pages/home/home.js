@@ -40,7 +40,9 @@ export default class Home extends Component {
 
     if (_res.code == 200) {
       if (result.code == 200) {
-        const {username, mobile} = result.data;
+        const {username,userId, mobile} = result.data;
+        Taro.setStorageSync('userInfo',result.data)
+        Taro.setStorageSync('userId',userId);
         if (isEmpty(username)) {
           this.setState({username, mobile, FLAG: true});
         } else {
@@ -106,7 +108,7 @@ export default class Home extends Component {
             <Text className='scan-qrcode-text' style='margin-left:20PX'>扫码签到、后台叫号管理</Text>
           </View>
           <View className='personal'>
-            <View className='basic-info-view'>
+            <View className='basic-info-view' onClick={()=>Taro.navigateTo({url:'/pages/person-data/person-data'})}>
               <View className='avatar' style='margin:auto;'>
                 <open-data type="userAvatarUrl"></open-data>
               </View>

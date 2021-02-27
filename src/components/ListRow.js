@@ -8,7 +8,7 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text' style={style}>{label}</Text>
-          <Input disabled={disabled}  style='flex:1' type={type} className={className} onInput={onInput} placeholder={placeholder}
+          <Input  disabled={disabled}  style='flex:1' type={type} className={className} onInput={onInput} placeholder={placeholder}
                  placeholderClass='list-row-input-placeholder'/>
         </View>
       </View>

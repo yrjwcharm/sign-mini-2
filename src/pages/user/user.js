@@ -14,11 +14,6 @@ const User = () => {
       title: '我的'
     })
   }, [])
-  useEffect(() => {
-    const userInfo = Taro.getStorageSync('userInfo');
-    setUserInfo(userInfo);
-
-  }, [])
   const toMyCreate=()=>{
     // if(this.state.userInfo){
       Taro.navigateTo({
@@ -36,11 +31,6 @@ const User = () => {
       url:'/pages/my-sign/my-sign'
     })
   }
-  const _goLogin = () => {
-    !userInfo && Taro.redirectTo({
-      url: '/pages/auth/login/login'
-    })
-  }
   const toOrgInfo=()=>{
     Taro.navigateTo({
       url:'/pages/org-info/org-info'
@@ -49,7 +39,7 @@ const User = () => {
   return (
     <View className='user-box'>
       <View className='user-header'>
-        <View className='user-header_wrap' onClick={_goLogin}>
+        <View className='user-header_wrap' onClick={()=>Taro.navigateTo({url:'/pages/person-data/person-data'})}>
           <View className='user-header_wrap_avatar'>
             <open-data type="userAvatarUrl"></open-data>
           </View>

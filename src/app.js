@@ -7,20 +7,7 @@ class App extends Component {
   componentWillMount() {
     this.update();
     this._getSystemInfo();
-    this._login();
   }
-  _login=async ()=>{
-    const res = await login();
-    console.log(333,res.code);
-    const _res = await wxLogin(res.code);
-    if(_res.code==200){
-      console.log(333,_res.data);
-      const {userId}=_res.data;
-      Taro.setStorageSync('userInfo',_res.data);
-      Taro.setStorageSync('userId',userId);
-    }
-  }
-
   _getSystemInfo = () => {
     Taro.getSystemInfo({
       success: function (res) {

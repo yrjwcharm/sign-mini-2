@@ -5,7 +5,6 @@ import {isEmpty} from "../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../utils/RegUtil";
 import './person-data.scss'
 import Api from '../../config/api'
-import ListRow from "../../components/ListRow";
 import  '../../components/ListRow.scss'
 import {getImgCodeApi, saveUserInfoApi} from "../../services/SyncRequest";
 const PersonData = () => {
@@ -18,12 +17,16 @@ const PersonData = () => {
   const [imgCode, setImgCode] = useState('');
   useEffect(()=>{
     const isIphoneX = Taro.getStorageSync('isIphoneX');
+    const {openId,mobile,idCard,username} = Taro.getStorageSync('userInfo');
+    console.log(333,mobile,idCard);
+    username&&setName(username);
+    mobile&&setPhone(mobile);
+    idCard&&setIdCard(idCard);
     setIsIphoneX(isIphoneX);
-    getImageCode();
+    getImageCode(openId);
   },[])
-  const getImageCode = async () => {
-    const userInfo = Taro.getStorageSync('userInfo');
-    const {openId} =userInfo;
+  const getImageCode = async (openId) => {
+
     Taro.request({
       url: Api.getImgCode+`?openId=${openId}`,
       data: {code},
@@ -115,14 +118,14 @@ const PersonData = () => {
   return (
     <View className='personal-box'>
       <View className='main'>
-        <ListRow className='list-row-input' type='text' onInput={(e) => {
+        <ListRow value={name} className='list-row-input' type='text' onInput={(e) => {
           setName(e.detail.value);
 
         }} label='姓名' style='margin-right:71PX' placeholder='请输入姓名'/>
-        <ListRow className='list-row-input' type='number' onInput={(e) => {
+        <ListRow  value={phone} className='list-row-input' type='number' onInput={(e) => {
           setPhone(e.detail.value);
         }} label='电话' style='margin-right:71PX' placeholder='请输入手机号码'/>
-        <ListRow className='list-row-input' type='idcard' onInput={(e) => {
+        <ListRow  value={idCard} className='list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
         }} label='身份证号'  style='margin-right:43PX' placeholder='请输入身份证号'/>
         <View className='list-row-container'>
@@ -153,3 +156,19 @@ const PersonData = () => {
   )
 }
 export default PersonData;
+const ListRow = (props) => {
+  const {label, placeholder, disabled, noBorder, value, style, className, type, onInput} = props;
+  return (
+    <View className='list-row-container'>
+      <View className='list-row-wrap'>
+        <View className='list-row-view'>
+          <Text className='list-row-text' style={style}>{label}</Text>
+          <Input disabled={disabled} value={value} style='flex:1' type={type} className={className} onInput={onInput}
+                 placeholder={placeholder}
+                 placeholderClass='list-row-input-placeholder'/>
+        </View>
+      </View>
+      {!noBorder && <View className='line'/>}
+    </View>
+  )
+}
