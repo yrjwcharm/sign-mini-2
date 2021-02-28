@@ -11,25 +11,18 @@ const PersonData = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [idCard, setIdCard] = useState('');
-  const [code, setCode] = useState('');
   const [verifyCode, setVerifyCode] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [imgCode, setImgCode] = useState('');
   useEffect(()=>{
     const isIphoneX = Taro.getStorageSync('isIphoneX');
-    const {openId,mobile,idCard,username} = Taro.getStorageSync('userInfo');
-    console.log(333,mobile,idCard);
-    username&&setName(username);
-    mobile&&setPhone(mobile);
-    idCard&&setIdCard(idCard);
     setIsIphoneX(isIphoneX);
-    getImageCode(openId);
+    getImageCode();
   },[])
-  const getImageCode = async (openId) => {
-
+  const getImageCode = async () => {
+    const {openId,mobile,idCard,username} = Taro.getStorageSync('userInfo');
     Taro.request({
       url: Api.getImgCode+`?openId=${openId}`,
-      data: {code},
       method: "GET",
       header: {
         'Content-Type': 'application/json',
@@ -39,6 +32,9 @@ const PersonData = () => {
       responseType: 'arraybuffer',
       success: function (res) {
         let url ='data:image/png;base64,'+Taro.arrayBufferToBase64(res.data);
+        username&&setName(username);
+        mobile&&setPhone(mobile);
+        idCard&&setIdCard(idCard);
         setImgCode(url);
       }
     })

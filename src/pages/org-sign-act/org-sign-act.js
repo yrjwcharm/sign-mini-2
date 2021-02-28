@@ -54,7 +54,6 @@ const OrgSignAct = () => {
 
   }
   const generateSign = async () => {
-    console.log(333, timeIntervalFlag);
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '活动名称不能为空',
@@ -131,6 +130,19 @@ const OrgSignAct = () => {
     const {userId} = Taro.getStorageSync('userInfo');
     const _res = await getCompanyInfoApi(userId);
     const {companyId} = _res.code == 200 ? _res.data : {};
+    console.log(333,companyId,actTopic,startDate,endDate,startTime1,
+    endTime1,
+      startTime2,
+      endTime2,
+      startTime3,
+      endTime3,
+      provinceid,
+      cityid,
+      districtid,
+      area,
+      callingFlag,
+      timeIntervalFlag
+    );
     const res = await saveSignAct({
       companyId,  // 企业id
       activityName: actTopic,			// 活动名称
@@ -153,7 +165,10 @@ const OrgSignAct = () => {
       Taro.navigateTo({
         url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate + ` 00:00:00`}&endDate=${endDate + ` 00:00:00`}`
       })
+    }else {
+      console.log(333,res)
     }
+
     Taro.hideLoading();
 
   }

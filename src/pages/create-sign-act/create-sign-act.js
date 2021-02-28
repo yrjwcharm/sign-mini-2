@@ -54,7 +54,6 @@ const CreateSignAct = () => {
 
   }
   const generateSign = async () => {
-    console.log(333,startTime1,endTime1);
     if (isEmpty(actTopic)) {
       Taro.showToast({
         title: '活动名称不能为空',
@@ -130,8 +129,10 @@ const CreateSignAct = () => {
     //   title: '请稍等...'
     // })
     const {userId} = Taro.getStorageSync('userInfo');
+    console.log(999,userId);
     const _res = await getCompanyInfoApi(userId);
     const {companyId} = _res.code == 200 ? _res.data : {};
+    console.log(222,companyId);
     const res = await saveSignAct({
       companyId,  // 企业id
       activityName: actTopic,			// 活动名称
