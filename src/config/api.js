@@ -16,6 +16,7 @@ export default {
     updateCompany:wxApi + `/sign/company/updateCompanyInfo`,
     getActQrWeiMaInfo:wxApi + `/sign/activity/getActivityQRCode`,
     alreadySignList:wxApi + `/sign/activity/getActivitySignList`,
-    getSignTimes:wxApi + `/sign/sign/getTodaySignInfo`
+    getSignTimes:wxApi + `/sign/sign/getTodaySignInfo`,
+    resetPwd:wxApi + `/sign/company/resetPasswordById`
 
 }

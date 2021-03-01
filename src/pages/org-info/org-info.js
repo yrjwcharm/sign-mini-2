@@ -1,16 +1,18 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro'
-import {Image, Input, Text, View} from "@tarojs/components";
+import {Button, Image, Input, ScrollView, Text, View} from "@tarojs/components";
 import './org-info.scss'
 import Edit from '@assets/edit.svg'
-import {getCompanyInfoApi, updateCompanyInfoApi} from "../../services/SyncRequest";
+import {getCompanyInfoApi,resetPwdApi, updateCompanyInfoApi} from "../../services/SyncRequest";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {isMobile} from "../../utils/RegUtil";
 import Api from "../../config/api";
 import Copy from '@assets/copy.svg'
 import Location from '@assets/location.png'
+import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
 
 const OrgInfo = () => {
+  const [visible,setVisible] = useState(false)
   const [companyId, setCompanyId] = useState('');
   const [area, setArea] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -25,7 +27,7 @@ const OrgInfo = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [contactPhone,setContactPhone]= useState('');
+  const [contactPhone, setContactPhone] = useState('');
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '机构信息维护'
@@ -56,7 +58,7 @@ const OrgInfo = () => {
       } = res.data || {};
       companyName && setOrgName(companyName);
       contactPhone && setPhone(contactPhone);
-      contactPhone&&setContactPhone(contactPhone),
+      contactPhone && setContactPhone(contactPhone),
       contactUsername && setName(contactUsername);
       companyId && setCompanyId(companyId);
       detailedAddress && setArea(detailedAddress);
@@ -123,7 +125,7 @@ const OrgInfo = () => {
           title: '修改成功'
         })
       }
-    }else {
+    } else {
       setDisabled(false);
     }
   }
@@ -207,6 +209,19 @@ const OrgInfo = () => {
       }
     })
   }
+  const resetPwd =async ()=>{
+    const res = await resetPwdApi({
+      companyId
+    })
+    if(res.code==200){
+      Taro.showToast({
+        title:'重置密码成功',
+        icon:'none'
+      })
+      setVisible(false);
+    }
+
+  }
   const copyUrl = () => {
     Taro.setClipboardData({
       data: backgroundUrl,
@@ -251,7 +266,7 @@ const OrgInfo = () => {
           <View style='display:flex;justify-content:flex-end;margin-top:10PX; margin-right:20PX' onClick={edit}>
             <View style='display:flex;align-items:center;'>
               <Image src={Edit} style='width:12PX;height:12PX'/>
-              <Text style='color:#06B48D;font-size:14PX;margin-left:7PX'>{disabled?'编辑':'保存'}</Text>
+              <Text style='color:#06B48D;font-size:14PX;margin-left:7PX'>{disabled ? '编辑' : '保存'}</Text>
             </View>
           </View>
         </View>
@@ -273,15 +288,33 @@ const OrgInfo = () => {
               <Text style='margin-left:50PX; color:#666;font-size:14PX'>{contactPhone}</Text>
             </View>
           </View>
-          <View style='display:flex; height:45PX;flex-direction:column;justify-content:center;'>
+          <View style='display:flex;flex-direction:column;'>
+            <View style='display:flex; height:45PX;flex-direction:column;justify-content:center;'>
 
+              <View style='display:flex;flex-direction:row;align-items:center'>
+                <Text style='color:#333;font-size:14PX;'>默认密码</Text>
+                <Text style='margin-left:60PX; color:#666;font-size:14PX'>手机号后8位</Text>
+              </View>
+            </View>
             <View style='display:flex;flex-direction:row;align-items:center'>
-              <Text style='color:#333;font-size:14PX;'>密码</Text>
-              <Text style='margin-left:60PX; color:#666;font-size:14PX'>{password}</Text>
+              <Text style='font-size:14PX;'>若您忘记修改后的密码，请</Text>
+              <Text onClick={()=>setVisible(true)} style='font-size:14PX; color:#06B48D'>重置密码</Text>
             </View>
           </View>
         </View>
       </View>
+      <AtModal isOpened={visible} customStyle='border-radius:5PX'>
+        <AtModalContent>
+          <View style='display:flex;height:45PX;'>
+            <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
+          </View>
+          <View className='line'/>
+          <View style='padding:20PX;'>
+            <Text style='font-size:14px;'>重置密码后登录密码将恢复为默认密码，为保证你的账户安全，请尽快登录叫号系统修改密码，确定重置密码？</Text>
+          </View>
+        </AtModalContent>
+        <AtModalAction> <Button onClick={()=>setVisible(false)}/> <Button style='color:#06B48D' onClick={resetPwd}>确定</Button> </AtModalAction>
+      </AtModal>
     </View>
   )
 }

@@ -53,3 +53,6 @@ export async  function  getActQrcodeInfoApi(payload){
 export async  function  getSignTimesApi(payload){
   return request.get(Api.getSignTimes+`?userId=${payload}`)
 }
+export async  function resetPwdApi(payload){
+  return request.put(Api.resetPwd,payload)
+}

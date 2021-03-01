@@ -22,7 +22,7 @@ const AlreadySign = () => {
   const [FLAG,setFLAG] = useState(false);
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
-      title: '已签约'
+      title: '已签到'
     })
   }, [])
   useEffect(() => {
