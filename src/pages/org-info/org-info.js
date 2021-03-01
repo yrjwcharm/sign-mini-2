@@ -1,9 +1,9 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import Taro from '@tarojs/taro'
-import {Button, Image, Input, ScrollView, Text, View} from "@tarojs/components";
+import {Button, Image, Input, Text, View} from "@tarojs/components";
 import './org-info.scss'
 import Edit from '@assets/edit.svg'
-import {getCompanyInfoApi,resetPwdApi, updateCompanyInfoApi} from "../../services/SyncRequest";
+import {getCompanyInfoApi, resetPwdApi, updateCompanyInfoApi} from "../../services/SyncRequest";
 import {isEmpty} from "../../utils/EmptyUtil";
 import {isMobile} from "../../utils/RegUtil";
 import Api from "../../config/api";
@@ -12,7 +12,7 @@ import Location from '@assets/location.png'
 import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
 
 const OrgInfo = () => {
-  const [visible,setVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
   const [companyId, setCompanyId] = useState('');
   const [area, setArea] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -209,14 +209,14 @@ const OrgInfo = () => {
       }
     })
   }
-  const resetPwd =async ()=>{
+  const resetPwd = async () => {
     const res = await resetPwdApi({
       companyId
     })
-    if(res.code==200){
+    if (res.code == 200) {
       Taro.showToast({
-        title:'重置密码成功',
-        icon:'none'
+        title: '重置密码成功',
+        icon: 'none'
       })
       setVisible(false);
     }
@@ -293,27 +293,31 @@ const OrgInfo = () => {
 
               <View style='display:flex;flex-direction:row;align-items:center'>
                 <Text style='color:#333;font-size:14PX;'>默认密码</Text>
-                <Text style='margin-left:60PX; color:#666;font-size:14PX'>手机号后8位</Text>
+                <Text style='margin-left:48PX; color:#666;font-size:14PX'>手机号后8位</Text>
               </View>
             </View>
-            <View style='display:flex;flex-direction:row;align-items:center'>
-              <Text style='font-size:14PX;'>若您忘记修改后的密码，请</Text>
-              <Text onClick={()=>setVisible(true)} style='font-size:14PX; color:#06B48D'>重置密码</Text>
+            <View style='display:flex; height:45PX;flex-direction:column;justify-content:center;'>
+              <View style='display:flex;flex-direction:row;align-items:center'>
+                <Text style='font-size:14PX;'>若您忘记修改后的密码，请</Text>
+                <Text onClick={() => setVisible(true)} style='margin-left:5PX; font-size:14PX; color:#06B48D'>重置密码</Text>
+              </View>
             </View>
           </View>
         </View>
       </View>
-      <AtModal isOpened={visible} customStyle='border-radius:5PX'>
+      <AtModal closeOnClickOverlay={false} isOpened={visible} customStyle='border-radius:5PX'>
         <AtModalContent>
-          <View style='display:flex;height:45PX;'>
-            <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
-          </View>
-          <View className='line'/>
+          {/*<View style='display:flex;height:45PX;'>*/}
+          {/*  <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>*/}
+          {/*</View>*/}
+          {/*<View className='line'/>*/}
           <View style='padding:20PX;'>
             <Text style='font-size:14px;'>重置密码后登录密码将恢复为默认密码，为保证你的账户安全，请尽快登录叫号系统修改密码，确定重置密码？</Text>
           </View>
         </AtModalContent>
-        <AtModalAction> <Button onClick={()=>setVisible(false)}/> <Button style='color:#06B48D' onClick={resetPwd}>确定</Button> </AtModalAction>
+        <AtModalAction> <Button onClick={() => setVisible(false)}>取消</Button> <Button style='color:#06B48D'
+                                                                            onClick={resetPwd}>确定</Button>
+        </AtModalAction>
       </AtModal>
     </View>
   )

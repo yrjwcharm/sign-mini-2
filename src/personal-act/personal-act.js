@@ -303,6 +303,14 @@ const PersonalAct = () => {
   const showEndTimePicker2 = (e) => {
     setEndTime3(e.detail.value+`:00`);
   }
+  const callPhone =()=>{
+    Taro.makePhoneCall({
+      phoneNumber: '13910955119' ,//仅为示例，并非真实的电话号码
+      success:function (res){
+
+      }
+    })
+  }
   return (
     <ScrollView scrollY={true} className='create-sign-act-box'>
       <View className='create-sign-act-main'>
@@ -431,16 +439,16 @@ const PersonalAct = () => {
           </View>
         </View>
       </View>
-      <AtModal isOpened={visible} customStyle='border-radius:5PX'>
+      <AtModal closeOnClickOverlay={false} isOpened={visible} customStyle='border-radius:5PX'>
         <AtModalContent>
           <View style='display:flex;height:45PX;'>
             <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
           </View>
           <View className='line'/>
           <View style='padding:20PX;'>
-            <View style='display:flex;flex-direction:row;align-items:center'>
+            <View style='display:flex;flex-direction:row;align-items:center' onClick={callPhone}>
               <Image src={Phone} style='width:17PX;height:13PX'/>
-              <Text style='color:#333;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
+              <Text style='text-decoration:underline; color:#06B48D;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
             </View>
             <View>
               <Image src={Email} style='width:17PX;height:13PX'/>
