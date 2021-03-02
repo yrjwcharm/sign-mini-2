@@ -10,7 +10,7 @@ import Api from "../../config/api";
 import Copy from '@assets/copy.svg'
 import Location from '@assets/location.png'
 import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
-
+const {tdist} = require("@/common/js/utils");
 const OrgInfo = () => {
   const [visible, setVisible] = useState(false)
   const [companyId, setCompanyId] = useState('');
@@ -61,13 +61,30 @@ const OrgInfo = () => {
       contactPhone && setContactPhone(contactPhone),
       contactUsername && setName(contactUsername);
       companyId && setCompanyId(companyId);
-      detailedAddress && setArea(detailedAddress);
+      detailedAddress && setStreetDesc(detailedAddress);
       areaCode && setDistrictId(areaCode),
       cityCode && setCityId(cityid),
       url && setBackgroundUrl(url);
       password && setPassword(password)
       provinceCode && setProvinceId(provinceCode);
-
+      let provinceName ='',cityName='',areaName='';
+      tdist.getLev1().forEach(p => {
+        if (p.id === provinceCode) {
+          provinceName = p.text;
+          tdist.getLev2(p.id).forEach(c => {
+            if (c.id === cityCode) {
+              cityName = c.text
+              tdist.getLev3(c.id).forEach(q => {
+                  if (q.id === areaCode) {
+                    areaName = q.text
+                  }
+                }
+              )
+            }
+          })
+        }
+      })
+      (provinceCode&&cityCode&&areaCode)&&setArea(provinceName+cityName+areaName);
     }
   }
   const edit = async () => {
@@ -216,7 +233,6 @@ const OrgInfo = () => {
     if (res.code == 200) {
       Taro.showToast({
         title: '重置密码成功',
-        icon: 'none'
       })
       setVisible(false);
     }
@@ -263,6 +279,9 @@ const OrgInfo = () => {
             </View>
             {!disabled && <View className='line'/>}
           </View>
+          <ListRow style='margin-right:43PX'noBorder={disabled} value={streetdesc} className='list-row-input' type='number' onInput={(e) => {
+            setStreetDesc(e.detail.value);
+          }} label='详细地址' placeholder='街道、楼牌号等'/>
           <View style='display:flex;justify-content:flex-end;margin-top:10PX; margin-right:20PX' onClick={edit}>
             <View style='display:flex;align-items:center;'>
               <Image src={Edit} style='width:12PX;height:12PX'/>
