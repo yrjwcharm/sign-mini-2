@@ -10,9 +10,11 @@ import Api from "../../config/api";
 import Copy from '@assets/copy.svg'
 import Location from '@assets/location.png'
 import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
-const {tdist} = require("@/common/js/utils");
+import {tdist} from "../../common/js/utils";
+
 const OrgInfo = () => {
   const [visible, setVisible] = useState(false)
+  const [data,setData] = useState({});
   const [companyId, setCompanyId] = useState('');
   const [area, setArea] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -56,6 +58,7 @@ const OrgInfo = () => {
         password,
         url
       } = res.data || {};
+      res.data&&setData(res.data);
       companyName && setOrgName(companyName);
       contactPhone && setPhone(contactPhone);
       contactPhone && setContactPhone(contactPhone),
@@ -65,26 +68,28 @@ const OrgInfo = () => {
       areaCode && setDistrictId(areaCode),
       cityCode && setCityId(cityid),
       url && setBackgroundUrl(url);
-      password && setPassword(password)
+      password && setPassword(password);
       provinceCode && setProvinceId(provinceCode);
-      let provinceName ='',cityName='',areaName='';
-      tdist.getLev1().forEach(p => {
-        if (p.id === provinceCode) {
-          provinceName = p.text;
-          tdist.getLev2(p.id).forEach(c => {
-            if (c.id === cityCode) {
-              cityName = c.text
-              tdist.getLev3(c.id).forEach(q => {
-                  if (q.id === areaCode) {
-                    areaName = q.text
+      let provinceName = '', cityName = '', areaName = '';
+      if (provinceCode && cityCode && areaCode) {
+        tdist.getLev1().forEach(p => {
+          if (p.id == provinceCode) {
+            provinceName = p.text;
+            tdist.getLev2(p.id).forEach(c => {
+              if (c.id == cityCode) {
+                cityName = c.text
+                tdist.getLev3(c.id).forEach(q => {
+                    if (q.id == areaCode) {
+                      areaName = q.text
+                    }
                   }
-                }
-              )
-            }
-          })
-        }
-      })
-      (provinceCode&&cityCode&&areaCode)&&setArea(provinceName+cityName+areaName);
+                )
+              }
+            })
+          }
+        })
+        setArea(provinceName + cityName + areaName);
+      }
     }
   }
   const edit = async () => {
@@ -279,7 +284,8 @@ const OrgInfo = () => {
             </View>
             {!disabled && <View className='line'/>}
           </View>
-          <ListRow style='margin-right:43PX'noBorder={disabled} value={streetdesc} className='list-row-input' type='number' onInput={(e) => {
+          <ListRow style='margin-right:43PX' noBorder={disabled} value={streetdesc} className='list-row-input'
+                   type='text' onInput={(e) => {
             setStreetDesc(e.detail.value);
           }} label='详细地址' placeholder='街道、楼牌号等'/>
           <View style='display:flex;justify-content:flex-end;margin-top:10PX; margin-right:20PX' onClick={edit}>
@@ -289,22 +295,21 @@ const OrgInfo = () => {
             </View>
           </View>
         </View>
-        <View
+        {Object.keys(data).length!==0&&<View
           style=' margin-top:11PX;padding-top:20PX;display:flex;background-color:#fff;flex-direction:column;padding-left:20PX;padding-right:20PX'>
           <View style='display:flex;height:45PX; flex-direction:column;justify-content:center;'>
-            <View style='display:flex;flex-direction:row;align-items:center'>
-              <View style='display:flex;flex-direction:row;align-items:center'>
-                <Text style='color:#333;font-size:14PX;'>后台登录地址</Text>
-                <Text style='margin-left:30PX; color:#666;font-size:14PX'>{backgroundUrl}</Text>
-              </View>
-              <Image src={Copy} onClick={copyUrl} style='width:16PX;height:16PX'/>
+            <View style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
+              <Text style='color:#333;font-size:14PX;'>后台登录地址</Text>
+              <Text style='color:#666;font-size:14PX'>{backgroundUrl}</Text>
+              <Image src={Copy} onClick={copyUrl} style='margin-left:5PX;width:16PX;height:16PX'/>
             </View>
           </View>
+
           <View style='display:flex;height:45PX;flex-direction:column;justify-content:center;'>
 
             <View style='display:flex;flex-direction:row;align-items:center'>
               <Text style='color:#333;font-size:14PX;'>用户名</Text>
-              <Text style='margin-left:50PX; color:#666;font-size:14PX'>{contactPhone}</Text>
+              <Text style='margin-left:53PX; color:#666;font-size:14PX'>{contactPhone}</Text>
             </View>
           </View>
           <View style='display:flex;flex-direction:column;'>
@@ -312,17 +317,16 @@ const OrgInfo = () => {
 
               <View style='display:flex;flex-direction:row;align-items:center'>
                 <Text style='color:#333;font-size:14PX;'>默认密码</Text>
-                <Text style='margin-left:48PX; color:#666;font-size:14PX'>手机号后8位</Text>
+                <Text style='margin-left:40PX; color:#666;font-size:14PX'>手机号后8位</Text>
               </View>
             </View>
-            <View style='display:flex; height:45PX;flex-direction:column;justify-content:center;'>
-              <View style='display:flex;flex-direction:row;align-items:center'>
+              <View style='margin-left:95PX;display:flex;flex-direction:row;align-items:center;padding-bottom:11PX;'>
                 <Text style='font-size:14PX;'>若您忘记修改后的密码，请</Text>
-                <Text onClick={() => setVisible(true)} style='margin-left:5PX; font-size:14PX; color:#06B48D'>重置密码</Text>
-              </View>
+                <Text onClick={() => setVisible(true)}
+                      style='margin-left:5PX; font-size:14PX; color:#06B48D'>重置密码</Text>
             </View>
           </View>
-        </View>
+        </View>}
       </View>
       <AtModal closeOnClickOverlay={false} isOpened={visible} customStyle='border-radius:5PX'>
         <AtModalContent>
@@ -335,7 +339,7 @@ const OrgInfo = () => {
           </View>
         </AtModalContent>
         <AtModalAction> <Button onClick={() => setVisible(false)}>取消</Button> <Button style='color:#06B48D'
-                                                                            onClick={resetPwd}>确定</Button>
+                                                                                      onClick={resetPwd}>确定</Button>
         </AtModalAction>
       </AtModal>
     </View>
