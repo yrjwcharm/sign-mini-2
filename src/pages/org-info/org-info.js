@@ -137,7 +137,7 @@ const OrgInfo = () => {
         provinceCode: provinceid,
         cityCode: cityid,					// 市编码
         areaCode: districtid,					// 区编码
-        detailedAddress: area  // 详细地址
+        detailedAddress: streetdesc  // 详细地址
       })
       console.log(333, res);
       if (res.code == 200) {
@@ -320,7 +320,7 @@ const OrgInfo = () => {
                 <Text style='margin-left:40PX; color:#666;font-size:14PX'>手机号后8位</Text>
               </View>
             </View>
-              <View style='margin-left:95PX;display:flex;flex-direction:row;align-items:center;padding-bottom:11PX;'>
+              <View style='margin-left:85PX;display:flex;flex-direction:row;align-items:center;padding-bottom:11PX;'>
                 <Text style='font-size:14PX;'>若您忘记修改后的密码，请</Text>
                 <Text onClick={() => setVisible(true)}
                       style='margin-left:5PX; font-size:14PX; color:#06B48D'>重置密码</Text>
