@@ -26,8 +26,8 @@ export async  function  signListApi(payload){
 export async  function  alreadySignListApi(payload){
   return request.get(Api.alreadySignList+`?activityId=${payload}`)
 }
-export async  function  getUserCreatedActApi(payload){
-  return request.get(Api.createdAct+`?userId=${payload}`)
+export async  function  getUserCreatedActApi(userId,status){
+  return request.get(Api.createdAct+`?userId=${userId}&state=${status}`)
 }
 
 export async function sign(payload){

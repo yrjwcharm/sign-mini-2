@@ -9,7 +9,11 @@ import Qrcode from "@assets/qrcode.svg";
 import {deleteActApi, getUserCreatedActApi} from "../../services/SyncRequest";
 import EmptyData from '@assets/empty.png'
 const MyCreate = () => {
+  const [allSelected,setAllSelected] = useState(true);
+  const [orgSelected, setOrgSelected] = useState(false);
+  const [personalSelected, setPersonalSelected] = useState(false)
   const [createSignList,setCreateSignList] = useState([]);
+  const [status,setStatus]  = useState(0);
   const [isEmpty,setIsEmpty] = useState(false);
   useLayoutEffect(()=>{
     Taro.setNavigationBarTitle({
@@ -17,15 +21,16 @@ const MyCreate = () => {
     })
   })
   useEffect(()=>{
-    getCreatedSignList();
-  },[])
-  const getCreatedSignList = async()=>{
     Taro.showLoading({
       title:'请稍等...'
     })
+    getCreatedSignList(status);
+  },[])
+  const getCreatedSignList = async(status)=>{
+    setStatus(status);
     const {userId} = Taro.getStorageSync('userInfo');
     console.log(888,userId);
-    const res = await getUserCreatedActApi(userId);
+    const res = await getUserCreatedActApi(userId,status);
     if(res.code==200){
         if(res.data.length>0){
           setIsEmpty(false);
@@ -48,13 +53,45 @@ const MyCreate = () => {
   }
   const deleteAct =async (id)=>{
     const res = await  deleteActApi(id);
-    console.log(333,res);
     if(res.code==200){
-      getCreatedSignList();
+      getCreatedSignList(status);
     }
+  }
+  const _allSelected =()=>{
+    setAllSelected(true);
+    setPersonalSelected(false);
+    setOrgSelected(false);
+    getCreatedSignList(0);
+  }
+  const _personalSelected =()=>{
+    setAllSelected(false);
+    setPersonalSelected(true);
+    setOrgSelected(false);
+    getCreatedSignList(2);
+  }
+  const _orgSelected =()=>{
+    setAllSelected(false);
+    setOrgSelected(true);
+    setPersonalSelected(false);
+    getCreatedSignList(1);
   }
   return (
     <View className='my-create-box'>
+      <View className='header'>
+        <View className='all-view' style={allSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
+              onClick={_allSelected}>
+          <Text className='org-text' style={allSelected ? 'color: #06B48D;' : 'color:#333'}>全部活动</Text>
+        </View>
+        <View className='org-view' style={orgSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
+              onClick={_orgSelected}>
+          <Text className='org-text' style={orgSelected ? 'color: #06B48D;' : 'color:#333'}>机构/团体活动</Text>
+        </View>
+        <View className='personal-act-view'
+              style={personalSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
+              onClick={_personalSelected}>
+          <Text className='personal-act-text' style={personalSelected ? 'color: #06B48D;' : 'color:#333'}>个人活动</Text>
+        </View>
+      </View>
       <View className='my-create-main' style={isEmpty?'margin-top:0;flex:1;display:flex;flex-direction:column;':'margin-top:11PX;'}>
         {!isEmpty?createSignList.map(item=>{
           return (

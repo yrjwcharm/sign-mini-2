@@ -26,3 +26,43 @@
   align-items: center;
   justify-content: space-between;
 }
+.header{
+  height: 45PX;
+  background: #FFFFFF;
+  display: flex;
+}
+.org-view{
+  display: flex;
+  flex:1;
+  height: 45PX;
+}
+.org-text{
+  font-family: PingFangSC-Regular;
+  font-size: 16PX;
+  color: #06B48D;
+  margin: auto;
+}
+.personal-act-view{
+  display: flex;
+  flex:1;
+  height: 45PX;
+}
+.personal-act-text{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 16PX;
+  color: #333333;
+}
+.all-view{
+  display: flex;
+  flex:1;
+  height: 45PX;
+  box-sizing: border-box;
+  border-bottom: 2PX solid #06B48D;
+}
+.all-text{
+  font-family: PingFangSC-Regular;
+  font-size: 16PX;
+  color: #06B48D;
+  margin: auto;
+}
