@@ -80,7 +80,7 @@ const MyCreate = () => {
       <View className='header'>
         <View className='all-view' style={allSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
               onClick={_allSelected}>
-          <Text className='org-text' style={allSelected ? 'color: #06B48D;' : 'color:#333'}>全部活动</Text>
+          <Text className='all-text' style={allSelected ? 'color: #06B48D;' : 'color:#333'}>全部活动</Text>
         </View>
         <View className='org-view' style={orgSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
               onClick={_orgSelected}>

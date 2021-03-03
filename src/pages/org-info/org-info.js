@@ -14,7 +14,7 @@ import {tdist} from "../../common/js/utils";
 
 const OrgInfo = () => {
   const [visible, setVisible] = useState(false)
-  const [data,setData] = useState({});
+  const [data, setData] = useState({});
   const [companyId, setCompanyId] = useState('');
   const [area, setArea] = useState('');
   const [isIphoneX, setIsIphoneX] = useState(false);
@@ -58,7 +58,7 @@ const OrgInfo = () => {
         password,
         url
       } = res.data || {};
-      res.data&&setData(res.data);
+      res.data && setData(res.data);
       companyName && setOrgName(companyName);
       contactPhone && setPhone(contactPhone);
       contactPhone && setContactPhone(contactPhone),
@@ -295,16 +295,20 @@ const OrgInfo = () => {
             </View>
           </View>
         </View>
-        {Object.keys(data).length!==0&&<View
+        {Object.keys(data).length !== 0 && <View
           style=' margin-top:11PX;padding-top:20PX;display:flex;background-color:#fff;flex-direction:column;padding-left:20PX;padding-right:20PX'>
           <View style='display:flex;height:45PX; flex-direction:column;justify-content:center;'>
             <View style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
-              <Text style='color:#333;font-size:14PX;'>后台登录地址</Text>
-              <Text style='color:#666;font-size:14PX'>{backgroundUrl}</Text>
-              <Image src={Copy} onClick={copyUrl} style='margin-left:5PX;width:16PX;height:16PX'/>
+              <View style='display:flex;flex-direction:column;'>
+                <Text style='color:#333;font-size:14PX;'>后台登录地址</Text>
+              </View>
+              <View style=' margin-left:13PX; display:flex;flex-direction:column; flex:1;'>
+                <Text style='color:#666;font-size:14PX;flex:1;'>{backgroundUrl.substring(0, 30)}</Text>
+                <Text style='color:#666;font-size:14PX;flex:1;'>{backgroundUrl.substring(30)}</Text>
+                <Image src={Copy} onClick={copyUrl} style='margin-top:5PX;width:16PX;height:16PX'/>
+              </View>
             </View>
           </View>
-
           <View style='display:flex;height:45PX;flex-direction:column;justify-content:center;'>
 
             <View style='display:flex;flex-direction:row;align-items:center'>
@@ -320,10 +324,10 @@ const OrgInfo = () => {
                 <Text style='margin-left:40PX; color:#666;font-size:14PX'>手机号后8位</Text>
               </View>
             </View>
-              <View style='margin-left:85PX;display:flex;flex-direction:row;align-items:center;padding-bottom:11PX;'>
-                <Text style='font-size:14PX;'>若您忘记修改后的密码，请</Text>
-                <Text onClick={() => setVisible(true)}
-                      style='margin-left:5PX; font-size:14PX; color:#06B48D'>重置密码</Text>
+            <View style='margin-left:95PX;display:flex;flex-direction:row;align-items:center;padding-bottom:11PX;'>
+              <Text style='font-size:14PX;color:#666;'>若您忘记修改后的密码,请</Text>
+              <Text onClick={() => setVisible(true)}
+                    style='margin-left:5PX; font-size:14PX; color:#06B48D'>重置密码</Text>
             </View>
           </View>
         </View>}
