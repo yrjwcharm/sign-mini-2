@@ -40,12 +40,12 @@ const Create = () => {
   return (
     <View className='create-box'>
       <View className='header'>
-        <View className='org-view' style={orgSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
+        <View className='org-view' style={orgSelected ? 'border-bottom: 2PX solid #06B48D;  box-sizing: border-box;' : 'border-bottom:0'}
               onClick={_orgSelected}>
           <Text className='org-text' style={orgSelected ? 'color: #06B48D;' : 'color:#333'}>机构/团体活动</Text>
         </View>
         <View className='personal-act-view'
-              style={personalSelected ? 'border-bottom: 2PX solid #06B48D;' : 'border-bottom:0'}
+              style={personalSelected ? 'border-bottom: 2PX solid #06B48D;  box-sizing: border-box;' : 'border-bottom:0'}
               onClick={_personalSelected}>
           <Text className='personal-act-text' style={personalSelected ? 'color: #06B48D;' : 'color:#333'}>个人活动</Text>
         </View>
