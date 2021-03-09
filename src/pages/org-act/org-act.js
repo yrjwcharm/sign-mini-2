@@ -252,7 +252,7 @@ const OrgAct = () => {
           </View>
           <View className='line'/>
         </View>
-        <ListRow style='margin-right:43PX' className='list-row-input' type='number' onInput={(e) => {
+        <ListRow style='margin-right:43PX' className='list-row-input' type='text' onInput={(e) => {
           setStreetDesc(e.detail.value);
         }} label='详细地址' placeholder='街道、楼牌号等'/>
         <View className='btn-next-view' onClick={nextStep}>
