@@ -34,3 +34,11 @@ export function desensitizationMobile(str){
     return "";
   }
 }
+export function desensitizationIdCard(str){
+  if(null != str && str != undefined){
+    var pat=/^(.{2})(?:\w+)(.{1})$/;
+    return str.replace(pat,'$1****$2');
+  } else {
+    return "";
+  }
+}
