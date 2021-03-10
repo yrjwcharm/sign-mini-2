@@ -116,7 +116,6 @@ const OrgAct = () => {
       detailedAddress:streetdesc  // 详细地址
     })
     Taro.hideLoading();
-    console.log(333,res.data);
     if(res.code==200) {
       Taro.navigateTo({
         url:'/pages/create-sign-act/create-sign-act'

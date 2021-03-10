@@ -150,7 +150,12 @@ const PersonalAct = () => {
       Taro.navigateTo({
         url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate+` 00:00:00`}&endDate=${endDate+' 00:00:00'}`
       })
-    }
+    }else {
+        Taro.showToast({
+          title:res.msg,
+          icon:"none"
+        })
+      }
     Taro.hideLoading();
 
   }
