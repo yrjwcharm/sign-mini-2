@@ -36,6 +36,7 @@ export default class Home extends Component {
     const _res = await wxLogin(res.code);
     const {openId,userId} = _res.data;
     const result = await getUserInfoApi(openId);
+    console.log(222,result);
     const _result= await getSignTimesApi(userId);
 
     if (_res.code == 200) {

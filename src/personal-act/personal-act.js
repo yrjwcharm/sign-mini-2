@@ -41,8 +41,11 @@ const PersonalAct = () => {
   const [startTime, setStateTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [visible,setVisible] = useState(false);
+  const [status,setStatus] =useState(0);
   useEffect(() => {
     const {isIphoneX} = Taro.getStorageSync('isIphoneX');
+    const {status} = Taro.getStorageSync('userInfo');
+    setStatus(status);
     setIsIphoneX(isIphoneX);
   }, [])
   const showStartDatePicker = (e) => {
@@ -436,11 +439,13 @@ const PersonalAct = () => {
         </View>
         <View style='display:flex;margin-top:15PX'>
           <View style=' margin:auto; display:flex;align-items:center'>
-            <Text
-              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户同时最多可以创建3个活动，</Text>
-            <Text
-              onClick={()=>setVisible(true)}
-              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>
+            {status == 0 && <Text
+              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>您的会员权限已过期，请您联系我们进行购买，</Text>}
+            {status == 2 && <Text
+              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户最多可创建3个活动，请您联系我们进行购买，</Text>}
+            {(status == 0 || status == 2) && <Text
+              onClick={() => setVisible(true)}
+              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>}
           </View>
         </View>
       </View>
