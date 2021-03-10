@@ -15,9 +15,9 @@ import Calendar from '@assets/calendar.png'
 import {getCompanyInfoApi, saveSignAct} from "../../services/SyncRequest";
 import Api from "../../config/api";
 import {isEmpty} from "../../utils/EmptyUtil";
-import {compareDate, compareTime} from "../../utils/Common";
+import {compareDate,compareTime} from "../../utils/Common";
 import moment from 'moment'
-import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
+import {AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
 
 const CreateSignAct = () => {
   const [actTopic, setActTopic] = useState('');
@@ -41,8 +41,8 @@ const CreateSignAct = () => {
   const [index, setIndex] = useState(0);
   const [startTime, setStateTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [visible, setVisible] = useState(false);
-  const [status, setStatus] = useState(0);
+  const [visible,setVisible]= useState(false);
+  const [status,setStatus] = useState(0);
   useEffect(() => {
     const {isIphoneX} = Taro.getStorageSync('isIphoneX');
     const {status} = Taro.getStorageSync('userInfo');
@@ -64,7 +64,7 @@ const CreateSignAct = () => {
       })
       return;
     }
-    if (actTopic.length > 10) {
+    if(actTopic.length>10){
       Taro.showToast({
         title: '活动名称不能超过10个字符',
         icon: 'none'
@@ -93,8 +93,8 @@ const CreateSignAct = () => {
       })
       return;
     }
-    if (!isEmpty(startTime1) && !isEmpty(endTime1)) {
-      if (!compareTime(startTime1, endTime1)) {
+    if(!isEmpty(startTime1)&&!isEmpty(endTime1)){
+      if(!compareTime(startTime1,endTime1)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -102,8 +102,8 @@ const CreateSignAct = () => {
         return;
       }
     }
-    if (!isEmpty(startTime2) && !isEmpty(endTime2)) {
-      if (!compareTime(startTime2, endTime2)) {
+    if(!isEmpty(startTime2)&&!isEmpty(endTime2)){
+      if(!compareTime(startTime2,endTime2)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -111,8 +111,8 @@ const CreateSignAct = () => {
         return;
       }
     }
-    if (!isEmpty(startTime3) && !isEmpty(endTime3)) {
-      if (!compareTime(startTime2, endTime2)) {
+    if(!isEmpty(startTime3)&&!isEmpty(endTime3)){
+      if(!compareTime(startTime2,endTime2)){
         Taro.showToast({
           title: '开始时间不能晚于结束时间',
           icon: 'none',
@@ -132,10 +132,10 @@ const CreateSignAct = () => {
     //   title: '请稍等...'
     // })
     const {userId} = Taro.getStorageSync('userInfo');
-    console.log(999, userId);
+    console.log(999,userId);
     const _res = await getCompanyInfoApi(userId);
     const {companyId} = _res.code == 200 ? _res.data : {};
-    console.log(222, companyId);
+    console.log(222,companyId);
     const res = await saveSignAct({
       companyId,  // 企业id
       activityName: actTopic,			// 活动名称
@@ -150,18 +150,18 @@ const CreateSignAct = () => {
       provinceCode: provinceid,			// 省
       cityCode: cityid,					// 市
       areaCode: districtid,				// 区
-      detailedAddr: area,	// 详细地址
+      detailedAddr:area,	// 详细地址
       callingFlag,				// 是否叫号  0是 1否
       timeIntervalFlag				// 是否开启时间区间   0是 1否
     })
     if (res.code == 200) {
       Taro.navigateTo({
-        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate + ` 00:00:00`}&endDate=${endDate + ` 00:00:00`}`
+        url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(res.data)}&activityName=${actTopic}&startDate=${startDate+` 00:00:00`}&endDate=${endDate+` 00:00:00`}`
       })
-    } else {
+    }else{
       Taro.showToast({
-        title: res.msg,
-        icon: 'none'
+        title:res.msg,
+        icon:'none'
       })
     }
 
@@ -270,13 +270,13 @@ const CreateSignAct = () => {
     }
   }
   const decreaseSign = (index) => {
-    if (index === 0) {
+    if(index===0){
       setStartTime1('');
       setEndTime1('');
-    } else if (index === 1) {
+    }else if(index===1){
       setStartTime2('');
       setEndTime2('');
-    } else {
+    }else{
       setStartTime3('');
       setEndTime3('')
     }
@@ -300,27 +300,27 @@ const CreateSignAct = () => {
   }
 
   const showStartTimePicker = (e) => {
-    setStartTime1(e.detail.value + `:00`);
+    setStartTime1(e.detail.value+`:00`);
   }
   const showStartTimePicker1 = (e) => {
-    setStartTime2(e.detail.value + `:00`);
+    setStartTime2(e.detail.value+`:00`);
   }
   const showStartTimePicker2 = (e) => {
-    setStartTime3(e.detail.value + `:00`);
+    setStartTime3(e.detail.value+`:00`);
   }
   const showEndTimePicker = (e) => {
-    setEndTime1(e.detail.value + `:00`);
+    setEndTime1(e.detail.value+`:00`);
   }
   const showEndTimePicker1 = (e) => {
-    setEndTime2(e.detail.value + `:00`);
+    setEndTime2(e.detail.value+`:00`);
   }
   const showEndTimePicker2 = (e) => {
-    setEndTime3(e.detail.value + `:00`);
+    setEndTime3(e.detail.value+`:00`);
   }
-  const callPhone = () => {
+  const callPhone =()=>{
     Taro.makePhoneCall({
-      phoneNumber: '13910955119',//仅为示例，并非真实的电话号码
-      success: function (res) {
+      phoneNumber: '13910955119' ,//仅为示例，并非真实的电话号码
+      success:function (res){
 
       }
     })
@@ -374,14 +374,12 @@ const CreateSignAct = () => {
                   <View style='display:flex;flex-direction:row;flex:1'>
                     <View style='display:flex;flex-direction:column;flex:1'>
                       <Picker mode='time'
-                              value={time}
-                              onChange={index === 0 ? showStartTimePicker : index === 1 ? showStartTimePicker1 : showStartTimePicker2}>
+                              value={time} onChange={index === 0 ? showStartTimePicker : index === 1 ? showStartTimePicker1 : showStartTimePicker2}>
                         <View style='display:flex;align-items:center;flex:1'>
                           <Text
-                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index + 1}
+                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
                             开始时间</Text>
-                          <Input disabled={true}
-                                 value={index === 0 ? startTime1 : index === 1 ? startTime2 : startTime3}
+                          <Input disabled={true} value={index===0?startTime1:index===1?startTime2:startTime3}
                                  style='flex:1;color:#666;font-size:12PX;text-align:right;' type='text'
                                  placeholder={'请选择开始时间'}
                                  placeholderClass='list-row-input-placeholder1'/>
@@ -393,9 +391,9 @@ const CreateSignAct = () => {
                               onChange={index === 0 ? showEndTimePicker : index === 1 ? showEndTimePicker1 : showEndTimePicker2}>
                         <View style='margin-top:15PX; display:flex;align-items:center;flex:1'>
                           <Text
-                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index + 1}
+                            style='font-family: PingFangSC-Regular;font-size: 12PX;color: #333333;letter-spacing: 0.18PX;'>签到{index+1}
                             结束时间</Text>
-                          <Input disabled={true} value={index === 0 ? endTime1 : index === 1 ? endTime2 : endTime3}
+                          <Input disabled={true} value={index===0?endTime1:index===1?endTime2:endTime3}
                                  style='color:#666;font-size:12PX;flex:1;text-align:right;' type='text'
                                  placeholder={'请选择结束时间'}
                                  placeholderClass='list-row-input-placeholder1'/>
@@ -449,19 +447,17 @@ const CreateSignAct = () => {
         <View className='btn-next-view' onClick={generateSign}>
           <Text className='btn-next-text'>生成签到码</Text>
         </View>
-        <View style='display:flex;margin-top:15PX'>
+        {(status==0||status==2)&&<View style='display:flex;margin-top:15PX'>
           <View style=' margin:auto; display:flex;align-items:center'>
-            {status == 0 && <Text
-              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>您的会员权限已过期，请您联系我们进行购买，</Text>}
-            {status == 2 && <Text
-              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户最多可创建3个活动，请您联系我们进行购买，</Text>}
-            {(status == 0 || status == 2) && <Text
-              onClick={() => setVisible(true)}
-              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>}
+            <Text
+              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #E02020;letter-spacing: 0.18PX;'>免费用户最多可以创建3个活动，</Text>
+            <Text
+              onClick={()=>setVisible(true)}
+              style='font-family: PingFangSC-Regular;font-size: 14PX;color: #06B48D;letter-spacing: 0.18PX;'>立即购买</Text>
           </View>
-        </View>
+        </View>}
       </View>
-      <AtModal closeOnClickOverlay={false} isOpened={visible} customStyle='border-radius:5PX'>
+      <AtModal  closeOnClickOverlay={false} isOpened={visible} customStyle='border-radius:5PX'>
         <AtModalContent>
           <View style='display:flex;height:45PX;'>
             <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
@@ -470,8 +466,7 @@ const CreateSignAct = () => {
           <View style='padding:20PX;'>
             <View style='display:flex;flex-direction:row;align-items:center' onClick={callPhone}>
               <Image src={Phone} style='width:17PX;height:13PX'/>
-              <Text style='text-decoration:underline; color:#06B48D;font-size:14PX;margin-left:10PX'>139 1095
-                5119</Text>
+              <Text style='text-decoration:underline; color:#06B48D;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
             </View>
             <View>
               <Image src={Email} style='width:17PX;height:13PX'/>
