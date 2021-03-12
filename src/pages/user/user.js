@@ -7,6 +7,7 @@ import Create from '@assets/create.png'
 import Sign from '@assets/Sign.png'
 import Team from '@assets/team.png'
 import './user.scss'
+import {isEmpty} from "../../utils/EmptyUtil";
 const User = () => {
   const [userInfo, setUserInfo] = useState({});
   useLayoutEffect(() => {
@@ -36,10 +37,18 @@ const User = () => {
       url:'/pages/org-info/org-info'
     })
   }
+  const navigateToUserInfo=()=>{
+    const {username} = Taro.getStorageSync('userInfo');
+    if(isEmpty(username)){
+      Taro.navigateTo({url:'/pages/person-data/person-data'})
+    }else{
+      Taro.navigateTo({url:'/pages/update-person-data/update-person-data'})
+    }
+  }
   return (
     <View className='user-box'>
       <View className='user-header'>
-        <View className='user-header_wrap' onClick={()=>Taro.navigateTo({url:'/pages/person-data/person-data'})}>
+        <View className='user-header_wrap' onClick={navigateToUserInfo}>
           <View className='user-header_wrap_avatar'>
             <open-data type="userAvatarUrl"></open-data>
           </View>

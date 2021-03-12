@@ -98,7 +98,13 @@ export default class Home extends Component {
       url: '/pages/person-data/person-data'
     })
   }
-
+  navigateToUserInfo=()=>{
+    if(isEmpty(this.state.username)){
+      Taro.navigateTo({url:'/pages/person-data/person-data'})
+    }else{
+      Taro.navigateTo({url:'/pages/update-person-data/update-person-data'})
+    }
+  }
   render() {
     const {FLAG, username, mobile,signTimes,latestSignTime} = this.state;
     return (
@@ -109,7 +115,7 @@ export default class Home extends Component {
             <Text className='scan-qrcode-text' style='margin-left:20PX'>扫码签到、后台叫号管理</Text>
           </View>
           <View className='personal'>
-            <View className='basic-info-view' onClick={()=>Taro.navigateTo({url:'/pages/person-data/person-data'})}>
+            <View className='basic-info-view' onClick={this.navigateToUserInfo}>
               <View className='avatar' style='margin:auto;'>
                 <open-data type="userAvatarUrl"></open-data>
               </View>

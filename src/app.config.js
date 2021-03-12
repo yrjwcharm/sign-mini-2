@@ -3,6 +3,7 @@ export default {
     'pages/index/index',
     'pages/sign-success/sign-success',
     'pages/person-data/person-data',
+    'pages/update-person-data/update-person-data',
     'pages/my-create/my-create',
     'pages/my-sign/my-sign',
     'pages/already-sign/already-sign',
