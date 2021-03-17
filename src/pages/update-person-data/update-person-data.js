@@ -116,14 +116,14 @@ const UpdatePersonData = () => {
   return (
     <View className='personal-box'>
       <View className='main'>
-        <ListRow value={name} noBorder={disabled} className='list-row-input' type='text' onInput={(e) => {
+        <ListRow value={name} noBorder={disabled} disabled={disabled} className='list-row-input' type='text' onInput={(e) => {
           setName(e.detail.value);
 
         }} label='姓名' style='margin-right:71PX' placeholder='请输入姓名'/>
-        <ListRow  value={phone} noBorder={disabled} className='list-row-input' type='number' onInput={(e) => {
+        <ListRow  value={phone} noBorder={disabled} disabled={disabled} className='list-row-input' type='number' onInput={(e) => {
           setPhone(e.detail.value);
         }} label='电话' style='margin-right:71PX' placeholder='请输入手机号码'/>
-        <ListRow  value={idCard} noBorder={disabled} className='list-row-input' type='idcard' onInput={(e) => {
+        <ListRow  value={idCard} noBorder={disabled} disabled={disabled} className='list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
         }} label='身份证号'  style='margin-right:43PX' placeholder='请输入身份证号'/>
         {!disabled&&<View className='list-row-container'>
