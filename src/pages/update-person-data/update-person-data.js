@@ -7,6 +7,7 @@ import './update-person-data.scss'
 import Api from '../../config/api'
 import  '../../components/ListRow.scss'
 import {getImgCodeApi, saveUserInfoApi} from "../../services/SyncRequest";
+import {desensitizationIdCard, desensitizationMobile} from "../../utils/Common";
 const UpdatePersonData = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -120,10 +121,10 @@ const UpdatePersonData = () => {
           setName(e.detail.value);
 
         }} label='姓名' style='margin-right:71PX' placeholder='请输入姓名'/>
-        <ListRow  value={phone} noBorder={disabled} disabled={disabled} className='list-row-input' type='number' onInput={(e) => {
+        <ListRow  value={disabled?desensitizationMobile(phone):phone} noBorder={disabled} disabled={disabled} className='list-row-input' type='number' onInput={(e) => {
           setPhone(e.detail.value);
         }} label='电话' style='margin-right:71PX' placeholder='请输入手机号码'/>
-        <ListRow  value={idCard} noBorder={disabled} disabled={disabled} className='list-row-input' type='idcard' onInput={(e) => {
+        <ListRow  value={disabled?desensitizationIdCard(idCard):idCard} noBorder={disabled} disabled={disabled} className='list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
         }} label='身份证号'  style='margin-right:43PX' placeholder='请输入身份证号'/>
         {!disabled&&<View className='list-row-container'>
