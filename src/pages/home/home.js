@@ -71,6 +71,7 @@ export default class Home extends Component {
       success: (res) => {
         const {userId} = Taro.getStorageSync('userInfo');
         if (res.result) {
+          console.log(222,res.result)
           let url = res.result + `&userId=${userId}`;
           sign(url).then(res => {
             console.log(333, res);
@@ -86,10 +87,12 @@ export default class Home extends Component {
             }
           });
         }
-
       },
       fail: (res => {
-
+        Taro.showToast({
+          title:'未能识别此二维码，请更换',
+          icon:'none',
+        })
       })
     })
   }

@@ -338,7 +338,7 @@ const OrgInfo = () => {
           {/*  <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>*/}
           {/*</View>*/}
           {/*<View className='line'/>*/}
-          <View style='padding:20PX;'>
+          <View style='padding-top:20PX;'>
             <Text style='font-size:14px;'>重置密码后登录密码将恢复为默认密码，为保证你的账户安全，请尽快登录叫号系统修改密码，确定重置密码？</Text>
           </View>
         </AtModalContent>

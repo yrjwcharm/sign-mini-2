@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add Taro-ui
+  /usr/local/bin/node /usr/local/bin/yarn install
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/yanrf/Desktop/小程序/sign/node_modules/.bin:/Users/yanrf/Library/Android/sdk/tools:/Users/yanrf/Library/Android/sdk/platform-tools
@@ -14,17 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/Taro-ui: Not found
-      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66988:18)
-      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140662:22)
-      at Request.emit (events.js:198:13)
-      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141634:10)
-      at Request.emit (events.js:198:13)
-      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141556:12)
-      at Object.onceWrapper (events.js:286:20)
-      at IncomingMessage.emit (events.js:203:15)
-      at endReadableNT (_stream_readable.js:1145:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: ENOENT: no such file or directory, copyfile '/Users/yanrf/Library/Caches/Yarn/v6/npm-eslint-utils-2.1.0-d2de5e03424e707dc10c74068ddedae708741b27-integrity/node_modules/eslint-utils/README.md' -> '/Users/yanrf/Desktop/小程序/sign/node_modules/@typescript-eslint/experimental-utils/node_modules/eslint-utils/README.md'
 
 npm manifest: 
   {
@@ -66,26 +56,26 @@ npm manifest:
     "dependencies": {
       "@babel/runtime": "^7.7.7",
       "@tarojs/components": "3.0.17",
+      "@tarojs/react": "3.0.16",
       "@tarojs/runtime": "3.0.16",
       "@tarojs/taro": "3.0.17",
-      "@tarojs/react": "3.0.16",
-      "react-dom": "^16.10.0",
-      "react": "^16.10.0",
       "moment": "^2.29.1",
+      "react": "^16.10.0",
+      "react-dom": "^16.10.0",
       "taro-code": "^3.2.0",
-      "taro-ui": "3.0.0-alpha.3"
+      "taro-ui": "^3.0.0-alpha.3"
     },
     "devDependencies": {
-      "@types/webpack-env": "^1.13.6",
-      "@types/react": "^16.0.0",
-      "@tarojs/mini-runner": "3.0.16",
       "@babel/core": "^7.8.0",
+      "@tarojs/mini-runner": "3.0.16",
       "@tarojs/webpack-runner": "3.0.16",
+      "@types/react": "^16.0.0",
+      "@types/webpack-env": "^1.13.6",
       "babel-preset-taro": "3.0.16",
-      "eslint-config-taro": "3.0.16",
       "eslint": "^6.8.0",
-      "eslint-plugin-react": "^7.8.2",
+      "eslint-config-taro": "3.0.16",
       "eslint-plugin-import": "^2.12.0",
+      "eslint-plugin-react": "^7.8.2",
       "eslint-plugin-react-hooks": "^1.6.1",
       "stylelint": "9.3.0"
     }

@@ -1,5 +1,6 @@
 // let wxApi = 'http://175.102.179.84:8090';
-let wxApi = 'https://hstest.youjiankang.net'
+// let wxApi = 'https://hstest.youjiankang.net'
+let wxApi = 'https://www.youjiankang.net/xyqd'
 import Constant from '../../project.config.json'
 export default {
     key:'946eedbef5b95fbeff0d6dfb42958db8',

@@ -3,7 +3,7 @@ import {Image, Text, View} from "@tarojs/components";
 import Forward from '@assets/forward.png';
 import './my-create.scss'
 import './my-create-config'
-import {AtSwipeAction} from "taro-ui";
+import {AtSwipeAction} from "taro-ui"
 import Taro from '@tarojs/taro'
 import Qrcode from "@assets/qrcode.svg";
 import {deleteActApi, getUserCreatedActApi} from "../../services/SyncRequest";
@@ -32,12 +32,12 @@ const MyCreate = () => {
     console.log(888,userId);
     const res = await getUserCreatedActApi(userId,status);
     if(res.code==200){
-        if(res.data.length>0){
-          setIsEmpty(false);
-          setCreateSignList(res.data);
-        }else{
-          setIsEmpty(true);
-        }
+      if(res.data.length>0){
+        setIsEmpty(false);
+        setCreateSignList(res.data);
+      }else{
+        setIsEmpty(true);
+      }
     }else{
       setIsEmpty(true);
     }
@@ -93,13 +93,14 @@ const MyCreate = () => {
         </View>
       </View>
       <View className='my-create-main' style={isEmpty?'margin-top:0;flex:1;display:flex;flex-direction:column;':'margin-top:11PX;'}>
-        {!isEmpty?createSignList.map(item=>{
+        {!isEmpty? createSignList.map(item=>{
+          console.log(222,item)
           return (
             <AtSwipeAction
-               key={item.signActivityId+""}
+              key={item.signActivityId+""}
               onOpened={handleSingle}
               isOpened={false}
-               onClick={()=>deleteAct(item.signActivityId)}
+              onClick={()=>deleteAct(item.signActivityId)}
               options={[
                 {
                   text: '删除',

@@ -463,7 +463,7 @@ const CreateSignAct = () => {
             <Text style='color:#333;font-size:16PX; margin:auto;'>购买本产品联系方式</Text>
           </View>
           <View className='line'/>
-          <View style='padding:20PX;'>
+          <View style='padding-top:20PX;'>
             <View style='display:flex;flex-direction:row;align-items:center' onClick={callPhone}>
               <Image src={Phone} style='width:17PX;height:13PX'/>
               <Text style='text-decoration:underline; color:#06B48D;font-size:14PX;margin-left:10PX'>139 1095 5119</Text>
