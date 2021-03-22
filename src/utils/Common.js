@@ -36,7 +36,7 @@ export function desensitizationMobile(str){
 }
 export function desensitizationIdCard(str){
   if(null != str && str != undefined){
-    var pat=/(\w{6})\w*(\w{2})/;
+    var pat=/(\w{12})\w*(\w{2})/;
     return str.replace(pat,'$1****$2');
   } else {
     return "";

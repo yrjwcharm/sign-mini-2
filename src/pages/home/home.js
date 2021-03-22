@@ -72,27 +72,31 @@ export default class Home extends Component {
         const {userId} = Taro.getStorageSync('userInfo');
         if (res.result) {
           console.log(222,res.result)
-          let url = res.result + `&userId=${userId}`;
-          sign(url).then(res => {
-            console.log(333, res);
-            if (res.code == 200) {
-              Taro.navigateTo({
-                url: '/pages/sign-success/sign-success'
-              })
-            } else {
-              Taro.showToast({
-                title: res.msg,
-                icon: 'none'
-              })
-            }
-          });
+          if(res.result.indexOf('state')!==-1) {
+            let url = res.result + `&userId=${userId}`;
+            sign(url).then(res => {
+              console.log(333, res);
+              if (res.code == 200) {
+                Taro.navigateTo({
+                  url: '/pages/sign-success/sign-success'
+                })
+              } else {
+                Taro.showToast({
+                  title: res.msg,
+                  icon: 'none'
+                })
+              }
+            });
+          }else {
+            Taro.showToast({
+              title:'未能识别此二维码，请更换',
+              icon:'none',
+            })
+          }
         }
       },
       fail: (res => {
-        Taro.showToast({
-          title:'未能识别此二维码，请更换',
-          icon:'none',
-        })
+
       })
     })
   }
