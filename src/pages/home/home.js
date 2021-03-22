@@ -91,6 +91,7 @@ export default class Home extends Component {
             Taro.showToast({
               title:'未能识别此二维码，请更换',
               icon:'none',
+              duration:3000
             })
           }
         }
