@@ -36,9 +36,26 @@ export function desensitizationMobile(str){
 }
 export function desensitizationIdCard(str){
   if(null != str && str != undefined){
-    var pat=/(\w{12})\w*(\w{2})/;
-    return str.replace(pat,'$1****$2');
+    var pat=/(\w{2})\w*(\w{2})/;
+    return str.replace(pat,'$1**************$2');
   } else {
     return "";
   }
+}
+export function getRequest(urlStr) {
+  let url ='';
+  if (typeof urlStr == "undefined") {
+    url = decodeURI(location.search); //获取url中"?"符后的字符串
+  } else {
+    url = "?" + urlStr.split("?")[1];
+  }
+  let theRequest = new Object();
+  if (url.indexOf("?") != -1) {
+    let str = url.substr(1);
+    let strs = str.split("&");
+    for (let i = 0; i < strs.length; i++) {
+      theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+    }
+  }
+  return theRequest;
 }
