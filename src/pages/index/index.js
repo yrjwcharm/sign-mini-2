@@ -22,6 +22,12 @@ export default class Index extends Component {
       current:0,
     }
   }
+  componentDidMount() {
+    Taro.showShareMenu({
+      withShareTicket:true
+    })
+  }
+
   handleClick= (value)=> {
     this.setState({
       current: value
