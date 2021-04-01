@@ -9,7 +9,8 @@ export default {
     'pages/already-sign/already-sign',
     'pages/org-info/org-info',
     'pages/create-sign-act/create-sign-act',
-    'pages/sign-qrcode/sign-qrcode'
+    'pages/sign-qrcode/sign-qrcode',
+    'pages/act-detail/act-detail'
   ],
   window: {
     backgroundTextStyle: 'light',

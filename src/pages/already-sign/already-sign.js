@@ -10,6 +10,7 @@ import {isEmpty} from "../../utils/EmptyUtil";
 import Act from '@assets/act.png'
 import SignCode from '@assets/sign_qrcode.png';
 import Export from '@assets/export.png'
+import EmptyData from '@assets/empty.png'
 const AlreadySign = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [signList, setSignList] = useState([]);
@@ -23,6 +24,7 @@ const AlreadySign = () => {
   const [url, setUrl] = useState('');
   const [FLAG, setFLAG] = useState(false);
   const [activityId,setActivityId] = useState('');
+  const [activity,setActivity] = useState({});
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '已签到'
@@ -40,7 +42,6 @@ const AlreadySign = () => {
     } = getCurrentInstance().router.params;
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
-    console.log(333,startTime1,startTime2,startTime3,endTime1,endTime2,endTime3)
     setActivityId(signActivityId);
     if (startTime1 && endTime1) {
       pushTime(startTime1, endTime1)
@@ -169,6 +170,7 @@ const AlreadySign = () => {
       setEndDate(endDate);
       setActivityName(activityName);
       setUrl(url);
+      setActivity(res[0].data.activity);
     }
     if (res[1].code == 200) {
       console.log(333, res[1]);
@@ -179,6 +181,11 @@ const AlreadySign = () => {
   const searchQrcode = () => {
     Taro.navigateTo({
       url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(url)}&activityName=${activityName}&startDate=${startDate}&endDate=${endDate}`
+    })
+  }
+  const goToActDetail = ()=>{
+    Taro.navigateTo({
+      url:`/pages/act-detail/act-detail?activity=${JSON.stringify(activity)}`
     })
   }
   const exportsExcel = async ()=>{
@@ -263,7 +270,7 @@ const AlreadySign = () => {
         }) : <Empty/>}
       </View>
       <View className='_footer'>
-        <View style='padding:15PX 10PX 15PX 10PX;background-color:#fff; border-radius:50PX; margin-right:15PX;'>
+        <View style='padding:15PX 10PX 15PX 10PX;background-color:#fff; border-radius:50PX; margin-right:15PX; margin-bottom:15PX;'>
           <View style='display:flex;flex-direction:column;align-items:center;' onClick={searchQrcode}>
             <Image src={SignCode} style='width:40PX;height:40PX;'/>
             <Text style='color:#333;font-size:14PX;'>签到码</Text>
@@ -272,7 +279,7 @@ const AlreadySign = () => {
             <Image src={Export} style='width:40PX;height:40PX;'/>
             <Text style='color:#333;font-size:14PX;'>导出</Text>
           </View>
-          <View style='margin-top:15PX;display:flex;flex-direction:column;align-items:center'>
+          <View style='margin-top:15PX;display:flex;flex-direction:column;align-items:center' onClick={goToActDetail}>
             <Image src={Act} style='width:40PX;height:40PX;'/>
             <Text style='color:#333;font-size:14PX;'>活动</Text>
           </View>
