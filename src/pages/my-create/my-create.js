@@ -44,7 +44,6 @@ const MyCreate = () => {
     Taro.hideLoading();
   }
   const handleSingle = (index) => {
-
   }
   const toAlreadySign=(item)=>{
     Taro.navigateTo({
@@ -56,6 +55,19 @@ const MyCreate = () => {
     if(res.code==200){
       getCreatedSignList(status);
     }
+  }
+  const _deleteAct =async (id)=>{
+    Taro.showModal({
+      title: '温馨提示',
+      confirmColor: '#06B48D',
+      content: '确定要删除吗？',
+      success: function (res) {
+        if (res.confirm) {
+          // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+          deleteAct(id);
+        }
+      }
+    })
   }
   const _allSelected =()=>{
     setAllSelected(true);
@@ -75,6 +87,7 @@ const MyCreate = () => {
     setPersonalSelected(false);
     getCreatedSignList(1);
   }
+
   return (
     <View className='my-create-box'>
       <View className='header'>
@@ -111,7 +124,7 @@ const MyCreate = () => {
                 }
               ]}
             >
-              <View className='list-row--layout' onClick={()=>toAlreadySign(item)}>
+              <View className='list-row--layout' onLongPress={()=>_deleteAct(item.signActivityId)} onClick={()=>toAlreadySign(item)}>
                 <View className='list-row--view'>
                   <View style='display:flex;flex-direction:column;'>
                     <Text style='color:#333;font-size:16PX;'>{item.activityName}</Text>

@@ -72,3 +72,9 @@
   flex-direction: row;
   justify-content: space-between;
 }
+._footer{
+  display: flex;
+  flex:1;
+  align-items: flex-end;
+  justify-content: flex-end;
+}

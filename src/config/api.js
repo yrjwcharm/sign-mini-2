@@ -18,6 +18,7 @@ export default {
     getActQrWeiMaInfo:wxApi + `/sign/activity/getActivityQRCode`,
     alreadySignList:wxApi + `/sign/activity/getActivitySignList`,
     getSignTimes:wxApi + `/sign/sign/getTodaySignInfo`,
-    resetPwd:wxApi + `/sign/company/resetPasswordById`
+    resetPwd:wxApi + `/sign/company/resetPasswordById`,
+    exportExcel:wxApi + `/sign/activity/exportExcel`,
 
 }

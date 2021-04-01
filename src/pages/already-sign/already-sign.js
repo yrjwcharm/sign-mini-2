@@ -3,11 +3,13 @@ import {Image, Picker, Text, View} from '@tarojs/components'
 import './already-sign.scss'
 import DropDown from '@assets/drop-down.png'
 import Taro from '@tarojs/taro'
-import {alreadySignListApi, getActQrcodeInfoApi} from "../../services/SyncRequest";
+import {alreadySignListApi, exportExcelApi, getActQrcodeInfoApi} from "../../services/SyncRequest";
 import {getCurrentInstance} from "@tarojs/runtime";
 import Api from '../../config/api'
 import {isEmpty} from "../../utils/EmptyUtil";
-import EmptyData from '@assets/empty.png'
+import Act from '@assets/act.png'
+import SignCode from '@assets/sign_qrcode.png';
+import Export from '@assets/export.png'
 const AlreadySign = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [signList, setSignList] = useState([]);
@@ -19,7 +21,8 @@ const AlreadySign = () => {
   const [endDate, setEndDate] = useState('');
   const [normalFlag, setNormalFlag] = useState(1);
   const [url, setUrl] = useState('');
-  const [FLAG,setFLAG] = useState(false);
+  const [FLAG, setFLAG] = useState(false);
+  const [activityId,setActivityId] = useState('');
   useLayoutEffect(() => {
     Taro.setNavigationBarTitle({
       title: '已签到'
@@ -37,6 +40,8 @@ const AlreadySign = () => {
     } = getCurrentInstance().router.params;
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     setIsIphoneX(isIphoneX);
+    console.log(333,startTime1,startTime2,startTime3,endTime1,endTime2,endTime3)
+    setActivityId(signActivityId);
     if (startTime1 && endTime1) {
       pushTime(startTime1, endTime1)
     }
@@ -66,7 +71,7 @@ const AlreadySign = () => {
     if (isEmpty(signTime)) {
       url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}`
     } else {
-      if (signTime==='非正常签到') {
+      if (signTime === '非正常签到') {
         url = Api.alreadySignList + `?activityId=${signActivityId}&signDate=${e.detail.value}&normalFlag=1`
       } else {
         let startTime = range[e.detail.value].split('-')[0] + ':00';
@@ -83,7 +88,6 @@ const AlreadySign = () => {
         'userId': Taro.getStorageSync('userId')
       },
       success: function (res) {
-        console.log(333, res);
         if (res.statusCode == 200) {
           if (res.data.code == 200) {
             if (res.data.data.length === 0) {
@@ -177,6 +181,46 @@ const AlreadySign = () => {
       url: `/pages/sign-qrcode/sign-qrcode?url=${encodeURIComponent(url)}&activityName=${activityName}&startDate=${startDate}&endDate=${endDate}`
     })
   }
+  const exportsExcel = async ()=>{
+    Taro.request({
+      url: Api.exportExcel+`?activityId=${activityId}`,
+      data: {},
+      method: "GET",
+      header: {
+        'Content-Type': 'application/json',
+        'userId':Taro.getStorageSync('userId')
+        // 'X-Litemall-Token': Taro.getStorageSync('token')
+      },
+      responseType: 'arraybuffer',
+      success: function (result) {
+        var fileManager = Taro.getFileSystemManager();
+        var FilePath = Taro.env.USER_DATA_PATH + "/" + "dataFile.xlsx";
+        fileManager.writeFile({
+          data: result.data,
+          filePath: FilePath,
+          encoding: "binary",//编码方式
+          success: result => {
+            console.log(222,result);
+            Taro.openDocument({ //我这里成功之后直接打开
+              filePath: FilePath,
+              showMenu:true,
+              fileType: "xlsx",
+              success: result => {
+                console.log("打开文档成功");
+              },
+              fail: result => {
+                console.log(result);
+              }
+            });
+          },
+          fail: res => {
+            console.log(res);
+          }
+        })
+      }
+    })
+
+  }
   return (
     <View className='already-sign-box'>
       <View className='sign-header'>
@@ -200,7 +244,7 @@ const AlreadySign = () => {
         </View>
       </View>
       <View className='already-sign-main' style='margin-top:11PX'>
-        {!FLAG?signList.map((item, index) => {
+        {!FLAG ? signList.map((item, index) => {
           return (
             <View className='list-row--layout'>
               <View className='list-row--view'>
@@ -216,13 +260,31 @@ const AlreadySign = () => {
               </View>
             </View>
           )
-        }):<Empty/>}
+        }) : <Empty/>}
       </View>
-      <View className='footer'>
-        <View className='btn-submit-view' onClick={searchQrcode}
-              style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}>
-          <Text className='btn-submit-text'>查看签到码</Text>
+      <View className='_footer'>
+        <View style='padding:15PX 10PX 15PX 10PX;background-color:#fff; border-radius:50PX; margin-right:15PX;'>
+          <View style='display:flex;flex-direction:column;align-items:center;' onClick={searchQrcode}>
+            <Image src={SignCode} style='width:40PX;height:40PX;'/>
+            <Text style='color:#333;font-size:14PX;'>签到码</Text>
+          </View>
+          <View style='margin-top:15PX; display:flex;flex-direction:column;align-items:center' onClick={exportsExcel}>
+            <Image src={Export} style='width:40PX;height:40PX;'/>
+            <Text style='color:#333;font-size:14PX;'>导出</Text>
+          </View>
+          <View style='margin-top:15PX;display:flex;flex-direction:column;align-items:center'>
+            <Image src={Act} style='width:40PX;height:40PX;'/>
+            <Text style='color:#333;font-size:14PX;'>活动</Text>
+          </View>
         </View>
+        {/*<View className='btn-submit-view' onClick={searchQrcode}*/
+        }
+        {/*      style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}>*/
+        }
+        {/*  <Text className='btn-submit-text'>查看签到码</Text>*/
+        }
+        {/*</View>*/
+        }
       </View>
     </View>
   )

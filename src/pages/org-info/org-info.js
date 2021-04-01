@@ -139,7 +139,6 @@ const OrgInfo = () => {
         areaCode: districtid,					// 区编码
         detailedAddress: streetdesc  // 详细地址
       })
-      console.log(333, res);
       if (res.code == 200) {
         setDisabled(true)
         getCompanyInfo();

@@ -56,3 +56,7 @@ export async  function  getSignTimesApi(payload){
 export async  function resetPwdApi(payload){
   return request.put(Api.resetPwd,payload)
 }
+
+export async  function exportExcelApi(payload){
+  return request.get(Api.exportExcel+`?activityId=${payload}`)
+}

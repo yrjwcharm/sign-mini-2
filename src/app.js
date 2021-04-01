@@ -34,6 +34,7 @@ class App extends Component {
     updateManager.onUpdateReady(function () {
       Taro.showModal({
         title: '更新提示',
+        confirmColor: '#06B48D',
         content: '新版本已经准备好，是否重启应用？',
         success: function (res) {
           if (res.confirm) {
