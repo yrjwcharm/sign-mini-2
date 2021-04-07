@@ -200,8 +200,8 @@ const AlreadySign = () => {
       },
       responseType: 'arraybuffer',
       success: function (result) {
-        var fileManager = Taro.getFileSystemManager();
-        var FilePath = Taro.env.USER_DATA_PATH + "/" + "dataFile.xlsx";
+        let fileManager = Taro.getFileSystemManager();
+        let FilePath = Taro.env.USER_DATA_PATH + "/" + "活动.xls";
         fileManager.writeFile({
           data: result.data,
           filePath: FilePath,
@@ -211,7 +211,7 @@ const AlreadySign = () => {
             Taro.openDocument({ //我这里成功之后直接打开
               filePath: FilePath,
               showMenu:true,
-              fileType: "xlsx",
+              fileType: "xls",
               success: result => {
                 console.log("打开文档成功");
               },

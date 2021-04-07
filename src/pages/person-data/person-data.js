@@ -111,14 +111,14 @@ const PersonData = () => {
   return (
     <View className='personal-box'>
       <View className='main'>
-        <ListRow  className='list-row-input' type='text' onInput={(e) => {
+        <ListRow  value={name}  className='list-row-input' type='text' onInput={(e) => {
           setName(e.detail.value);
 
         }} label='姓名' style='margin-right:71PX' placeholder='请输入姓名'/>
-        <ListRow   className='list-row-input' type='number' onInput={(e) => {
+        <ListRow value={phone}  className='list-row-input' type='number' onInput={(e) => {
           setPhone(e.detail.value);
         }} label='电话' style='margin-right:71PX' placeholder='请输入手机号码'/>
-        <ListRow   className='list-row-input' type='idcard' onInput={(e) => {
+        <ListRow  value={idCard}  className='list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
         }} label='身份证号'  style='margin-right:43PX' placeholder='请输入身份证号'/>
         <View className='list-row-container'>
@@ -126,7 +126,7 @@ const PersonData = () => {
             <View className='list-row-view  flex-between'>
               <View style='display:flex;align-items:center;flex:1;'>
                 <Text className='list-row-text'>验证码</Text>
-                <Input type='text' style='padding-left:57px;flex:1;' className='list-row-input' onInput={(e) => {
+                <Input type='text' value={verifyCode} style='padding-left:57px;flex:1;' className='list-row-input' onInput={(e) => {
                   setVerifyCode(e.detail.value);
                 }} placeholder={'请输入验证码'}
                        placeholderClass='list-row-input-placeholder'/>

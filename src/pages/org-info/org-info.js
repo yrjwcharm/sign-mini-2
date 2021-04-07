@@ -11,6 +11,7 @@ import Copy from '@assets/copy.svg'
 import Location from '@assets/location.png'
 import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
 import {tdist} from "../../common/js/utils";
+import * as url from "url";
 
 const OrgInfo = () => {
   const [visible, setVisible] = useState(false)
@@ -298,13 +299,13 @@ const OrgInfo = () => {
           style=' margin-top:11PX;padding-top:20PX;display:flex;background-color:#fff;flex-direction:column;padding-left:20PX;padding-right:20PX'>
           <View style='display:flex;height:45PX; flex-direction:column;justify-content:center;'>
             <View style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
-              <View style='display:flex;flex-direction:column;'>
+              <View style='display:flex;align-items:center'>
                 <Text style='color:#333;font-size:14PX;'>后台登录地址</Text>
+                <Text style='color:#666;font-size:14PX; margin-left:12PX;'>{backgroundUrl}</Text>
               </View>
-              <View style=' margin-left:13PX; display:flex;flex-direction:column; flex:1;'>
-                <Text style='color:#666;font-size:14PX;flex:1;'>{backgroundUrl.substring(0, 30)}</Text>
-                <Text style='color:#666;font-size:14PX;flex:1;'>{backgroundUrl.substring(30)}</Text>
-                <Image src={Copy} onClick={copyUrl} style='margin-top:5PX;width:16PX;height:16PX'/>
+              <View style='display:flex;align-items:center;' onClick={copyUrl}>
+                <Image src={Copy}  style='width:16PX;height:16PX'/>
+                <Text style='color:#06B48D;font-size:14PX; margin-left:7PX'>复制</Text>
               </View>
             </View>
           </View>
