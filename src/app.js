@@ -19,7 +19,9 @@ class App extends Component {
           // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
           Taro.requestSubscribeMessage({
             tmplIds: Api.templateIds,
-            success: function (res) { }
+            success: function (res) {
+              console.log(333,res)
+            }
           })
         }
       }

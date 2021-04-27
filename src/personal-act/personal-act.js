@@ -119,7 +119,14 @@ const PersonalAct = () => {
         return;
       }
     }
-
+    if(timeIntervalFlag==1){
+      if(timeArr.length==0){
+        Taro.showToast({
+          title:'请添加签到时间段',
+          icon:'none',
+        })
+      }
+    }
     if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
         title: '请选择活动地点',
@@ -156,7 +163,8 @@ const PersonalAct = () => {
     }else {
       Taro.showToast({
         title:res.msg,
-        icon:"none"
+        icon:"none",
+        duration:3500
       })
     }
     Taro.hideLoading();
