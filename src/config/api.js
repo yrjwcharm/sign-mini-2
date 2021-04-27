@@ -4,6 +4,7 @@ let wxApi = 'https://www.youjiankang.net/xyqd'
 import Constant from '../../project.config.json'
 export default {
     key:'946eedbef5b95fbeff0d6dfb42958db8',
+    templateIds:['2KQxdayP9BLvq-ezhtl5C76SKE_UqjPU_8tfk2A_3S4'],
     login:wxApi+`/sign/user/${Constant.appid}/login`,
     getImgCode:wxApi+`/sign/user/${Constant.appid}/getImgVerifyCode`,
     saveUserInfo:wxApi+`/sign/user/${Constant.appid}/saveUserInfo`,

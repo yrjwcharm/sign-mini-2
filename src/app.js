@@ -2,11 +2,29 @@ import { Component } from 'react'
 import './app.scss'
 import Taro from '@tarojs/taro'
 import {login,wxLogin} from "./services/user";
-
+import Api from './config/api'
 class App extends Component {
   componentWillMount() {
     this.update();
+    this._subscribeMessage();
     this._getSystemInfo();
+  }
+  _subscribeMessage=()=>{
+    Taro.showModal({
+      title: '消息订阅',
+      confirmColor: '#06B48D',
+      content: '小佑签到需要订阅以下信息，是否允许？',
+      success: function (res) {
+        if (res.confirm) {
+          // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+          Taro.requestSubscribeMessage({
+            tmplIds: Api.templateIds,
+            success: function (res) { }
+          })
+        }
+      }
+    })
+
   }
   _getSystemInfo = () => {
     Taro.getSystemInfo({
