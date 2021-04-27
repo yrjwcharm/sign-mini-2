@@ -125,6 +125,7 @@ const OrgSignAct = () => {
           title:'请添加签到时间段',
           icon:'none',
         })
+        return;
       }
     }
     if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
